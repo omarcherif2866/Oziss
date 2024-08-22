@@ -1,0 +1,62 @@
+<div style="display: flex; flex-direction: column; padding: 1rem;">
+  <div style="display: flex; flex-direction: row; gap: 1rem;" *ngIf="userRole === 'admin'">
+    <!-- Nombre total de produits -->
+    <div style="flex: 0 0 100%; max-width: 100%; margin-bottom: 1rem;">
+      <div class="card flex flex-column align-items-center">
+        <h5 class="text-left w-full">Le nombre total de produits:</h5>
+        <h1 class="text-center w-full" style="color: #E10209;">{{ productCount }}</h1>
+        <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: row; gap: 1rem;" *ngIf="userRole === 'admin'">
+    <!-- Produits les plus commandés et Nombre de clients / partenaires -->
+    <div style="flex: 0 0 50%; max-width: 50%;">
+      <div class="card">
+        <h5>Produits les plus commandés</h5>
+        <p-chart type="line" [data]="lineData" [options]="lineOptions"></p-chart>
+      </div>
+    </div>
+    <div style="flex: 0 0 50%; max-width: 50%;">
+      <div class="card flex flex-column align-items-center">
+        <h5 class="text-left w-full">Nombre de clients / partenaires</h5>
+        <p-chart type="pie" [data]="pieData" [options]="pieOptions"></p-chart>
+      </div>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-direction: row; gap: 1rem;" *ngIf="userRole === 'admin'">
+    <!-- Produits par services et Les budgets de nos clients -->
+    <div style="flex: 0 0 50%; max-width: 50%;">
+      <div class="card">
+        <h5>Produits par services</h5>
+        <p-chart type="bar" [data]="barData" [options]="barOptions"></p-chart>
+      </div>
+    </div>
+    <div style="flex: 0 0 50%; max-width: 50%;">
+      <div class="card">
+        <h5 class="text-left w-full">Les budgets de nos clients</h5>
+        <p-table [value]="clients" [paginator]="true" [rows]="5" responsiveLayout="scroll">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon></th>
+              <th pSortableColumn="budget">Budget <p-sortIcon field="budget"></p-sortIcon></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-client>
+            <tr>
+              <td>{{client.name}}</td>
+              <td>{{client.budget | currency:'USD'}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card flex flex-column align-items-center" *ngIf="userRole === 'client'">
+    <h5 class="text-left w-full">Doughnut Chart</h5>
+    <p-chart *ngIf="doughnutData" type="doughnut" [data]="doughnutData" [options]="doughnutOptions"></p-chart>
+  </div>
+</div>

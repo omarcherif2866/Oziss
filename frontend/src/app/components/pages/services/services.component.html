@@ -1,0 +1,152 @@
+<app-navbar-style-one></app-navbar-style-one>
+
+<!-- Page Title -->
+<div class="page-title-area">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="container">
+                <h2>Services</h2>
+            </div>
+        </div>
+    </div>
+    <div class="shape1"><img src="assets/img/shape11.png" alt="shape"></div>
+    <div class="shape2 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+    <div class="shape3"><img src="assets/img/shape3.png" alt="shape"></div>
+    <div class="shape4"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape5"><img src="assets/img/shape5.png" alt="shape"></div>
+    <div class="shape6 rotateme"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape7"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape8 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+</div>
+
+<!-- Services -->
+<div class="services-area-two ptb-80 bg-f9f6f6">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Services</h2>
+            <div class="bar"></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let service of services">
+                <div class="single-services-box">
+                    <div class="icon">
+                        <i-feather name="settings"></i-feather>
+                    </div>
+                    <h3><a [routerLink]="['/services-details', service._id]">{{ service.nom }}</a></h3>
+                    <p class="description">{{ service.description }}</p>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <!-- partenaire -->
+    <div class="ml-partner-area pt-0 ptb-80">
+        <div class="container">
+            <div class="partner-slides">
+                <owl-carousel-o [options]="partnerSlides">
+                    <ng-template carouselSlide>
+                        <div class="single-ml-partner">
+                            <a href="#" target="_blank">
+                                <img src="assets/img/partner-img/partner-1.png" alt="image">
+                                <img src="assets/img/partner-img/partner-hover1.png" alt="image">
+                            </a>
+                        </div>
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <div class="single-ml-partner">
+                            <a href="#" target="_blank">
+                                <img src="assets/img/partner-img/partner-2.png" alt="image">
+                                <img src="assets/img/partner-img/partner-hover2.png" alt="image">
+                            </a>
+                        </div>
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <div class="single-ml-partner">
+                            <a href="#" target="_blank">
+                                <img src="assets/img/partner-img/partner-3.png" alt="image">
+                                <img src="assets/img/partner-img/partner-hover3.png" alt="image">
+                            </a>
+                        </div>
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <div class="single-ml-partner">
+                            <a href="#" target="_blank">
+                                <img src="assets/img/partner-img/partner-10.png" alt="image">
+                                <img src="assets/img/partner-img/partner-hover10.png" alt="image">
+                            </a>
+                        </div>
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <div class="single-ml-partner">
+                            <a href="#" target="_blank">
+                                <img src="assets/img/partner-img/partner-5.png" alt="image">
+                                <img src="assets/img/partner-img/partner-hover5.png" alt="image">
+                            </a>
+                        </div>
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <div class="single-ml-partner">
+                            <a href="#" target="_blank">
+                                <img src="assets/img/partner-img/partner-6.png" alt="image">
+                                <img src="assets/img/partner-img/partner-hover6.png" alt="image">
+                            </a>
+                        </div>
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <div class="single-ml-partner">
+                            <a href="#" target="_blank">
+                                <img src="assets/img/partner-img/partner-7.png" alt="image">
+                                <img src="assets/img/partner-img/partner-hover7.png" alt="image">
+                            </a>
+                        </div>
+                    </ng-template>
+                </owl-carousel-o>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="funfacts-area ptb-80" style="
+    background-image: url('assets/img/map.png');
+    background-size: 70%; /* Ajuste la taille de l'image pour un effet de zoom out */
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 80px 0;
+    color: #fff; /* Optionnel: couleur du texte pour contraste */
+">
+    <div class="container">
+        <div class="section-title">
+            <h2>We always try to understand users expectation</h2>
+            <div class="bar"></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="180">00</span>K</h3>
+                    <p>Downloaded</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="20">00</span>K</h3>
+                    <p>Feedback</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="500">00</span>+</h3>
+                    <p>Workers</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="70">00</span>+</h3>
+                    <p>Contributors</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

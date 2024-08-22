@@ -1,0 +1,538 @@
+/*banner-css*/
+
+.funfacts-area {
+    position: relative;
+    z-index: 1;
+
+    .section-title {
+        h2 {
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 37px;
+        }
+    }
+    .map-bg {
+        position: absolute;
+        z-index: -1;
+        top: 120px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+.funfact {
+    text-align: center;
+
+    h3 {
+        color: var(--mainColor);
+        font-size: 32px;
+        margin-bottom: 7px;
+    }
+    p {
+        line-height: initial;
+    }
+}
+
+.text-danger {
+    color: red;
+    font-size: 0.875em;
+  }
+  
+
+.main-banner {
+    position: relative;
+    min-height: 100vh; /* Assurez-vous que le conteneur occupe toute la hauteur de la fenêtre */
+    z-index: 1;
+    background: {
+        position: right top;
+        repeat: no-repeat;
+    };
+}
+
+.main-banner .d-table {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.main-banner .d-table-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.main-banner .container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-banner .banner-form {
+    box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
+    background: var(--whiteColor);
+    padding: 50px 30px;
+    border-radius: 5px;
+}
+
+.main-banner form .form-control {
+    padding-left: 15px;
+}
+
+.main-banner form .btn {
+    width: 100%;
+    display: block;
+    transform: unset;
+    margin-top: 25px;
+}
+
+.hero-content h1 {
+    margin-bottom: 20px;
+    font-size: 45px;
+    font-weight: 500;
+}
+
+.hero-content p {
+    margin-bottom: 30px;
+}
+.card {
+    border: 1px  #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+  }
+  
+  .splitter-container {
+    display: flex; /* Affiche les splitters côte à côte */
+  }
+  
+  .splitter {
+    height: 300px;
+    flex: 1; /* Chaque splitter prend la même largeur */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.3s ease, background-color 0.3s ease; /* Ajoutez la transition pour la couleur de fond */
+  }
+  
+  .col {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .btn-link {
+    background: none;
+    border: none;
+    color: #000; /* Texte en noir */
+    text-decoration: none; /* Sans soulignement */
+    cursor: pointer;
+    padding: 0;
+    font-size: 20px; /* Texte plus grand */
+  }
+  
+  
+  
+  .btn-link:hover {
+    text-decoration: none; /* Assurez-vous que le texte reste sans soulignement même au survol */
+  }
+  
+  .btn-link:focus {
+    outline: none; /* Supprime le contour au focus */
+  }
+  
+  .hovered {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    background: var(--mainColor); /* Utilisez la variable pour la couleur de fond au survol */
+  }
+  
+  .btn-primary {
+    background: var(--gradientColor);
+    border: none; /* Supprimez la bordure si nécessaire */
+    color: white; /* Couleur du texte */
+    text-transform: uppercase; /* Met le texte en majuscules */
+    text-align: center;
+    display: inline-block;
+    border-radius: 5px; /* Ajustez le radius selon vos besoins */
+    transition: background 0.3s ease; /* Transition douce pour le hover */
+}
+
+@media only screen and (max-width: 767px) {
+    
+    .main-banner {
+        height: 100%;
+        background-position: center;
+        padding: {
+            top: 150px;
+            bottom: 80px;
+        };
+        .hero-content {
+            margin-bottom: 45px;
+            text-align: center;
+
+            h1 {
+                font-size: 25px;
+                line-height: 30px;
+                margin-bottom: 15px;
+            }
+        }
+        .banner-form {
+            padding: 30px 20px;
+            margin: 0 !important;
+        }
+    }
+
+    .boxes-area {
+        margin-top: 0;
+        padding-bottom: 20px;
+    }
+    .single-box {
+        margin-bottom: 30px;
+
+        h3 {
+            font-size: 17px;
+        }
+    }
+
+    .services-content {
+        .box {
+            margin-top: 20px;
+            padding: 14px 10px 11px;
+        }
+    }
+    .services-right-image {
+        text-align: center;
+        margin-top: 45px;
+        
+        img {
+            display: none;
+            position: relative;
+
+            &:last-child {
+                display: inline-block;
+            }
+        }
+        &.single-right-image {
+            img {
+                &.bg-image  {
+                    display: none;
+                }
+            }
+        }
+    }
+    .services-left-image {
+        text-align: center;
+        margin-bottom: 45px;
+
+        img {
+            display: none;
+            position: relative;
+
+            &:last-child {
+                display: inline-block;
+            }
+        }
+        &.single-left-image {
+            img {
+                &.bg-image {
+                    display: none;
+                }
+            }
+        }
+    }
+    .single-services-box {
+        h3 {
+            font-size: 17px;
+        }
+    }
+
+    .team-area {
+        padding-bottom: 20px;
+
+        .container-fluid {
+            padding: {
+                left: var(--bs-gutter-x, 0.75rem) !important;
+                right: var(--bs-gutter-x, 0.75rem) !important;
+            };
+        }
+    }
+    .single-team {
+        padding: {
+            top: 30px;
+            bottom: 30px;
+        }
+
+        .team-image {
+            padding: {
+                left: 20px;
+                right: 20px;
+            }
+        }
+        .team-content {
+            padding: {
+                left: 20px;
+                right: 20px;
+            }
+
+            .team-info {
+                margin: {
+                    right: 10px;
+                    left: 10px;
+                }
+
+                h3 {
+                    font-size: 17px;
+                }
+            }
+        }
+    }
+
+    .contact-cta-box {
+        text-align: center;
+        margin: 20px 0 0;
+        max-width: 100%;
+        padding: 30px 20px;
+
+        h3 {
+            font-size: 17px;
+        }
+        .btn {
+            position: relative;
+            right: 0;
+            top: 0;
+            margin-top: 15px;
+        }
+    }
+
+    .pricing-area {
+        padding-bottom: 20px;
+    }
+    .pricing-table {
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+
+        .pricing-header {
+            h3 {
+                font-size: 17px;
+            }
+        }
+        .price {
+            margin-bottom: 25px;
+
+            span {
+                font-size: 27px;
+            }
+        }
+    }
+
+    .feedback-slides {
+        .single-feedback {
+            text-align: center;
+            padding: {
+                top: 30px;
+                left: 20px;
+                right: 20px;
+                bottom: 30px;
+            }
+            .client-img {
+                margin-bottom: 20px;
+                position: relative;
+                left: 0;
+                top: 0;
+            }
+            h3 {
+                font-size: 17px;
+            }
+            p {
+                font-size: 14px;
+            }
+            &::before {
+                display: none;
+            }
+        }
+    }
+
+    .ready-to-talk {
+        padding: {
+            top: 50px;
+            bottom: 145px;
+        }
+
+        h3 {
+            font-size: 20px;
+        }
+        span {
+            display: block;
+            margin-top: 25px;
+        }
+    }
+
+    .partner-section {
+        h5 {
+            font-size: 17px;
+            line-height: 23px;
+        }
+        .partner-inner {
+            padding: {
+                left: 20px;
+                right: 20px;
+            }
+        }
+    }
+
+    .blog-area {
+        padding-bottom: 20px;
+
+        .widget-area {
+            margin-top: 10px;
+        }
+    }
+    .single-blog-post {
+        .blog-post-content {
+            h3 {
+                font-size: 17px;
+            }
+        }
+        .blog-image {
+            a {
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    
+    .team-area {
+        .container-fluid {
+            max-width: 540px;
+        }
+    }
+
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+
+    .main-banner {
+        height: 100%;
+        padding: {
+            top: 185px;
+            bottom: 165px;
+        }
+        .hero-content {
+            h1 {
+                font-size: 30px;
+                margin-bottom: 15px;
+            }
+        }
+        .banner-form {
+            padding: 50px;
+            margin: 45px 0 !important;
+        }
+    }
+
+    .boxes-area {
+        padding-bottom: 50px;
+        margin-top: -65px;
+    }
+    .single-box {
+        margin-bottom: 30px;
+    }
+
+    .services-right-image {
+        text-align: center;
+        margin-top: 45px;
+        
+        img {
+            display: none;
+            position: relative;
+
+            &:last-child {
+                display: block;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+            }
+        }
+        &.single-right-image {
+            img {
+                &.bg-image {
+                    display: none;
+                }
+            }
+        }
+    }
+    .services-left-image {
+        text-align: center;
+        margin-bottom: 45px;
+
+        img {
+            display: none;
+            position: relative;
+
+            &:last-child {
+                display: block;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+            }
+        }
+        &.single-left-image {
+            img {
+                &.bg-image {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .pricing-area {
+        padding-bottom: 50px;
+    }
+    .pricing-table {
+        margin-bottom: 30px;
+    }
+    
+    .team-area {
+        .container-fluid {
+            max-width: 720px;
+        }
+    }
+
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+
+    .main-banner {
+        .hero-content {
+            h1 {
+                font-size: 35px;
+            }
+        }
+    }
+
+    .services-left-image {
+        &.single-left-image {
+            img {
+                &:first-child {
+                    top: -30px;
+                }
+            }
+        }
+    }
+    .services-right-image {
+        &.single-right-image {
+            img {
+                &:first-child {
+                    top: -30px;
+                }
+            }
+        }
+    }
+
+}
+
+@media only screen and (min-width: 1550px) {
+
+}

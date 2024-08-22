@@ -1,0 +1,536 @@
+<app-navbar-style-one></app-navbar-style-one>
+
+<!-- Main Banner -->
+ <br><br>
+ <br><br>
+<div class="agency-portfolio-home-slides">
+    <owl-carousel-o [options]="homeSlides">
+        <ng-template carouselSlide *ngFor="let Content of agencyPortfolioMainBanner;">
+            <div class="agency-portfolio-main-banner" [ngStyle]="{'background-image': 'url(' + Content.bgImg + ')'}">
+                <div class="d-table">
+                    <div class="d-table-cell">
+                        <div class="container">
+                            <div class="portfolio-banner-content">
+                                <span class="sub-title">{{Content.subTitle}}</span>
+                                <h1>{{Content.title}}</h1>
+                                <p>{{Content.desc}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </owl-carousel-o>
+</div>
+<div class="repair-main-banner">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="repair-banner-content">
+                    <h1>Bienvenue a OZISS Cooperation Sarl</h1>
+                    <p>OZISS Cooperation Sarl est une entreprise de services informatiques fondée par des ingénieurs et des Auditeurs certifiés ISO 27001 dans le monde de l’informatique et de service
+                        Notre mission est d’assurer la disponibilité et l’évolution du système d’informations des organismes en proposant des...</p>
+                    <boutton routerLink="/" class="btn btn-primary">En Savoir Plus</boutton>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="repair-banner-image">
+                    <img src="assets/img/repair-banner-image/repair-banner-img.png" alt="image">
+                    <img src="assets/img/repair-banner-image/1.png" class="animate__animated animate__zoomIn" alt="image">
+                    <img src="assets/img/repair-banner-image/2.png" class="animate__animated animate__fadeInLeft" alt="image">
+                    <img src="assets/img/repair-banner-image/circle.png" class="rotateme" alt="image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Partner -->
+<div class="repair-partner-area bg-f9fafb">
+    <div class="container">
+        <div class="partner-slides">
+            <owl-carousel-o [options]="partnerSlides">
+                <ng-template carouselSlide>
+                    <div class="single-repair-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-1.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover1.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-repair-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-2.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover2.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-repair-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-3.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover3.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-repair-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-10.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover10.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-repair-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-5.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover5.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-repair-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-6.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover6.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-repair-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-7.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover7.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
+    </div>
+</div>
+
+<!-- About -->
+<div class="repair-about-area ptb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="repair-about-content">
+                    <span class="sub-title" >Pourquoi vous choisissez OZISS CORPORATION</span>
+                    <ul>
+                        <li><span><i-feather name="check"></i-feather> Professionnels expérimentés</span></li>
+                        <li><span><i-feather name="check"></i-feather> Compétences techniques expertes</span></li>
+                        <li><span><i-feather name="check"></i-feather> Excellente réputation</span></li>
+                        <li><span><i-feather name="check"></i-feather> Service amical</span></li>
+                        <li><span><i-feather name="check"></i-feather> Digne de confiance</span></li>
+                        <li><span><i-feather name="check"></i-feather> Diagnostic abordable</span></li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="repair-about-image">
+                    <img  class="animate__animated animate__fadeInDown" >
+                    <img src="assets/img/SLIDES_OZISS-04.png" class="animate__animated animate__zoomIn" alt="image">
+                    <img  class="animate__animated animate__fadeInUp" >
+                    <img src="assets/img/about-shape11.png" alt="image">
+                    <img src="assets/img/about-shape2.png" alt="image">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Services -->
+<div class="repair-services-area ptb-80 bg-f7fafd">
+    <div class="container">
+        <div class="section-title">
+            <h2>Nos Services</h2>
+            <div class="bar"></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-lg-4 col-sm-6 col-md-6" *ngFor="let service of services.slice(0, 3)">
+              <div class="single-ml-services-box">
+                <div class="image">
+                  <img [src]="getImageUrl(service.image)" alt="image">
+                </div>
+                <h3>{{ service.nom }}</h3>
+                <p class="description">{{ service.description }}</p>
+                <a [routerLink]="['/services-details', service._id]"><i-feather name="arrow-right"></i-feather></a>    
+              </div>
+            </div>
+        </div> -->
+          
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let service of services.slice(0, 3)">
+                <div class="single-repair-services" [style.backgroundImage]="'url(' + getImageUrl(service.image) + ')'">
+                    <h3>{{ service.nom }}</h3>
+                    <p class="description">{{ service.description }}</p>
+                    <a [routerLink]="['/services-details', service._id]"><i-feather name="arrow-right"></i-feather></a>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-4">
+            <div class="col-12 text-center">
+                <a routerLink="/services" class="btn btn-primary">Consulter nos Services</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- CTA -->
+<div class="repair-cta-area bg-0f054b">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="cta-repair-content">
+                    <h3>Nous vous aiderons à remettre votre projet sur le marché </h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel.</p>
+                    <a routerLink="/" class="btn btn-primary">Contact Us</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+               <div class="cta-repair-img">
+                   <img src="assets/img/SLIDES_OZISS-02.png" alt="image">
+               </div>
+            </div>
+        </div>
+    </div>
+    <div class="circle-box"><img src="assets/img/circle.png" alt="image"></div>
+    <div class="cta-shape"><img src="assets/img/cta-shape.png" alt="image"></div>
+</div>
+
+<!-- Funfacts -->
+<div class="funfacts-area ptb-80">
+    <div class="container">
+        <div class="section-title">
+            <h2>We always try to understand users expectation</h2>
+            <div class="bar"></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="180">00</span>K</h3>
+                    <p>Downloaded</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="20">00</span>K</h3>
+                    <p>Feedback</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="500">00</span>+</h3>
+                    <p>Workers</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="70">00</span>+</h3>
+                    <p>Contributors</p>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="contact-cta-box">
+            <h3>Have any question about us?</h3>
+            <p>Don't hesitate to contact us</p>
+            <a routerLink="/contact" class="btn btn-primary">Contact Us</a>
+        </div> -->
+        <div class="map-bg">
+            <img src="assets/img/map.png" alt="map">
+        </div>
+    </div>
+</div>
+
+<!-- Team -->
+<!-- <div class="team-area repair-team-area ptb-80 bg-f9f6f6">
+    <div class="container">
+        <div class="section-title">
+            <h2>Our Awesome Team</h2>
+            <div class="bar"></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-team">
+                    <div class="team-image">
+                        <img src="assets/img/repair-team-image/1.jpg" alt="image">
+                    </div>
+                    <div class="team-content">
+                        <div class="team-info">
+                            <h3>Josh Buttler</h3>
+                            <span>CEO & Founder</span>
+                        </div>
+                        <ul>
+                            <li><a href="#" target="_blank"><i-feather name="facebook"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="twitter"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="linkedin"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="gitlab"></i-feather></a></li>
+                        </ul>
+                        <p>Risus commodo viverra maecenas accumsan lacus vel facilisis quis ipsum. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-team">
+                    <div class="team-image">
+                        <img src="assets/img/repair-team-image/2.jpg" alt="image">
+                    </div>
+                    <div class="team-content">
+                        <div class="team-info">
+                            <h3>Alex Maxwel</h3>
+                            <span>Marketing Manager</span>
+                        </div>
+                        <ul>
+                            <li><a href="#" target="_blank"><i-feather name="facebook"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="twitter"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="linkedin"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="gitlab"></i-feather></a></li>
+                        </ul>
+                        <p>Risus commodo viverra maecenas accumsan lacus vel facilisis quis ipsum. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-team">
+                    <div class="team-image">
+                        <img src="assets/img/repair-team-image/3.jpg" alt="image">
+                    </div>
+                    <div class="team-content">
+                        <div class="team-info">
+                            <h3>Janny Cotller</h3>
+                            <span>Web Developer</span>
+                        </div>
+                        <ul>
+                            <li><a href="#" target="_blank"><i-feather name="facebook"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="twitter"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="linkedin"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="gitlab"></i-feather></a></li>
+                        </ul>
+                        <p>Risus commodo viverra maecenas accumsan lacus vel facilisis quis ipsum. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-team">
+                    <div class="team-image">
+                        <img src="assets/img/repair-team-image/4.jpg" alt="image">
+                    </div>
+                    <div class="team-content">
+                        <div class="team-info">
+                            <h3>Jason Statham</h3>
+                            <span>UX/UI Designer</span>
+                        </div>
+                        <ul>
+                            <li><a href="#" target="_blank"><i-feather name="facebook"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="twitter"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="linkedin"></i-feather></a></li>
+                            <li><a href="#" target="_blank"><i-feather name="gitlab"></i-feather></a></li>
+                        </ul>
+                        <p>Risus commodo viverra maecenas accumsan lacus vel facilisis quis ipsum. </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Feedback -->
+<div class="feedback-area ptb-80 bg-f7fafd">
+    <div class="container">
+        <div class="section-title">
+            <h2>Temoiniages</h2>
+            <div class="bar"></div>
+            <p>Nous vous remercions pour tous vos super témoignages. Il y a des centaines de nos clients satisfaits.
+                Voyons ce que les autres disent de OZISS Cooperation spécialiser.</p>
+        </div>
+        <div class="feedback-slides">
+            <owl-carousel-o [options]="feedbackSlides">
+                <ng-template carouselSlide>
+                    <div class="single-repair-feedback">
+                        <div class="client-img">
+                            <img src="assets/img/client-image/1.jpg" alt="image">
+                            <h3>John Lucy</h3>
+                            <span>Web Developer</span>
+                        </div>
+                        <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-repair-feedback">
+                        <div class="client-img">
+                            <img src="assets/img/client-image/2.jpg" alt="image">
+                            <h3>John Smith</h3>
+                            <span>Web Developer</span>
+                        </div>
+                        <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-repair-feedback">
+                        <div class="client-img">
+                            <img src="assets/img/client-image/3.jpg" alt="image">
+                            <h3>Maxwel Warner</h3>
+                            <span>Web Developer</span>
+                        </div>
+                        <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-repair-feedback">
+                        <div class="client-img">
+                            <img src="assets/img/client-image/4.jpg" alt="image">
+                            <h3>Ross Taylor</h3>
+                            <span>Web Developer</span>
+                        </div>
+                        <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-repair-feedback">
+                        <div class="client-img">
+                            <img src="assets/img/client-image/5.jpg" alt="image">
+                            <h3>James Anderson</h3>
+                            <span>Web Developer</span>
+                        </div>
+                        <p>Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
+    </div>
+    <div class="shape1"><img src="assets/img/shape11.png" alt="shape"></div>
+    <div class="shape2 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+    <div class="shape4"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape5"><img src="assets/img/shape5.png" alt="shape"></div>
+    <div class="shape6 rotateme"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape7"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape8 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+</div>
+
+<!-- Why Choose Us -->
+<div class="repair-why-choose-us ptb-80 pb-0">
+    <div class="container">
+        <div class="section-title">
+            <h2>Why We Are Best From Others</h2>
+            <div class="bar"></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-repair-box">
+                    <div class="icon">
+                        <i class="flaticon-handshake"></i>
+                    </div>
+                    <h3>Quick Repair Process</h3>
+                    <p>Lorem ipsum dolor sit amet elit, adipiscing, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.</p>
+                    <a routerLink="/"><i-feather name="arrow-right"></i-feather></a>
+                    <div class="back-icon">
+                        <i class="flaticon-handshake"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-repair-box">
+                    <div class="icon">
+                        <i class="flaticon-repair"></i>
+                    </div>
+                    <h3>Free Diagnostics</h3>
+                    <p>Lorem ipsum dolor sit amet elit, adipiscing, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.</p>
+                    <a routerLink="/"><i-feather name="arrow-right"></i-feather></a>
+                    <div class="back-icon">
+                        <i class="flaticon-repair"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="single-repair-box">
+                    <div class="icon">
+                        <i class="flaticon-delivery-truck"></i>
+                    </div>
+                    <h3>Fast Delivery</h3>
+                    <p>Lorem ipsum dolor sit amet elit, adipiscing, sed do eiusmod tempor incididunt ut labore dolore magna aliqua.</p>
+                    <a routerLink="/"><i-feather name="arrow-right"></i-feather></a>
+                    <div class="back-icon">
+                        <i class="flaticon-delivery-truck"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Blog -->
+<!-- <div class="blog-area ptb-80">
+    <div class="container">
+        <div class="section-title">
+            <h2>The News from Our Blog</h2>
+            <div class="bar"></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6">
+                <div class="single-blog-post">
+                    <div class="blog-image">
+                        <a routerLink="/blog-details">
+                            <img src="assets/img/blog-image/1.jpg" alt="image">
+                        </a>
+                        <div class="date">
+                            <i-feather name="calendar"></i-feather> March 15, 2024
+                        </div>
+                    </div>
+                    <div class="blog-post-content">
+                        <h3><a routerLink="/blog-details">The security risks of changing package owners</a></h3>
+                        <span>by <a routerLink="/blog-grid">Admin</a></span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.</p>
+                        <a routerLink="/blog-details" class="read-more-btn">Read More <i-feather name="arrow-right"></i-feather></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single-blog-post">
+                    <div class="blog-image">
+                        <a routerLink="/blog-details">
+                            <img src="assets/img/blog-image/2.jpg" alt="image">
+                        </a>
+                        <div class="date">
+                            <i-feather name="calendar"></i-feather> March 17, 2024
+                        </div>
+                    </div>
+                    <div class="blog-post-content">
+                        <h3><a routerLink="/blog-details">Tips to Protecting Your Business and Family</a></h3>
+                        <span>by <a routerLink="/blog-grid">Smith</a></span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.</p>
+                        <a routerLink="/blog-details" class="read-more-btn">Read More <i-feather name="arrow-right"></i-feather></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single-blog-post">
+                    <div class="blog-image">
+                        <a routerLink="/blog-details">
+                            <img src="assets/img/blog-image/3.jpg" alt="image">
+                        </a>
+                        <div class="date">
+                            <i-feather name="calendar"></i-feather> March 19, 2024
+                        </div>
+                    </div>
+                    <div class="blog-post-content">
+                        <h3><a routerLink="/blog-details">Protect Your Workplace from Cyber Attacks</a></h3>
+                        <span>by <a routerLink="/blog-grid">John</a></span>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.</p>
+                        <a routerLink="/blog-details" class="read-more-btn">Read More <i-feather name="arrow-right"></i-feather></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->

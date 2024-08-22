@@ -1,0 +1,150 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajouter un service" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    </div>
+                </ng-template>
+
+                <!-- <ng-template pTemplate="right">
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template> -->
+            </p-toolbar>
+
+
+
+
+            <p-table #dt [value]="services" [columns]="cols" responsiveLayout="scroll" [rows]="5" [globalFilterFields]="['nom']" [paginator]="true" [rowsPerPageOptions]="[5,10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedService" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Manage services</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <!-- <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th> -->
+                        <th>Image</th>
+                        <th pSortableColumn="name">Nom <p-sortIcon field="name"></p-sortIcon></th>
+                        <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+                        <th pSortableColumn="subDesc">Sous Description <p-sortIcon field="subDesc"></p-sortIcon></th>
+
+                        <th>Action</th>
+
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-service>
+                    <tr>
+                        <!-- <td>
+                            <p-tableCheckbox [value]="activite"></p-tableCheckbox>
+                        </td> -->
+
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Image</span>
+                            <img [src]="getImageUrl(service.image)" [alt]="service.image" width="100" class="shadow-4" />
+                          </td>          
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Nom</span>
+                            {{service.nom}}
+                        </td>                
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Description</span>
+                            {{service.description}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Sous-descriptions</span>
+                            <ul>
+                                <li *ngFor="let desc of service.subDesc">{{ desc }}</li>
+                            </ul>
+                        </td>
+                          
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(service)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(service)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+
+
+
+
+        <p-dialog [(visible)]="serviceDialog" [style]="{width: '450px'}" header="Service Détails" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <form [formGroup]="serviceForm" (ngSubmit)="saveService()">
+                    <div class="field">
+                        <label for="nom">Nom</label>
+                        <input type="text" pInputText id="nom" formControlName="nom" required autofocus [ngClass]="{'ng-invalid ng-dirty': submitted && serviceForm.get('nom')!.invalid}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && serviceForm.get('nom')!.invalid">Nom est requis.</small>
+                    </div>
+                    <div class="field">
+                        <label for="description">Description</label>
+                        <textarea id="description" pInputTextarea formControlName="description" required rows="3" cols="20"></textarea>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && serviceForm.get('description')!.invalid">Description est requise.</small>
+                    </div>
+                    <div class="field">
+                        <label for="image">Image</label>
+                        <p-fileUpload mode="basic" name="image" accept="image/*" maxFileSize="1000000" (onSelect)="onFileSelected($event)" label="Choisir une image" chooseLabel="Choisir une image"></p-fileUpload>
+                    </div>
+                    <div class="field">
+                        <label for="subDesc">Sous-descriptions</label>
+                        <ng-container formArrayName="subdesc">
+                            <div *ngFor="let control of subdesc.controls; let i = index" [formGroupName]="i" style="display: flex; align-items: center;">
+                                <input type="text" pInputText [formControl]="toFormControl(control)" placeholder="Sous-description {{i + 1}}" style="flex-grow: 1; margin-right: 0.5em;" maxlength="100" />
+                                <small *ngIf="submitted && control.invalid">Sous-description est requise.</small>
+                                <button type="button" pButton icon="pi pi-trash" class="p-button-rounded p-button-danger" (click)="removeSubDesc(i)" style="width: 2em; height: 2em;"></button>
+                            </div>
+                        </ng-container>
+                        <button type="button" pButton icon="pi pi-plus" (click)="addSubDesc()" label="Ajouter une sous-description" style="margin-top: 1em; width: 200px;"></button>
+                    </div>
+                    
+
+
+
+                    
+                </form>
+            </ng-template>
+            
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple [label]="actionLabel" icon="pi pi-check" class="p-button-text" (click)="saveService()"></button>
+            </ng-template>
+        </p-dialog>
+        
+        
+        
+
+        
+        
+        
+        
+
+        <p-dialog [(visible)]="deleteServiceDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+              <span *ngIf="service">Vous voulez supprimer ce service ?</span>
+            </div>
+            <ng-template pTemplate="footer">
+              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteServiceDialog = false"></button>
+              <!-- <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button> -->
+            </ng-template>
+        </p-dialog>
+
+
+    </div>
+</div>

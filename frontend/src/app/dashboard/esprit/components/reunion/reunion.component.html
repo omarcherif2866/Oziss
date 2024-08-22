@@ -1,0 +1,217 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajouter une nouvelle reunion" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        <button pButton pRipple label="Afficher le calendrier" icon="pi pi-calendar" class="p-button-info" (click)="toggleCalendar()"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <div *ngIf="showCalendar" class="calendar-container">
+                <button (click)="toggleCalendar()" class="close-button">
+                  <i class="pi pi-times"></i> <!-- Icône de croix -->
+                </button>
+                <full-calendar [options]="calendarOptions" class="custom-calendar"></full-calendar>
+              </div>
+
+            <p-table #dt [value]="reunions" [columns]="cols" responsiveLayout="scroll" [rows]="5" [globalFilterFields]="['nom']" [paginator]="true" [rowsPerPageOptions]="[5,10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [(selection)]="selectedReunions" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0" >Gérer les reunions</h5>
+                        <h5 class="m-0" >Nos reunions</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Rechercher..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="nom">Nom <p-sortIcon field="nom"></p-sortIcon></th>
+                        <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+                        <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon></th>
+                        <th pSortableColumn="heureDebut">Heure de Debut <p-sortIcon field="heureDebut"></p-sortIcon></th>
+                        <th pSortableColumn="heureFin">Heure de Fin <p-sortIcon field="heureFin"></p-sortIcon></th>
+                        <th pSortableColumn="logiciel">logiciel <p-sortIcon field="logiciel"></p-sortIcon></th>
+                        <th pSortableColumn="deuxiemeMembre" *ngIf="getUserRole() === 'partner'">deuxiemeMembre <p-sortIcon field="deuxiemeMembre"></p-sortIcon></th>
+                        <th pSortableColumn="createur" *ngIf="getUserRole() === 'admin'">createur <p-sortIcon field="createur"></p-sortIcon></th>
+                        <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
+                        <th *ngIf="getUserRole() === 'admin'">Modifier le status de la reunion <p-sortIcon ></p-sortIcon></th>
+
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-reunion>
+                    <tr>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Nom</span>
+                            {{reunion.nom}}
+                        </td>
+
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Description</span>
+                            {{reunion.description}}
+                        </td>
+
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">date</span>
+                            {{reunion.date}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">heureDebut</span>
+                            {{reunion.heureDebut}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">heureFin</span>
+                            {{reunion.heureFin}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">logiciel</span>
+                            {{reunion.logiciel}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;" *ngIf="getUserRole() === 'partner'">
+                            <span class="p-column-title">deuxiemeMembre</span>
+                            {{reunion.deuxiemeMembre}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;" *ngIf="getUserRole() === 'admin'">
+                            <span class="p-column-title">createur</span>
+                            <strong>Email:</strong>  {{ reunion.createur.email}}
+                            <strong>Nom:</strong> {{ reunion.createur.nom}}
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Status</span>
+                            <span [ngClass]="{
+                                'status-pending': reunion.status === 'En attente',
+                                'status-confirmed': reunion.status === 'Confirmée',
+                                'status-rejected': reunion.status === 'Refusée'
+                            }">
+                                {{reunion.status}}
+                            </span>
+                        </td>
+                        
+                        <td *ngIf="getUserRole() === 'admin'">
+                            <span class="p-column-title">Modifier le statut</span>
+                            <p-dropdown [options]="statusOptions" [(ngModel)]="selectedStatuses[reunion._id]" optionLabel="label"
+                                        optionValue="value" (onChange)="onStatusChange(reunion, $event)" appendTo="body"></p-dropdown>
+                        </td>
+                        <td>
+                            <div class="flex" >
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editReunion(reunion)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteReunion(reunion)"></button>
+                            </div>
+
+                              
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="reunionDialog" [style]="{width: '450px'}" header="Détails de la réunion" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <form [formGroup]="reunionForm">
+                    <div class="field">
+                        <label for="nom">Nom</label>
+                        <input type="text" pInputText id="nom" formControlName="nom" required autofocus />
+                        <small *ngIf="submitted && reunionForm.get('nom')?.invalid" class="ng-dirty ng-invalid">Nom est requis.</small>
+                    </div>
+                    <div class="field">
+                        <label for="description">Description</label>
+                        <textarea id="description" pInputTextarea formControlName="description" rows="3" cols="20"></textarea>
+                    </div>
+                    <div class="field">
+                        <label for="date">Date</label>
+                        <p-calendar formControlName="date" [showIcon]="true" inputId="icon" required></p-calendar>
+                        <small *ngIf="submitted && reunionForm.get('date')?.invalid" class="ng-dirty ng-invalid">Date est requise.</small>
+                    </div>
+                    <!-- <div class="field">
+                        <label for="heureDebut">Heure de Début</label>
+                        <input type="text" pInputText id="heureDebut" formControlName="heureDebut" required />
+                        <small *ngIf="submitted && reunionForm.get('heureDebut')?.invalid" class="ng-dirty ng-invalid">Heure de début est requise.</small>
+                    </div>
+                    <div class="field">
+                        <label for="heureFin">Heure de Fin</label>
+                        <input type="text" pInputText id="heureFin" formControlName="heureFin" required />
+                        <small *ngIf="submitted && reunionForm.get('heureFin')?.invalid" class="ng-dirty ng-invalid">Heure de fin est requise.</small>
+                    </div> -->
+                    <div [formGroup]="reunionForm">
+                        <div class="field">
+                            <label for="heureDebut">Heure de Début</label>
+                            <p-calendar 
+                                inputId="heureDebut" 
+                                formControlName="heureDebut" 
+                                [timeOnly]="true"
+                                hourFormat="24"
+                                [showSeconds]="false"
+                                [showButtonBar]="false"
+                                [appendTo]="'body'"
+                                [placeholder]="'Sélectionner l’heure de début'"
+                                required
+                            />
+                            <small *ngIf="submitted && reunionForm.get('heureDebut')?.invalid" class="ng-dirty ng-invalid">Heure de début est requise.</small>
+                        </div>
+                    
+                        <div class="field">
+                            <label for="heureFin">Heure de Fin</label>
+                            <p-calendar 
+                                inputId="heureFin" 
+                                formControlName="heureFin"
+                                [timeOnly]="true"
+                                hourFormat="24"
+                                [showSeconds]="false"
+                                [showButtonBar]="false"
+                                [appendTo]="'body'"
+                                [placeholder]="'Sélectionner l’heure de fin'"
+                                required
+                            />
+                            <small *ngIf="submitted && reunionForm.get('heureFin')?.invalid" class="ng-dirty ng-invalid">Heure de fin est requise.</small>
+                        </div>
+                    </div>
+                    
+                    <div class="field">
+                        <label>Logiciel</label>
+                        <div class="software-options">
+                            <div class="software-option">
+                                <img src="assets/img/teams.png" alt="Teams" class="software-image" />
+                                <p-radioButton value="teams" formControlName="logiciel" label="Teams"></p-radioButton>
+                            </div>
+                            <div class="software-option">
+                                <img src="assets/img/meet.png" alt="Meet" class="software-image-meet" />
+                                <p-radioButton value="meet" formControlName="logiciel" label="Meet"></p-radioButton>
+                            </div>
+                            <div class="software-option">
+                                <img src="assets/img/zoom.png" alt="Zoom" class="software-image" />
+                                <p-radioButton value="zoom" formControlName="logiciel" label="Zoom"></p-radioButton>
+                            </div>
+                        </div>
+                    </div>
+                
+
+                </form>
+                
+            </ng-template>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple [label]="actionLabel" icon="pi pi-check" class="p-button-text" (click)="saveReunion()"></button>
+            </ng-template>
+        </p-dialog>
+        
+          
+          
+          <p-dialog [(visible)]="deleteReunionDialog" header="Confirmation" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+              <span *ngIf="reunion">Voulez-vous supprimer cette reunion ?</span>
+            </div>
+            <ng-template pTemplate="footer">
+              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteReunionDialog = false"></button>
+              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
+

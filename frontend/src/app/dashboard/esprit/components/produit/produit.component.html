@@ -1,0 +1,127 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2" *ngIf="getUserRole() === 'admin'">
+                        <button pButton pRipple label="Ajouter un produit" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="produits" [columns]="cols" responsiveLayout="scroll" [rows]="5" [globalFilterFields]="['nom']" [paginator]="true" [rowsPerPageOptions]="[5,10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [(selection)]="selectedProduits" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0" *ngIf="getUserRole() === 'admin'">Gérer les produits</h5>
+                        <h5 class="m-0" >Nos produits</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Rechercher..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="nom">Nom <p-sortIcon field="nom"></p-sortIcon></th>
+                        <th>Image</th>
+                        <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
+                        <th pSortableColumn="services">Services <p-sortIcon field="services"></p-sortIcon></th>
+                        <th>Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-produit>
+                    <tr>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Nom</span>
+                            {{produit.nom}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Image</span>
+                            <img [src]="getImageUrl(produit.image)" [alt]="produit.image" width="100" class="shadow-4" />
+                        </td>
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">Description</span>
+                            {{produit.description}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Services</span>
+                            {{ getServiceNom(produit.service) }}
+                        </td>                        
+                        <td>
+                            <div class="flex" *ngIf="getUserRole() === 'admin'">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(produit)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(produit)"></button>
+                            </div>
+                            <div *ngIf="getUserRole() === 'client'">
+                                <button pButton pRipple icon="pi pi-cart-plus" class="p-button-rounded p-button-success mr-2" (click)="openProductDialog(produit)"></button>
+                              </div> 
+                              
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="produitDialog" [style]="{width: '450px'}" header="Détails du Produit" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+
+                    <div *ngIf="produit._id && getUserRole() === 'client'">
+                        <img [src]="produitImageUrl" alt="Image du produit">
+                    </div>
+
+                    <label for="nom">Nom</label>
+                    <input type="text" pInputText id="nom" [(ngModel)]="produit.nom" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !produit.nom}" 
+                    [disabled]="getUserRole() === 'client'"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !produit.nom">Nom est requis.</small>
+                </div>
+                <div class="field">
+                    <label for="description">Description</label>
+                    <textarea id="description" pInputTextarea [(ngModel)]="produit.description" required rows="3" cols="20" [disabled]="getUserRole() === 'client'"></textarea>
+                </div>
+                <div class="field" *ngIf="getUserRole() === 'admin'">
+                    <label for="image">Image</label>
+                    <p-fileUpload mode="basic" name="image" accept="image/*" maxFileSize="1000000" (onSelect)="onFileSelected($event)" label="Choisir une image" chooseLabel="Choisir une image" ></p-fileUpload>
+                </div>
+
+                <div class="field">
+                    <label for="service">Service</label>
+                    <p-dropdown [options]="services" [(ngModel)]="selectedService" optionLabel="nom" placeholder="Sélectionner un service" appendTo="body" [disabled]="getUserRole() === 'client'"></p-dropdown>
+                </div>
+
+  
+                <div class="field" *ngIf="produit._id && getUserRole() === 'client'">
+                    <label for="besoin">Besoin</label>
+                    <textarea pInputTextarea id="besoin" [(ngModel)]="order.besoin" required></textarea>
+                </div>
+                <div class="field" *ngIf="produit._id && getUserRole() === 'client'">
+                    <label for="pdf">Document PDF</label>
+                    <p-fileUpload mode="basic" name="pdf" accept=".pdf" maxFileSize="1000000" multiple label="Importer un fichier PDF" chooseLabel="Importer un fichier PDF" (onSelect)="onSelectPDF($event)"></p-fileUpload>
+                </div>
+                
+                             
+                
+            </ng-template>
+            
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button *ngIf="getUserRole() === 'admin'" pButton pRipple [label]="actionLabel" icon="pi pi-check" class="p-button-text" (click)="saveProduct()"></button>
+                <button *ngIf="getUserRole() === 'client'" pButton pRipple [label]="actionLabel" icon="pi pi-check" class="p-button-text" (click)="saveOrder()"></button>
+            </ng-template>
+        </p-dialog>
+          
+          
+          <p-dialog [(visible)]="deleteProduitDialog" header="Confirmation" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+              <span *ngIf="produit">Voulez-vous supprimer ce produit ?</span>
+            </div>
+            <ng-template pTemplate="footer">
+              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteProduitDialog = false"></button>
+              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
+

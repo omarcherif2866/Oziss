@@ -1,0 +1,42 @@
+<app-navbar-style-one></app-navbar-style-one>
+
+<!-- Page Title -->
+<div class="page-title-area">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="container">
+                <h2>Products</h2>
+            </div>
+        </div>
+    </div>
+    <div class="shape1"><img src="assets/img/shape11.png" alt="shape"></div>
+    <div class="shape2 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+    <div class="shape3"><img src="assets/img/shape3.png" alt="shape"></div>
+    <div class="shape4"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape5"><img src="assets/img/shape5.png" alt="shape"></div>
+    <div class="shape6 rotateme"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape7"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape8 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+</div>
+
+<!-- Products -->
+<div class="shop-area ptb-80">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6" *ngFor="let produit of produits">
+                <div class="single-products" [routerLink]="['/products-details', produit._id]">
+                    <div class="products-image">
+                        <img *ngIf="produit.image" [src]="getImageUrl(produit.image)" alt="image">
+                    </div>
+                </div>
+                <div class="single-products">
+                    <div class="products-content">
+                        <h3><a>{{ produit.nom }}</a></h3>
+                        <a (click)="addToCart(produit)" class="add-to-cart-btn">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

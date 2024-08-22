@@ -1,0 +1,76 @@
+.p-button-rounded {
+    border-radius: 50% !important; /* Assurez-vous que les styles sont forcés */
+  }
+  .software-options {
+    display: flex;
+    flex-direction: column; /* Aligne les éléments en colonne */
+    gap: 1rem; /* Espacement entre les éléments */
+}
+
+.software-option {
+  display: flex;
+  align-items: center; /* Aligne verticalement l'image et la case à cocher */
+  position: relative; /* Assure que les éléments sont positionnés correctement */
+}
+
+
+.software-options label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.software-image {
+    width: 60px; /* Ajustez la taille de l'image selon vos besoins */
+    height: 50px;
+    margin-right: 0.5rem;
+}
+
+.software-image-meet{
+  width: 80px; /* Ajustez la taille de l'image selon vos besoins */
+  height: 80px;
+  margin-right: 0.5rem;
+}
+.p-checkbox {
+  z-index: 1; /* Assure que la case à cocher est au-dessus */
+}
+
+/* styles.css ou styles du composant */
+
+.status-pending {
+  color: orange;
+}
+
+.status-confirmed {
+  color: green;
+}
+
+.status-rejected {
+  color: red;
+}
+
+
+.calendar-container {
+  position: relative; // Position relative pour le bouton de fermeture
+}
+
+.custom-calendar {
+  max-width: 800px; /* Ajustez la largeur selon vos besoins */
+  margin: 0 auto; /* Centrer le calendrier */
+}
+
+.close-button {
+  position: absolute;
+  top: 10px; // Ajustez la position selon vos préférences
+  right: 10px; // Ajustez la position selon vos préférences
+  background: none;
+  border: none;
+  font-size: 24px; // Taille de l'icône
+  color: #000; // Couleur de l'icône (changez si nécessaire)
+  cursor: pointer;
+  z-index: 10; // Assurez-vous que le bouton est au-dessus du calendrier
+}
+
+.close-button:hover {
+  color: #f00; // Couleur de survol de l'icône
+}

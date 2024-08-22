@@ -1,0 +1,73 @@
+<p-messages [value]="messages" class="messages-container"></p-messages>
+
+
+
+<div class="w-full surface-card py-8 px-5 sm:px-8 large-card" style="border-radius: 53px;">
+    <form class="form-body" #f="ngForm" (ngSubmit)="onSubmit()">
+        <div>
+
+          <div class="field" style="text-align: center;">  
+            <img *ngIf="form.image" 
+                 [src]="getImageUrl(form.image)" 
+                 alt="User Image" 
+                 class="user-photo"
+                 style="width: 200px; height: 200px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto;">
+          </div>
+          
+          
+
+        <div class="field">
+            <label for="image">Image</label>
+            <p-fileUpload mode="basic" name="image" accept="image/*" maxFileSize="1000000" (onSelect)="onFileSelected($event)" label="Choisir une image" chooseLabel="Choisir une image" ></p-fileUpload>
+        </div>
+  
+        <br><br>
+  
+
+  
+        <label for="inputNom" class="block text-900 text-xl font-medium mb-2">Last Name</label>
+        <input type="text" id="inputNom" placeholder="Enter your Last Name" [(ngModel)]="form.nom" name="nom" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem" required>
+  
+  
+
+  
+        <label for="inputEmail" class="block text-900 text-xl font-medium mb-2">Email</label>
+        <input type="email" id="inputEmail" placeholder="Enter Email Address" [(ngModel)]="form.email" name="email" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem" required>
+  
+  
+        <label for="inputphoneNumber" class="block text-900 text-xl font-medium mb-2">Phone Number</label>
+        <input type="tel" id="inputTel" placeholder="Enter Telephone Number" [(ngModel)]="form.phoneNumber" name="phoneNumber" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem" required>
+  
+  
+
+        <!-- Champs spécifiques aux clients -->
+        <div *ngIf="getUserRole() === 'client'">
+          <label for="inputServicesNeeded" class="block text-900 text-xl font-medium mb-2">Services Needed</label>
+          <input type="text" id="inputServicesNeeded" placeholder="Enter Services Needed" [(ngModel)]="form.servicesNeeded" name="servicesNeeded" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem">
+  
+          <label for="inputMainObjectives" class="block text-900 text-xl font-medium mb-2">Main Objectives</label>
+          <input type="text" id="inputMainObjectives" placeholder="Enter Main Objectives" [(ngModel)]="form.mainObjectives" name="mainObjectives" pInputTextarea class="w-full md:w-30rem mb-5" style="padding: 1rem">
+  
+          <label for="inputEstimatedBudget" class="block text-900 text-xl font-medium mb-2">Estimated Budget</label>
+          <input type="number" id="inputEstimatedBudget" placeholder="Enter Estimated Budget" [(ngModel)]="form.estimatedBudget" name="estimatedBudget" pInputNumber class="w-full md:w-30rem mb-5" style="padding: 1rem">
+        </div>
+  
+        <!-- Champs spécifiques aux partenaires -->
+        <div *ngIf="getUserRole() === 'partner'">
+          <label for="inputPartnershipType" class="block text-900 text-xl font-medium mb-2">Partnership Type</label>
+          <input type="text" id="inputPartnershipType" placeholder="Enter Partnership Type" [(ngModel)]="form.partnershipType" name="partnershipType" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem">
+  
+          <label for="inputPartnershipObjectives" class="block text-900 text-xl font-medium mb-2">Partnership Objectives</label>
+          <textarea id="inputPartnershipObjectives" placeholder="Enter Partnership Objectives" [(ngModel)]="form.partnershipObjectives" name="partnershipObjectives" pInputTextarea class="w-full md:w-30rem mb-5" style="padding: 1rem"></textarea>
+  
+          <label for="inputAvailableResources" class="block text-900 text-xl font-medium mb-2">Available Resources</label>
+          <input type="text" id="inputAvailableResources" placeholder="Enter Available Resources" [(ngModel)]="form.availableResources" name="availableResources" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem">
+        </div>
+  
+        <br>
+        <div class="d-grid">
+          <button pButton pRipple label="Modifier Profile" class="w-full p-3 text-xl"></button>
+        </div>
+      </div>
+    </form>
+  </div>

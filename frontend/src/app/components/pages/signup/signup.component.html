@@ -1,0 +1,320 @@
+<app-navbar-style-one></app-navbar-style-one>
+<br><br><br><br><br>
+<div *ngIf="!showClientForm && !showPartnerForm">
+    <div class="card">
+      <div class="splitter-container">
+        <div class="splitter" [ngClass]="{'hovered': hoveredElement === 'client'}">
+          <div class="col flex align-items-center justify-content-center">
+            <button type="button" class="btn-link" (mouseenter)="onHover('client')" (mouseleave)="onHover(null)" (click)="showClientForm = true">CLIENT</button>
+          </div>
+        </div>
+        <div class="splitter" [ngClass]="{'hovered': hoveredElement === 'partner'}">
+          <div class="col flex align-items-center justify-content-center">
+            <button type="button" class="btn-link" (mouseenter)="onHover('partner')" (mouseleave)="onHover(null)" (click)="showPartnerForm = true">PARTENAIRE</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+  <div *ngIf="showClientForm">
+    <div class="main-banner">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-12">
+                            <div class="banner-form ml-3">
+                                <form (submit)="creerCompte()" [formGroup]="form" id="createForm" enctype="multipart/form-data">
+                                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputName">Full Name</label>
+                                            <input type="text" id="inputName" class="form-control" placeholder="Enter Full Name" formControlName="nom" required>
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputEmail">Email</label>
+                                            <input type="email" id="inputEmail" class="form-control" placeholder="Enter Email Address" formControlName="email" required>
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputTel">Phone Number</label>
+                                            <input type="tel" id="inputTel" class="form-control" placeholder="Enter Telephone Number" formControlName="phoneNumber" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="signupPassword">Password</label>
+                                            <input type="password" id="signupPassword" placeholder="Enter Password" formControlName="password" class="form-control" required>
+                                            <div *ngIf="signupPassword?.touched && signupPassword?.invalid" class="text-danger">
+                                              <div *ngIf="signupPassword?.errors?.required">Le mot de passe est requis.</div>
+                                              <div *ngIf="signupPassword?.errors?.minlength">Le mot de passe doit comporter au moins 8 caractères.</div>
+                                              <div *ngIf="signupPassword?.errors?.passwordStrength">Le mot de passe doit contenir au moins une majuscule, un chiffre et un symbole.</div>
+                                            </div>
+                                          </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputConfirmPassword">Confirm Password</label>
+                                            <input type="password" id="inputConfirmPassword" class="form-control" placeholder="Confirm Password" formControlName="confirmPassword" required>
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputImage">Image URL</label>
+                                            <input type="file" class="form-control" id="inputImage" (change)="onFileChange($event)" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputCompanyName">Company Name</label>
+                                            <input type="text" id="inputCompanyName" class="form-control" placeholder="Enter Company Name" formControlName="companyName" required>
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputIndustry">Industry</label>
+                                            <input type="text" id="inputIndustry" class="form-control" placeholder="Enter Industry" formControlName="industry" required>
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputPosition">Position</label>
+                                            <input type="text" id="inputPosition" class="form-control" placeholder="Enter Position" formControlName="position" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputServicesNeeded">Types of Services Needed</label>
+                                            <input type="text" id="inputServicesNeeded" class="form-control" placeholder="Enter Types of Services Needed" formControlName="servicesNeeded">
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputMainObjectives">Main Objectives</label>
+                                            <input type="text" id="inputMainObjectives" class="form-control" placeholder="Enter Main Objectives" formControlName="mainObjectives">
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputEstimatedBudget">Estimated Budget</label>
+                                            <input type="number" id="inputEstimatedBudget" class="form-control" placeholder="Enter Estimated Budget" formControlName="estimatedBudget">
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between mb-5 gap-5">
+                                        <a href="/signin" class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Already have an account?</a>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-primary radius-30">S'inscrire</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shape1"><img src="assets/img/shape11.png" alt="shape"></div>
+        <div class="shape2 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+        <div class="shape3"><img src="assets/img/shape3.png" alt="shape"></div>
+        <div class="shape4"><img src="assets/img/shape4.png" alt="shape"></div>
+        <div class="shape5"><img src="assets/img/shape5.png" alt="shape"></div>
+        <div class="shape6 rotateme"><img src="assets/img/shape4.png" alt="shape"></div>
+        <div class="shape7"><img src="assets/img/shape4.png" alt="shape"></div>
+        <div class="shape8 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+    </div>
+</div>
+
+
+<div *ngIf="showPartnerForm">
+    <div class="main-banner">
+        <div class="d-table">
+            <div class="d-table-cell">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-lg-12">
+                            <div class="banner-form ml-3">
+                                <form (submit)="creerComptePartner()" [formGroup]="formPartner" id="createForm" enctype="multipart/form-data">
+                                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputName">Full Name</label>
+                                            <input type="text" id="inputName" class="form-control" placeholder="Enter Full Name" formControlName="nom" required>
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputEmail">Email</label>
+                                            <input type="email" id="inputEmail" placeholder="Enter Email Address" formControlName="email" class="form-control" required>
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputTel">Phone Number</label>
+                                            <input id="inputTel" placeholder="Enter Telephone Number" formControlName="phoneNumber" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="partnerPassword">Password</label>
+                                            <input type="password" id="partnerPassword" placeholder="Enter Password" formControlName="password" class="form-control" required>
+                                            <div *ngIf="partnerPassword?.touched && partnerPassword?.invalid" class="text-danger">
+                                              <div *ngIf="partnerPassword?.errors?.required">Le mot de passe est requis.</div>
+                                              <div *ngIf="partnerPassword?.errors?.minlength">Le mot de passe doit comporter au moins 8 caractères.</div>
+                                              <div *ngIf="partnerPassword?.errors?.passwordStrength">Le mot de passe doit contenir au moins une majuscule, un chiffre et un symbole.</div>
+                                            </div>
+                                          </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputConfirmPassword">Confirm Password</label>
+                                            <input type="password" id="inputConfirmPassword" placeholder="Confirm Password" formControlName="confirmPassword" class="form-control" required>
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputImage">Image URL</label>
+                                            <input type="file" class="form-control" id="inputImage" (change)="onFileChangePartner($event)" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputCompanyName">Company Name</label>
+                                            <input type="text" id="inputCompanyName" placeholder="Enter Company Name" formControlName="companyName" class="form-control" required>
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputIndustry">Industry</label>
+                                            <input type="text" id="inputIndustry" placeholder="Enter Industry" formControlName="industry" class="form-control" required>
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="inputPosition">Position</label>
+                                            <input type="text" id="inputPosition" placeholder="Enter Position" formControlName="position" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="availableResources">Available Resources</label>
+                                            <input type="text" id="availableResources" placeholder="Enter Available Resources" formControlName="availableResources" class="form-control">
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="partnershipType">Partnership Type</label>
+                                            <input type="text" id="partnershipType" placeholder="Enter Partnership Type" formControlName="partnershipType" class="form-control">
+                                        </div>
+                                        <div class="form-group" style="flex: 1; min-width: 200px;">
+                                            <label for="partnershipObjectives">Partnership Objectives</label>
+                                            <input type="text" id="partnershipObjectives" placeholder="Enter Partnership Objectives" formControlName="partnershipObjectives" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between mb-5 gap-5">
+                                        <a href="/signin" class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Already have an account?</a>
+                                    </div>
+                                    <div class="d-grid">
+                                        <button type="submit" class="btn btn-primary radius-30">S'inscrire</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shape1"><img src="assets/img/shape11.png" alt="shape"></div>
+    <div class="shape2 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+    <div class="shape3"><img src="assets/img/shape3.png" alt="shape"></div>
+    <div class="shape4"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape5"><img src="assets/img/shape5.png" alt="shape"></div>
+    <div class="shape6 rotateme"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape7"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape8 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+</div>
+
+<br><br><br><br><br>
+
+<div class="ml-partner-area pt-0 ptb-80">
+    <div class="container">
+        <div class="partner-slides">
+            <owl-carousel-o [options]="partnerSlides">
+                <ng-template carouselSlide>
+                    <div class="single-ml-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-1.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover1.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-ml-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-2.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover2.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-ml-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-3.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover3.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-ml-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-10.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover10.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-ml-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-5.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover5.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-ml-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-6.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover6.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+                <ng-template carouselSlide>
+                    <div class="single-ml-partner">
+                        <a href="#" target="_blank">
+                            <img src="assets/img/partner-img/partner-7.png" alt="image">
+                            <img src="assets/img/partner-img/partner-hover7.png" alt="image">
+                        </a>
+                    </div>
+                </ng-template>
+            </owl-carousel-o>
+        </div>
+    </div>
+</div>
+<div class="funfacts-area ptb-80" style="
+    background-image: url('assets/img/map.png');
+    background-size: 70%; /* Ajuste la taille de l'image pour un effet de zoom out */
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 80px 0;
+    color: #fff; /* Optionnel: couleur du texte pour contraste */
+">
+    <div class="container">
+        <div class="section-title">
+            <h2>We always try to understand users expectation</h2>
+            <div class="bar"></div>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="180">00</span>K</h3>
+                    <p>Downloaded</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="20">00</span>K</h3>
+                    <p>Feedback</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="500">00</span>+</h3>
+                    <p>Workers</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3><span [countUp]="70">00</span>+</h3>
+                    <p>Contributors</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  

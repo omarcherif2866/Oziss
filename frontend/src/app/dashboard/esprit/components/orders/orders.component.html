@@ -1,0 +1,90 @@
+<div class="grid">
+    <div class="col-12">
+      <div class="card px-6 py-6">
+        <p-toast></p-toast>
+        <p-table
+          #dt
+          [value]="orders"
+          [columns]="cols"
+          responsiveLayout="scroll"
+          [rows]="5"
+          [globalFilterFields]="['client.nom', 'client.email', 'status']"
+          [paginator]="true"
+          [rowsPerPageOptions]="[5, 10, 20, 30]"
+          [showCurrentPageReport]="true"
+          currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées"
+          [(selection)]="selectedOrders"
+          selectionMode="multiple"
+          [rowHover]="true"
+          dataKey="_id"
+          expandableRows
+          rowExpandMode="multiple"
+        >
+          <ng-template pTemplate="caption">
+            <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+              <h5 class="m-0">Gérer les commandes</h5>
+              <span class="block mt-2 md:mt-0 p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Rechercher..." class="w-full sm:w-auto" />
+              </span>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="client.nom">Nom du client <p-sortIcon field="client.nom"></p-sortIcon></th>
+              <th pSortableColumn="client.email">Email du client <p-sortIcon field="client.email"></p-sortIcon></th>
+              <th pSortableColumn="client.phoneNumber">Numéro du téléphone <p-sortIcon field="client.phoneNumber"></p-sortIcon></th>
+              <th pSortableColumn="status">Statut <p-sortIcon field="status"></p-sortIcon></th>
+              <th pSortableColumn="produits.produit.nom">produits <p-sortIcon field="produits.produit.nom"></p-sortIcon></th>
+              <th >Modifier commande <p-sortIcon ></p-sortIcon></th>
+
+              
+
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-order>
+            <tr>
+              <td>
+                <span class="p-column-title">Nom du client</span>
+                {{ order.client.nom }}
+              </td>
+              <td>
+                <span class="p-column-title">Email du client</span>
+                {{ order.client.email }}
+              </td>
+              <td>
+                <span class="p-column-title">Numéro du téléphone</span>
+                {{ order.client.phoneNumber }}
+              </td>
+              <td style="width:14%; min-width:8rem;">
+                <span class="p-column-title">Status</span>
+                <span [ngClass]="{
+                    'status-attente': order.status === 'En attente',
+                    'status-Confirmée': order.status === 'Confirmée',
+                    'status-Annulée': order.status === 'Annulée',
+                    'status-Expédiée': order.status === 'Expédiée',
+                    'status-Livrée': order.status === 'Livrée'
+                }">
+                    {{order.status}}
+                </span>
+            </td>
+              <td>
+                <span class="p-column-title">Produits</span>
+                <ul>
+                  <li *ngFor="let produitItem of order.produits">
+                    {{ produitItem.produit.nom }}
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <span class="p-column-title">Modifier le statut</span>
+                <p-dropdown [options]="statusOptions" [(ngModel)]="selectedStatuses[order._id]" optionLabel="label"
+                            optionValue="value" (onChange)="onStatusChange(order, $event)" appendTo="body"></p-dropdown>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+    </div>
+  </div>
+  

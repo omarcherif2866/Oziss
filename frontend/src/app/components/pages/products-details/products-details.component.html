@@ -1,0 +1,50 @@
+<app-navbar-style-one></app-navbar-style-one>
+
+<!-- Page Title -->
+<div class="page-title-area">
+    <div class="d-table">
+        <div class="d-table-cell">
+            <div class="container">
+                <h2>Products Details</h2>
+            </div>
+        </div>
+    </div>
+    <div class="shape1"><img src="assets/img/shape11.png" alt="shape"></div>
+    <div class="shape2 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+    <div class="shape3"><img src="assets/img/shape3.png" alt="shape"></div>
+    <div class="shape4"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape5"><img src="assets/img/shape5.png" alt="shape"></div>
+    <div class="shape6 rotateme"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape7"><img src="assets/img/shape4.png" alt="shape"></div>
+    <div class="shape8 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
+</div>
+
+<!-- Products Details -->
+<div class="shop-details-area ptb-80">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="row">
+                <div class="col-lg-5" *ngIf="produit">
+                    <div class="products-details-image products-details-image-slides">
+                        <div class="single-image-box">
+                            <img *ngIf="produit.image" [src]="getImageUrl(produit.image)" alt="img">
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="col-lg-7">
+                    <div class="products-details">
+                        <h3>Nom du produit : {{ produit?.nom }}</h3>
+                        <div class="price">
+                            <p>Service : {{ serviceName }}</p>
+                        </div>
+                        <h3>Description du produit :</h3>
+                        <p>{{ produit?.description }}</p>
+                    </div>
+                </div>
+            </div>
+            
+
+        </div>
+    </div>
+</div>

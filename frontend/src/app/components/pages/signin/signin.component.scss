@@ -1,0 +1,47 @@
+// @import "../digital-agency-demo/digital-agency-demo.component.scss";
+// @import "../home-demo-one/home-demo-one.component.scss";
+// @import "../machine-learning-demo/machine-learning-demo.component.scss";
+.btn-primary {
+    background: var(--gradientColor);
+    border: none; /* Supprimez la bordure si nécessaire */
+    color: white; /* Couleur du texte */
+    text-transform: uppercase; /* Met le texte en majuscules */
+    text-align: center;
+    display: inline-block;
+    border-radius: 5px; /* Ajustez le radius selon vos besoins */
+    transition: background 0.3s ease; /* Transition douce pour le hover */
+}
+
+.funfacts-area {
+    position: relative;
+    z-index: 1;
+
+    .section-title {
+        h2 {
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 37px;
+        }
+    }
+    .map-bg {
+        position: absolute;
+        z-index: -1;
+        top: 120px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+.funfact {
+    text-align: center;
+
+    h3 {
+        color: var(--mainColor);
+        font-size: 32px;
+        margin-bottom: 7px;
+    }
+    p {
+        line-height: initial;
+    }
+}
