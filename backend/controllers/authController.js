@@ -166,25 +166,31 @@ export function getUserById(req, res) {
 
 export async function updateUserProfile(req, res) {
   try {
-    const { nom, email } = req.body;
+    // Extraire les champs du corps de la requête
+    const { nom, email, password, confirmPassword, phoneNumber, companyName, industry, position, 
+            servicesNeeded, mainObjectives, estimatedBudget, partnershipType, partnershipObjectives, availableResources } = req.body;
 
-    let user = { nom, email };
+    // Préparer l'objet à mettre à jour
+    let updateData = { nom, email, password, confirmPassword, phoneNumber, companyName, industry, position,
+                        servicesNeeded, mainObjectives, estimatedBudget, partnershipType, partnershipObjectives, availableResources };
 
+    // Gérer le fichier image si présent
     if (req.file) {
       console.log('File received:', req.file);
-
-      user.image = `${req.file.filename}`; // Assurez-vous que le chemin est correct
+      updateData.image = req.file.filename; // Assurez-vous que le chemin est correct pour le stockage
     }
 
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, user, { new: true });
+    // Mettre à jour l'utilisateur dans la base de données
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, updateData, { new: true });
 
+    // Répondre en fonction du résultat
     if (updatedUser) {
       res.status(200).json(updatedUser);
     } else {
       res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
   } catch (error) {
-    console.error('Error updating user profile:', error);
+    console.error('Erreur lors de la mise à jour du profil utilisateur :', error);
     res.status(500).json({ message: 'Erreur lors de la mise à jour du profil utilisateur' });
   }
 }
@@ -262,43 +268,10 @@ export async function putUser(req, res) {
 
 
 export async function DeleteUser(req, res) {
-  const id = req.params.id;
-  
-  try {
-    // Supprimer le profil
-    const prof = await Profil.findByIdAndDelete(id);
-
-    if (!prof) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    // Supprimer l'utilisateur en fonction du rôle associé au profil
-    let utilisateur;
-    switch (prof.role) {
-      case 'apprenant':
-        utilisateur = await Apprenants.findOneAndDelete({ profil: id });
-        break;
-      case 'formateur':
-        utilisateur = await Formateurs.findOneAndDelete({ profil: id });
-        break;
-      case 'admin':
-        utilisateur = await Admins.findOneAndDelete({ profil: id });
-        break;
-      default:
-        return res.status(400).json({ message: 'Invalid user role' });
-    }
-
-    if (!utilisateur) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.status(200).json({ message: 'User deleted successfully' });
-  } catch (error) {
-    console.error("Error during user deletion:", error);
-    res.status(500).json({ message: 'Error deleting user' });
-  }
+  const id =req.params.id
+  const prd = await User.findByIdAndDelete(id);
+  res.status(200).json({"message":" user deleted"});
 }
-
 
 //deleteUser a re-implementer
 
@@ -337,6 +310,42 @@ export const getClientBudgets = async (req, res) => {
     res.status(500).json({ message: 'Error fetching client budgets' });
   }
 };
+
+export async function addCommercial(req, res) {
+  try {
+    console.log("Données reçues :", req.body); // Ajoutez cette ligne pour déboguer
+
+    const { nom, email, password, phoneNumber } = req.body;
+
+    const imageFile = req.file;
+    if (!imageFile) {
+      return res.status(400).json({ message: 'Please upload an image' });
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 8);
+
+
+    // Créez un nouvel utilisateur de type 'commercial'
+    const newCommercial = new User({
+      userType: 'commercial',
+      nom,
+      email,
+      password: hashedPassword,
+      confirmPassword: hashedPassword, // Vous pouvez décider de ne pas stocker la confirmation du mot de passe
+      phoneNumber,
+      image: imageFile.filename,
+    });
+
+    // Enregistrez l'utilisateur dans la base de données
+    await newCommercial.save();
+
+    console.log('Commercial ajouté avec succès:', newCommercial);
+    return res.status(201).json(newCommercial);
+  } catch (error) {
+    console.error('Erreur lors de l\'ajout du commercial:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+}
 
 
 export { signup, signin, signout, getUser, putPassword};

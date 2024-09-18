@@ -1,5 +1,5 @@
 import express from 'express';
-import { addOnceProjet, DeleteProjet, getAllProjets, putOnce, updateProjetStatus } from '../controllers/projet.js';
+import { addOnceProjet, DeleteProjet, getAllProjets, getProjetsByCriteria, putOnce, updateProjetStatus } from '../controllers/projet.js';
 import upload from '../middlewares/multerPdf.js';
 
 
@@ -12,16 +12,19 @@ router.route('/')
 
 
 
-router.post('/addProjet', upload.array('pdf', 10), addOnceProjet);
+router.post('/addProjet/:ownedBy', upload.array('pdf', 10), addOnceProjet);
 
 
 
 router.route('/:id')
 .delete(DeleteProjet)
 .put(
+    upload.array('pdf',10),
     putOnce)
 
 router.put('/status/:id', updateProjetStatus);
+
+router.get('/filter', getProjetsByCriteria); // Route pour récupérer les projets par critères
 
 
 export default router;

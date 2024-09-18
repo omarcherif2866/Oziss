@@ -6,7 +6,7 @@ import Produit from '../models/Produit.js'; // Assurez-vous que le chemin est co
 
 export const createOrder = async (req, res) => {
   try {
-    const { client, produits, besoin } = req.body;
+    const { client, produits, besoin, budget, monnaie } = req.body;
 
     console.log('Client:', client);
     console.log('Produits (avant parsing):', produits);
@@ -47,6 +47,8 @@ export const createOrder = async (req, res) => {
         produit: item.produit,
       })),
       besoin: besoin,
+      budget: budget,
+      monnaie: monnaie,
       pdf: pdfNames,
       status: 'En attente', // Par défaut, en attente
     });

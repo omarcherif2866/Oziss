@@ -10,6 +10,8 @@ const OrderSchema = new Schema(
       }
     ],
     besoin: { type: String },
+    budget: { type: Number },
+    monnaie: { type: String, enum: ['Euro', 'Dollar', 'Franc CFA (CEMAC)', 'Franc guinéen', 'Franc CFA (UEMOA)', 'Dinar tunisien']},
     pdf: [{ type: String }],
     status: { type: String, enum: ['En attente', 'Confirmée', 'Expédiée', 'Livrée', 'Annulée'], default: 'En attente' },
   },

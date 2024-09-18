@@ -15,14 +15,14 @@ const ProjetSchema = new Schema(
         },
         pdf: [{ type: String }],
         status: { type: String, enum: ['En attente', 'Terminé', 'En cours'], default: 'En attente' },
-        // ownedBy: { 
-        //     type: mongoose.Types.ObjectId, 
-        //     ref: 'User' 
-        //   },
-        //   with: { 
-        //     type: mongoose.Types.ObjectId, 
-        //     ref: 'User' 
-        //   },
+        ownedBy: { 
+            type: mongoose.Types.ObjectId, 
+            ref: 'User' 
+          },
+          with: { 
+            type: mongoose.Types.ObjectId, 
+            ref: 'User' 
+          },
 
     },
     {

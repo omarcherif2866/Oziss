@@ -3,6 +3,7 @@ import Users from '../models/User.js';
 import asyncHandler from "express-async-handler"
 import bcrypt from 'bcryptjs'
 import { generatorOTP } from "./utils/mail.js";
+import User from "../models/User.js";
 
 
   
@@ -56,16 +57,11 @@ import { generatorOTP } from "./utils/mail.js";
     }
   }
 
-  export function deleteOnce(req, res) {
-  Users
-  .findOneAndRemove({ "firstname": req.params.firstname })
-  .then(doc => {
-      res.status(200).json(doc);
-  })
-  .catch(err => {
-      res.status(500).json({ error: err });
-  });
-}
+  export async function deleteOnce(req, res) {
+    const id =req.params.id
+    const prd = await Users.findByIdAndDelete(id);
+    res.status(200).json({"message":" user deleted"});
+  }
 
   export function getUserById(req, res){
   Users.findById(req.params.id)
@@ -101,6 +97,7 @@ export async function logIn  (req,res){
       res.status(400).json({"message":"invalid"})
   }
 }
+
 
 
 

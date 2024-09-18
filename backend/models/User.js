@@ -2,12 +2,12 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 const userSchema = new Schema({
-  userType: { type: String, enum: ['client', 'partner', 'admin'], required: true },
+  userType: { type: String, enum: ['client', 'partner', 'admin','commercial'], required: true },
   nom: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   image: { type: String, required: true },
-  confirmPassword: { type: String, required: true },
+  confirmPassword: { type: String},
   phoneNumber: { type: String, required: true },
   companyName: { type: String },
   industry: { type: String },
