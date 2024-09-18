@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators }
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { AuthService } from 'src/app/components/services/auth/auth.service';
 import Swal from 'sweetalert2';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-signup',
@@ -14,6 +15,7 @@ export class SignupComponent {
   formPartner!: FormGroup;
   showClientForm: boolean = false; // Déclaration et initialisation de showClientForm à false
   showPartnerForm: boolean = false; // Déclaration et initialisation de showClientForm à false
+  Users: User[] = [];
 
   hoveredElement: string | null = null;
 
@@ -59,30 +61,34 @@ export class SignupComponent {
       userType: ['partner']  // Ajout de userType avec la valeur 'client'
 
     });
+
+    this.getAllPartners()
+
   }
 
   partnerSlides: OwlOptions = {
-		loop: true,
-		nav: false,
-		dots: false,
-		autoplayHoverPause: true,
-		autoplay: true,
-		margin: 30,
-		responsive: {
-			0: {
-				items: 2
-			},
-			576: {
-				items: 4
-			},
-			768: {
-				items: 4
-			},
-			992: {
-				items: 6
-			}
-		}
+    loop: true,
+    nav: false,
+    dots: false,
+    autoplay: true, // Active l'autoplay
+    autoplayTimeout: 2000, // Temps entre les diapositives (en ms)
+    autoplayHoverPause: true, // Pause l'autoplay lors du survol
+    margin: 30,
+    responsive: {
+      0: {
+        items: 2
+      },
+      576: {
+        items: 4
+      },
+      768: {
+        items: 4
+      },
+      992: {
+        items: 6
+      }
     }
+  };
 
   onHover(element: string | null) {
     this.hoveredElement = element;
@@ -256,6 +262,27 @@ export class SignupComponent {
   // Méthode pratique pour accéder plus facilement au champ de formulaire partnerForm.password
   get partnerPassword() {
     return this.formPartner.get('password');
+  }
+
+  getImageUrl(imageName?: string): string {
+    // Vérifiez si l'image existe dans le répertoire backend
+    const imageUrl = imageName ? `http://localhost:9090/img/${imageName}` : 'assets/img/default-image.png';
+    return imageUrl;
+}
+  getAllPartners(): void {
+    this.userService.getUser().subscribe(ss => {
+      // Afficher les utilisateurs récupérés dans la console
+      console.log("Users récupérées:", ss);
+      
+      // Filtrer les utilisateurs pour ne garder que ceux avec userType = 'client'
+      this.Users = ss.filter(user => user.userType === 'partner');
+      
+      // Afficher les utilisateurs filtrés dans la console pour vérification
+      console.log("Partners filtrés:", this.Users);
+    }, error => {
+      // Gestion des erreurs
+      console.error("Erreur lors de la récupération des utilisateurs:", error);
+    });
   }
 
 }

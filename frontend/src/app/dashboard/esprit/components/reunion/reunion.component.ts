@@ -156,16 +156,28 @@ export class ReunionComponent {
         return;
     }
 
+    // Obtenez les valeurs du formulaire
+    const nom = this.reunionForm.get('nom')?.value;
+    const description = this.reunionForm.get('description')?.value;
+    const date = this.reunionForm.get('date')?.value;
+    const heureDebut = this.reunionForm.get('heureDebut')?.value;
+    const heureFin = this.reunionForm.get('heureFin')?.value;
+    const logiciel = this.reunionForm.get('logiciel')?.value;
+
+    // Vérifiez et formatez la date et les heures
+    const formattedDate = date instanceof Date ? date.toISOString().split('T')[0] : '';
+    const formattedHeureDebut = heureDebut instanceof Date ? heureDebut.toISOString().split('T')[1].substring(0, 5) : '';
+    const formattedHeureFin = heureFin instanceof Date ? heureFin.toISOString().split('T')[1].substring(0, 5) : '';
 
     const requestData = {
-      nom: this.reunionForm.get('nom')?.value,
-      description: this.reunionForm.get('description')?.value,
-      date: this.reunionForm.get('date')?.value ? this.reunionForm.get('date')?.value.toISOString().split('T')[0] : '',
-      heureDebut: this.reunionForm.get('heureDebut')?.value ? this.reunionForm.get('heureDebut')?.value.toISOString().split('T')[1].substring(0, 5) : '',
-      heureFin: this.reunionForm.get('heureFin')?.value ? this.reunionForm.get('heureFin')?.value.toISOString().split('T')[1].substring(0, 5) : '',
-      createur: localStorage.getItem('user_id') || '',
-      logiciel: this.reunionForm.get('logiciel')?.value,  // Inclure la valeur du logiciel
-      deuxiemeMembre: 'admin@gmail.com'
+        nom: nom,
+        description: description,
+        date: formattedDate,
+        heureDebut: formattedHeureDebut,
+        heureFin: formattedHeureFin,
+        createur: localStorage.getItem('user_id') || '',
+        logiciel: logiciel,
+        deuxiemeMembre: 'admin@gmail.com'
     };
 
     console.log('Données envoyées:', requestData);
@@ -200,6 +212,7 @@ export class ReunionComponent {
         );
     }
 }
+
 
 
 

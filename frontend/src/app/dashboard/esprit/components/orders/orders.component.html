@@ -8,7 +8,7 @@
           [columns]="cols"
           responsiveLayout="scroll"
           [rows]="5"
-          [globalFilterFields]="['client.nom', 'client.email', 'status']"
+          [globalFilterFields]="['client.nom', 'client.email', 'status','createdAt']"
           [paginator]="true"
           [rowsPerPageOptions]="[5, 10, 20, 30]"
           [showCurrentPageReport]="true"
@@ -34,8 +34,10 @@
               <th pSortableColumn="client.nom">Nom du client <p-sortIcon field="client.nom"></p-sortIcon></th>
               <th pSortableColumn="client.email">Email du client <p-sortIcon field="client.email"></p-sortIcon></th>
               <th pSortableColumn="client.phoneNumber">Numéro du téléphone <p-sortIcon field="client.phoneNumber"></p-sortIcon></th>
+              <th pSortableColumn="produits.produit.nom">Produits <p-sortIcon field="produits.produit.nom"></p-sortIcon></th>
+              <th pSortableColumn="status">date de la commande <p-sortIcon field="status"></p-sortIcon></th>
+              <th pSortableColumn="status">Budget <p-sortIcon field="status"></p-sortIcon></th>
               <th pSortableColumn="status">Statut <p-sortIcon field="status"></p-sortIcon></th>
-              <th pSortableColumn="produits.produit.nom">produits <p-sortIcon field="produits.produit.nom"></p-sortIcon></th>
               <th >Modifier commande <p-sortIcon ></p-sortIcon></th>
 
               
@@ -56,6 +58,22 @@
                 <span class="p-column-title">Numéro du téléphone</span>
                 {{ order.client.phoneNumber }}
               </td>
+              <td>
+                <span class="p-column-title">Produits</span>
+                <ul>
+                  <li *ngFor="let produitItem of order.produits">
+                    {{ produitItem.produit.nom }}
+                  </li>
+                </ul>
+              </td>
+              <td>
+                <span class="p-column-title">date de la commande </span>
+                {{ order.createdAt | date: 'dd/MM/yyyy' }} 
+              </td>
+              <td>
+                <span class="p-column-title">Budget</span>
+                {{ order.budget }} {{ getMonnaieSymbol(order) }}
+              </td>
               <td style="width:14%; min-width:8rem;">
                 <span class="p-column-title">Status</span>
                 <span [ngClass]="{
@@ -68,14 +86,6 @@
                     {{order.status}}
                 </span>
             </td>
-              <td>
-                <span class="p-column-title">Produits</span>
-                <ul>
-                  <li *ngFor="let produitItem of order.produits">
-                    {{ produitItem.produit.nom }}
-                  </li>
-                </ul>
-              </td>
               <td>
                 <span class="p-column-title">Modifier le statut</span>
                 <p-dropdown [options]="statusOptions" [(ngModel)]="selectedStatuses[order._id]" optionLabel="label"

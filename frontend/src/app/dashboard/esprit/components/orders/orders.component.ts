@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Order } from '../../models/order';
+import { Monnaie, Order } from '../../models/order';
 import { OrderService } from '../../service/order.service';
 import { forkJoin, tap } from 'rxjs';
 import { ProduitService } from '../../service/produit.service';
@@ -123,6 +123,29 @@ export class OrdersComponent {
 
   private showMessage(severity: string, summary: string, detail: string): void {
     this.messageService.add({ severity, summary, detail, life: 3000 });
+  }
+
+  getMonnaieSymbol(order: Order): string {
+    if (!order || order.monnaie === undefined) {
+      return ''; // Retourne une chaîne vide si `order` ou `order.monnaie` est undefined
+    }
+  
+    switch (order.monnaie) {
+      case Monnaie.Euro:
+        return '€';
+      case Monnaie.Dollar:
+        return '$';
+      case Monnaie.DinarTunisien:
+        return 'DT';
+      case Monnaie.FrancCFA_CEMAC:
+        return 'XAF';
+      case Monnaie.FrancGuineen:
+        return 'GNF';
+      case Monnaie.FrancCFA_UEMOA:
+        return 'XOF';
+      default:
+        return ''; // Retourne une chaîne vide si la monnaie ne correspond à aucun des cas
+    }
   }
 
 }

@@ -36,15 +36,30 @@
                     </div>
                     <form (ngSubmit)="saveOrder()">
                         <div class="form-group">
-                            <label for="besoin">Besoin</label>
-                            <input type="text" id="besoin" name="besoin" [(ngModel)]="besoin" class="form-control">
+                          <label for="besoin">Besoin</label>
+                          <input type="text" id="besoin" name="besoin" [(ngModel)]="besoin" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label for="pdf">Importation PDF</label>
-                            <input type="file" id="pdf" name="pdf" accept=".pdf" multiple class="form-control" (change)="onSelectPDF($event)">
+                          <label for="budget">Budget</label>
+                          <input type="number" id="budget" name="budget" [(ngModel)]="order.budget" class="form-control">
                         </div>
-                        <button type="submit" class="btn btn-primary" (click)="proceedToCheckout()" >Proceed to Checkout</button>
-                    </form>
+                        
+                        <div class="form-group">
+                          <label for="monnaie">Monnaie</label>
+                          <select id="monnaie" name="monnaie" [(ngModel)]="order.monnaie" class="form-select">
+                            <option value="" disabled selected>Sélectionner une monnaie</option>
+                            <option *ngFor="let monnaie of monnaieKeys()" [value]="monnaie">{{ monnaie }}</option>
+                          </select>
+                        </div>
+                        
+                        <div class="form-group">
+                          <label for="pdf">Importation PDF</label>
+                          <input type="file" id="pdf" name="pdf" accept=".pdf" multiple class="form-control" (change)="onSelectPDF($event)">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Proceed to Checkout</button>
+                      </form>
+                      
+                      
                 </div>
             </div>
         </div>

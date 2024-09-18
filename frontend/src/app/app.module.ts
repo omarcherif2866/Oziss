@@ -44,6 +44,7 @@ import { UIkitModule } from './dashboard/esprit/components/uikit/uikit.module';
 import { CartComponent } from './components/pages/cart/cart.component';
 import { ClientsModule } from './dashboard/esprit/components/clients/clients.module';
 import { ReunionModule } from './dashboard/esprit/components/reunion/reunion.module';
+import { CommercialModule } from './dashboard/esprit/components/commercial/commercial.module';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,7 @@ import { ReunionModule } from './dashboard/esprit/components/reunion/reunion.mod
     ServiceModule,
     ReunionModule,
     UIkitModule,
-    
+    CommercialModule
     
     
   ],

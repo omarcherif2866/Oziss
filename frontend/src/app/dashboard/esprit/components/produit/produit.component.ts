@@ -6,7 +6,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Table } from 'primeng/table';
 import { ProduitService } from '../../service/produit.service';
 import { Produit } from '../../models/produit';
-import { Order } from '../../models/order';
+import { Monnaie, Order } from '../../models/order';
 import { User } from '../../models/user';
 import { OrderService } from '../../service/order.service';
 
@@ -36,6 +36,7 @@ export class ProduitComponent {
     client: {} as User,
     produits: [],
     besoin: '',
+    budget: 0,
     pdf:[],
     status: 'En attente'
   };
@@ -265,6 +266,9 @@ saveOrder(): void {
   formData.append('client', clientId);
   formData.append('produits', JSON.stringify(produitsToSend));
   formData.append('besoin', this.order.besoin);
+  formData.append('budget', this.order.budget.toString());
+  formData.append('monnaie', this.order.monnaie || '');
+
 
   // Ajouter chaque fichier PDF à FormData avec son nom
   for (let i = 0; i < this.order.pdf.length; i++) {
@@ -288,6 +292,7 @@ saveOrder(): void {
 }
 
 
+monnaieOptions = Object.keys(Monnaie).map(key => ({ label: Monnaie[key as keyof typeof Monnaie], value: Monnaie[key as keyof typeof Monnaie] }));
 
 
 

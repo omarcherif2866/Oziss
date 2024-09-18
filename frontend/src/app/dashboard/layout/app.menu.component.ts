@@ -71,7 +71,8 @@ export class AppMenuComponent implements OnInit {
                 label: 'Utilisateurs',
                 items: [
                     { label: 'Tous les clients', icon: 'pi pi-fw pi-users', routerLink: ['/clients'] },
-                    { label: 'Tous les partenaires', icon: 'pi pi-fw pi-users', routerLink: ['/partners'] }
+                    { label: 'Tous les partenaires', icon: 'pi pi-fw pi-users', routerLink: ['/partners'] },
+                    { label: 'Commerciales', icon: 'pi pi-fw pi-users', routerLink: ['/commercial'] }
 
                 ]
             });
@@ -104,6 +105,7 @@ export class AppMenuComponent implements OnInit {
                 ]
             });
 
+
         } else if (userRole === 'client'){
             this.model.splice(2, 0, {
                 label: 'Mes Commandes',
@@ -125,6 +127,45 @@ export class AppMenuComponent implements OnInit {
                     { label: 'Projets', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/projet'] }
                 ]
             });
+        } else if (userRole === 'commercial') {
+            this.model.splice(5, 0, {
+                label: 'Utilisateurs',
+                items: [
+                    { label: 'Tous les clients', icon: 'pi pi-fw pi-users', routerLink: ['/clients'] },
+                    { label: 'Tous les partenaires', icon: 'pi pi-fw pi-users', routerLink: ['/partners'] },
+                    { label: 'Commerciales', icon: 'pi pi-fw pi-users', routerLink: ['/commercial'] }
+
+                ]
+            });
+
+            this.model.splice(2, 0, {
+                label: 'Service',
+                items: [
+                    { label: 'Services', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/service'] }
+                ]
+            });
+            
+            this.model.splice(5, 0, {
+                label: 'Commandes',
+                items: [
+                    { label: 'Commandes', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/orders'] }
+                ]
+            });
+
+            this.model.splice(2, 0, {
+                label: 'Reunion',
+                items: [
+                    { label: 'Reunion', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/reunion'] }
+                ]
+            });
+
+            this.model.splice(2, 0, {
+                label: 'projet',
+                items: [
+                    { label: 'projet', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/projet'] }
+                ]
+            });
+
         }
         
     }

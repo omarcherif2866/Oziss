@@ -20,10 +20,10 @@ export class PartnersComponent {
   ) {}
 
   ngOnInit() {
-    this.getAllClients()
+    this.getAllPartners()
   }
 
-  getAllClients(): void {
+  getAllPartners(): void {
     this.userService.getUser().subscribe(ss => {
       // Afficher les utilisateurs récupérés dans la console
       console.log("Users récupérées:", ss);
@@ -32,7 +32,7 @@ export class PartnersComponent {
       this.Users = ss.filter(user => user.userType === 'partner');
       
       // Afficher les utilisateurs filtrés dans la console pour vérification
-      console.log("Clients filtrés:", this.Users);
+      console.log("Partners filtrés:", this.Users);
     }, error => {
       // Gestion des erreurs
       console.error("Erreur lors de la récupération des utilisateurs:", error);

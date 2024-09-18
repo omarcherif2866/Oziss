@@ -31,6 +31,10 @@ export class UserService {
     return this.http.post<User>("http://localhost:9090/api/signup",data)
   }
 
+  addCommerciale(data:any){
+    return this.http.post<User>("http://localhost:9090/api/addCommerciale",data)
+  }
+
   getUser() {
     return this.http.get<User[]>("http://localhost:9090/api/user");
   }

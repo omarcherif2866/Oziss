@@ -45,3 +45,31 @@
         line-height: initial;
     }
 }
+
+.single-repair-partner {
+    text-align: center;
+
+    a {
+        display: block;
+        position: relative;
+
+        img {
+            width: 150px; /* Fixer la largeur */
+            height: 100px; /* Fixer la hauteur */
+            object-fit: contain; /* Maintient le contenu de l'image visible, même avec des dimensions fixes */
+            display: block; /* S'assure que l'image s'affiche correctement */
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            // filter: drop-shadow(2px 2px 7px cyan);
+        }
+        
+        &:hover {
+            img {
+                &:last-child {
+                    opacity: 1;
+                    visibility: visible;
+                    top: 0; /* Assurez-vous que ce style est approprié pour votre cas */
+                }
+            }
+        }
+    }
+}

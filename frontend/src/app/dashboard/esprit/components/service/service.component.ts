@@ -173,6 +173,10 @@ export class ServiceComponent implements OnInit {
   onGlobalFilter(table: any, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
+
+  getUserRole(): string | null {
+    return localStorage.getItem('userRole');
+  }
 }
 
 

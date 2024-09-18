@@ -1,6 +1,6 @@
 export interface User {
     _id: string;
-    userType: 'client' | 'partner' | 'admin';
+    userType: 'client' | 'partner' | 'admin'| 'commercial';
     nom: string;
     email: string;
     password?: string;

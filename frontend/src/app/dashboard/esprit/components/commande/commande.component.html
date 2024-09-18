@@ -29,7 +29,10 @@
         <ng-template pTemplate="header">
           <tr>
             <th pSortableColumn="produits.produit.nom">Produits <p-sortIcon field="produits.produit.nom"></p-sortIcon></th>
+            <th pSortableColumn="status">date de la commande <p-sortIcon field="status"></p-sortIcon></th>
+            <th pSortableColumn="status">Budget <p-sortIcon field="status"></p-sortIcon></th>
             <th pSortableColumn="status">Statut <p-sortIcon field="status"></p-sortIcon></th>
+
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-order>
@@ -43,9 +46,26 @@
               </ul>
             </td>
             <td>
-              <span class="p-column-title">Statut</span>
-              {{ order.status }}
+              <span class="p-column-title">date de la commande </span>
+              {{ order.createdAt | date: 'dd/MM/yyyy' }} 
             </td>
+            <td>
+              <span class="p-column-title">Budget</span>
+              {{ order.budget }} {{ getMonnaieSymbol(order) }}
+            </td>
+            <td>
+              <span class="p-column-title">Statut</span>
+              <span [ngClass]="{
+                'status-attente': order.status === 'En attente',
+                'status-Confirmée': order.status === 'Confirmée',
+                'status-Annulée': order.status === 'Annulée',
+                'status-Expédiée': order.status === 'Expédiée',
+                'status-Livrée': order.status === 'Livrée'
+            }">
+                {{order.status}}
+            </span>
+            </td>
+
           </tr>
         </ng-template>
       </p-table>

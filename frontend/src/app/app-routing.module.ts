@@ -38,6 +38,7 @@ const routes: Routes = [
             children: [
                 { path: 'dashboard', loadChildren: () => import('./dashboard/esprit/components/uikit/charts/chartsdemo.module').then(m => m.ChartsDemoModule) },
                 { path: 'clients', loadChildren: () => import('./dashboard/esprit/components/clients/clients.module').then(m => m.ClientsModule) },
+                { path: 'commercial', loadChildren: () => import('./dashboard/esprit/components/commercial/commercial.module').then(m => m.CommercialModule) },
                 { path: 'partners', loadChildren: () => import('./dashboard/esprit/components/partners/partners.module').then(m => m.PartnersModule) },
                 { path: 'uikit', loadChildren: () => import('./dashboard/esprit/components/uikit/uikit.module').then(m => m.UIkitModule) },
                 { path: 'service', loadChildren: () => import('./dashboard/esprit/components/service/service.module').then(m => m.ServiceModule) },

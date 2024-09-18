@@ -16,6 +16,8 @@ export class SigninComponent implements OnInit{
   password!: string;
   form!: FormGroup;
   user!: User;
+  Users: User[] = [];
+
   constructor( private formBuilder: FormBuilder, private service: AuthService, private router: Router,
     private route: ActivatedRoute  ) { }
 
@@ -24,6 +26,8 @@ export class SigninComponent implements OnInit{
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.getAllPartners()
+
   }
 
   partnerSlides: OwlOptions = {
@@ -86,5 +90,27 @@ export class SigninComponent implements OnInit{
           }
         );
       }
+    }
+
+    getImageUrl(imageName?: string): string {
+      // Vérifiez si l'image existe dans le répertoire backend
+      const imageUrl = imageName ? `http://localhost:9090/img/${imageName}` : 'assets/img/default-image.png';
+      return imageUrl;
+  }
+  
+    getAllPartners(): void {
+      this.service.getUser().subscribe(ss => {
+        // Afficher les utilisateurs récupérés dans la console
+        console.log("Users récupérées:", ss);
+        
+        // Filtrer les utilisateurs pour ne garder que ceux avec userType = 'client'
+        this.Users = ss.filter(user => user.userType === 'partner');
+        
+        // Afficher les utilisateurs filtrés dans la console pour vérification
+        console.log("Partners filtrés:", this.Users);
+      }, error => {
+        // Gestion des erreurs
+        console.error("Erreur lors de la récupération des utilisateurs:", error);
+      });
     }
 }

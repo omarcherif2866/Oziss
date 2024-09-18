@@ -2,9 +2,9 @@
     <div class="col-12">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
-            <p-toolbar styleClass="mb-4">
+            <p-toolbar styleClass="mb-4" *ngIf="getUserRole() === 'admin'">
                 <ng-template pTemplate="left">
-                    <div class="my-2" *ngIf="getUserRole() === 'admin'">
+                    <div class="my-2" >
                         <button pButton pRipple label="Ajouter un produit" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
                     </div>
                 </ng-template>
@@ -27,7 +27,7 @@
                         <th>Image</th>
                         <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
                         <th pSortableColumn="services">Services <p-sortIcon field="services"></p-sortIcon></th>
-                        <th>Action</th>
+                        <th *ngIf="getUserRole() === 'admin' || getUserRole() === 'client'">Action</th>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-produit>
@@ -90,6 +90,24 @@
                     <p-dropdown [options]="services" [(ngModel)]="selectedService" optionLabel="nom" placeholder="Sélectionner un service" appendTo="body" [disabled]="getUserRole() === 'client'"></p-dropdown>
                 </div>
 
+                <div class="field" *ngIf="produit._id && getUserRole() === 'client'">
+                    <label for="budget">Budget</label>
+                    <input type="number" pInputText id="budget" [(ngModel)]="order.budget" required min="0" placeholder="Entrez le budget" />
+                </div>
+            
+                <div class="field" *ngIf="produit._id && getUserRole() === 'client'">
+                    <label for="monnaie">Monnaie</label>
+                    <p-dropdown
+                      id="monnaie"
+                      name="monnaie"
+                      [options]="monnaieOptions"
+                      [(ngModel)]="order.monnaie"
+                      placeholder="Sélectionner une monnaie"
+                      class="form-select"
+                    >
+                    </p-dropdown>
+                    
+                </div>
   
                 <div class="field" *ngIf="produit._id && getUserRole() === 'client'">
                     <label for="besoin">Besoin</label>

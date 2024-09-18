@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { Order } from '../../models/order';
+import { Monnaie, Order } from '../../models/order';
 import { OrderService } from '../../service/order.service';
 import { ProduitService } from '../../service/produit.service';
 import { forkJoin } from 'rxjs';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-commande',
@@ -14,8 +15,8 @@ export class CommandeComponent {
   cols: any[];
   orderDialogVisible: boolean = false;
   selectedOrder: Order | null = null;
-
-  constructor(
+  
+ constructor(
     private orderService: OrderService,
     private produitService: ProduitService,
   ) {
@@ -84,4 +85,28 @@ export class CommandeComponent {
     this.selectedOrder = order;
     this.orderDialogVisible = true;
   }
+
+  getMonnaieSymbol(order: Order): string {
+    if (!order || order.monnaie === undefined) {
+      return ''; // Retourne une chaîne vide si `order` ou `order.monnaie` est undefined
+    }
+  
+    switch (order.monnaie) {
+      case Monnaie.Euro:
+        return '€';
+      case Monnaie.Dollar:
+        return '$';
+      case Monnaie.DinarTunisien:
+        return 'DT';
+      case Monnaie.FrancCFA_CEMAC:
+        return 'XAF';
+      case Monnaie.FrancGuineen:
+        return 'GNF';
+      case Monnaie.FrancCFA_UEMOA:
+        return 'XOF';
+      default:
+        return ''; // Retourne une chaîne vide si la monnaie ne correspond à aucun des cas
+    }
+  }
+  
 }

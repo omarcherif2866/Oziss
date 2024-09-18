@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, Observable, throwError } from 'rxjs';
@@ -20,8 +20,10 @@ export class ProjetService {
 
 
 
-  addProjet(data: any): Observable<HttpResponse<Projet>> {
-    return this.http.post<Projet>("http://localhost:9090/Projet/addProjet", data, {
+  addProjet(ownedBy: string, data: any): Observable<HttpResponse<Projet>> {
+    const url = `http://localhost:9090/Projet/addProjet/${ownedBy}`;
+    
+    return this.http.post<Projet>(url, data, {
       observe: 'response' // Observe the full response
     }).pipe(
       catchError((error: any) => {
@@ -30,6 +32,7 @@ export class ProjetService {
       })
     );
   }
+  
   
   putProjet(id: string, formData: any): Observable<Projet> {
   return this.http.put<Projet | HttpErrorResponse>(`http://localhost:9090/Projet/${id}`, formData)
@@ -65,4 +68,15 @@ export class ProjetService {
     const url = `http://localhost:9090/Projet/status/${ProjetId}`;
     return this.http.put<Projet>(url, { status });
   }
+
+  getProjetsByCriteria(): Observable<Projet[]> {
+    const ownedBy = localStorage.getItem('user_id') || '';
+    const withUser = localStorage.getItem('user_id') || '';
+
+    // Construct the URL with query parameters
+    const url = `http://localhost:9090/Projet/filter?ownedBy=${encodeURIComponent(ownedBy)}&with=${encodeURIComponent(withUser)}`;
+
+    return this.http.get<Projet[]>(url);
+  }
+
 }

@@ -2,7 +2,7 @@
     <div class="col-12">
         <div class="card px-6 py-6">
             <p-toast></p-toast>
-            <p-toolbar styleClass="mb-4">
+            <p-toolbar styleClass="mb-4" *ngIf="getUserRole() === 'admin'">
                 <ng-template pTemplate="left">
                     <div class="my-2">
                         <button pButton pRipple label="Ajouter un service" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>

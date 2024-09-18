@@ -46,70 +46,28 @@
 </div>
 
 <!-- Partner -->
-<div class="repair-partner-area bg-f9fafb">
+<div *ngIf="Users.length > 0" class="repair-partner-area bg-f9fafb">
     <div class="container">
-        <div class="partner-slides">
-            <owl-carousel-o [options]="partnerSlides">
-                <ng-template carouselSlide>
-                    <div class="single-repair-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-1.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover1.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-repair-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-2.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover2.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-repair-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-3.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover3.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-repair-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-10.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover10.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-repair-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-5.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover5.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-repair-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-6.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover6.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-repair-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-7.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover7.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-            </owl-carousel-o>
+        <div class="section-title">
+            <h2>Nos Partenaires</h2>
+            <div class="bar"></div>
         </div>
+      <div class="partner-slides">
+        <owl-carousel-o [options]="partnerSlides">
+          <ng-template carouselSlide *ngFor="let partner of Users">
+            <div class="single-repair-partner">
+              <a href="#" target="_blank">
+                <img [src]="getImageUrl(partner.image)" [alt]="partner.nom" />
+              </a>
+            </div>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
     </div>
-</div>
+  </div>
+  
+
+
 
 <!-- About -->
 <div class="repair-about-area ptb-80">

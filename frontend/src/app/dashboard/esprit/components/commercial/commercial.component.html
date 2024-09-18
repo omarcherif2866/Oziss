@@ -1,0 +1,147 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+                    <div class="my-2">
+                        <button pButton pRipple label="Ajouter un commerciale" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    </div>
+                </ng-template>
+
+            </p-toolbar>
+
+
+
+
+            <p-table #dt [value]="commerciales" [columns]="cols" responsiveLayout="scroll" [rows]="5" [globalFilterFields]="['nom']" [paginator]="true" [rowsPerPageOptions]="[5,10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedCommerciale" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0">Manage commerciales</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" (input)="onGlobalFilter(dt, $event)" placeholder="Search..."  class="w-full sm:w-auto"/>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Image</th>
+                        <th pSortableColumn="name">Nom <p-sortIcon field="nom"></p-sortIcon></th>
+                        <th pSortableColumn="description">Email <p-sortIcon field="email"></p-sortIcon></th>
+                        <th pSortableColumn="subDesc">Numero de Telephone <p-sortIcon field="phoneNumber"></p-sortIcon></th>
+
+                        <th>Action</th>
+
+                        <th></th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-commerciale>
+                    <tr>
+
+
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Image</span>
+                            <img [src]="getImageUrl(commerciale.image)" [alt]="commerciale.image" width="100" class="shadow-4" />
+                          </td>          
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">nom</span>
+                            {{commerciale.nom}}
+                        </td>             
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">email</span>
+                            {{commerciale.email}}
+                        </td>    
+                        <td style="width:14%; min-width:8rem;">
+                            <span class="p-column-title">phoneNumber</span>
+                            {{commerciale.phoneNumber}}
+                        </td>
+                          
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editCommerciale(commerciale)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteCommerciale(commerciale)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+
+
+
+
+        <p-dialog [(visible)]="commercialeDialog" [style]="{width: '450px'}" header="Détails du commercial" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <form [formGroup]="commercialeForm" (ngSubmit)="saveCommercial()">
+                    <div class="field">
+                        <label for="nom">Nom</label>
+                        <input type="text" pInputText id="nom" formControlName="nom" required autofocus 
+                               [ngClass]="{'ng-invalid ng-dirty': submitted && commercialeForm.get('nom')!.invalid}"/>
+                        <small class="ng-dirty ng-invalid" *ngIf="submitted && commercialeForm.get('nom')!.invalid">Nom est requis.</small>
+                    </div>
+
+                    <div class="field">
+                        <label for="inputEmail">Email</label>
+                        <input type="email" id="inputEmail" pInputText class="form-control" placeholder="Entrez l'adresse email" 
+                               formControlName="email" required>
+                        <small *ngIf="submitted && commercialeForm.get('email')!.invalid" class="text-danger">
+                            Email invalide.
+                        </small>
+                    </div>
+        
+                    <div class="field">
+                        <label for="signupPassword">Mot de passe</label>
+                        <p-password id="signupPassword" placeholder="Enter Password" formControlName="password" [toggleMask]="true" class="w-full p-3" required></p-password>
+                        
+                        <div *ngIf="(commercialeForm.get('password')?.touched || submitted) && commercialeForm.get('password')?.invalid" class="text-danger">
+                            <div *ngIf="commercialeForm.get('password')?.errors?.required">Le mot de passe est requis.</div>
+                            <div *ngIf="commercialeForm.get('password')?.errors?.minlength">Le mot de passe doit comporter au moins 8 caractères.</div>
+                            <div *ngIf="commercialeForm.get('password')?.errors?.pattern">Le mot de passe doit contenir au moins une majuscule, un chiffre et un symbole.</div>
+                        </div>
+                    </div>
+                    
+
+        
+                    <div class="field">
+                        <label for="inputTel">Numéro de téléphone</label>
+                        <input type="tel" id="inputTel" pInputText class="form-control" placeholder="Entrez le numéro de téléphone" 
+                               formControlName="phoneNumber" required>
+                        <small *ngIf="submitted && commercialeForm.get('phoneNumber')!.invalid" class="text-danger">
+                            Numéro de téléphone requis.
+                        </small>
+                    </div>
+                    <div class="field">
+                        <label for="image">Image</label>
+                        <p-fileUpload mode="basic" name="image" accept="image/*" maxFileSize="1000000" 
+                                      (onSelect)="onFileSelected($event)" label="Choisir une image" chooseLabel="Choisir une image">
+                        </p-fileUpload>
+                    </div>
+                </form>
+            </ng-template>
+        
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button pButton pRipple label="Enregistrer" icon="pi pi-check" class="p-button-text" (click)="saveCommercial()"></button>
+            </ng-template>
+        </p-dialog>
+
+        
+
+        <p-dialog [(visible)]="deletecommercialeDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+              <span *ngIf="commerciale">Vous voulez supprimer ce commerciale ?</span>
+            </div>
+            <ng-template pTemplate="footer">
+              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deletecommercialeDialog = false"></button>
+              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+
+    </div>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Produit } from '../../models/produit';
-import { Order } from '../../models/order';
+import { Monnaie, Order } from '../../models/order';
 import { User } from '../../models/user';
 import { OrderService } from '../../services/order.service';
 import { AuthService } from '../../services/auth/auth.service';
@@ -23,6 +23,7 @@ export class CheckoutComponent implements OnInit {
     client: {} as User,
     produits: [],
     besoin: '',
+    budget:0,
     pdf:[],
     status: 'En attente'
   };
@@ -66,6 +67,8 @@ export class CheckoutComponent implements OnInit {
     formData.append('client', clientId);
     formData.append('produits', JSON.stringify(produitsToSend));
     formData.append('besoin', this.besoin);
+    formData.append('budget', this.order.budget.toString());
+    formData.append('monnaie', this.order.monnaie || '');
 
     for (let i = 0; i < this.order.pdf.length; i++) {
       const file = this.order.pdf[i];
@@ -124,6 +127,10 @@ proceedToCheckout(): void {
     const returnUrl = this.router.url; // Récupère l'URL actuelle
     this.router.navigate(['/signin'], { queryParams: { returnUrl } });
   }
+}
+
+monnaieKeys(): string[] {
+  return Object.values(Monnaie);
 }
 
 

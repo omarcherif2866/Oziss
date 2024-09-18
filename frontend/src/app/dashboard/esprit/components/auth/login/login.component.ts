@@ -5,7 +5,7 @@ import { Message, MessageService } from 'primeng/api';
 import Swal from 'sweetalert2';
 import { User } from '../../../models/user';
 import { LayoutService } from 'src/app/dashboard/layout/service/app.layout.service';
-import { UserService } from '../../../service/user.service';
+import { AuthService } from '../../../../../components/services/auth/auth.service';
 
 @Component({
     selector: 'app-login',
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
     user!: User;
     messages: Message[] = []; // Propriété pour stocker les messages à afficher
 
-    constructor(public layoutService: LayoutService, private formBuilder: FormBuilder, private service: UserService,
+    constructor(public layoutService: LayoutService, private formBuilder: FormBuilder, private service: AuthService,
       private router:Router,  private messageService: MessageService
     ) { }
   
@@ -64,18 +64,20 @@ export class LoginComponent implements OnInit {
             console.log('User email stored in localStorage:', localStorage.getItem('user_email'));
             console.log('connexion réussie');
             this.service.setLoggedIn(true);
-            console.log("signin successful");
+            console.log("signin successful");           
             Swal.fire({
               icon: 'success',
               title: 'Vous êtes connecté',
               showConfirmButton: false,
               timer: 1500
-            });            
+            }); 
             this.router.navigate(['/profil', data._id]);
           },
           (error) => {
             console.error(error);
             console.log("signin error");
+            this.messageService.add({ severity: 'error', summary: 'Erreur lors de la connexion', detail: error });
+
           }
         );
       }

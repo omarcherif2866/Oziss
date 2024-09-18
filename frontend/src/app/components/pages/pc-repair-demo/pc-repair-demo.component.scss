@@ -299,31 +299,27 @@
         position: relative;
 
         img {
-            width: auto !important;
-            display: inline-block !important;
-
-            &:last-child {
-                position: absolute;
-                top: 20px;
-                left: 0;
-                right: 0;
-                margin: 0 auto;
-                transition: var(--transition);
-                opacity: 0;
-                visibility: hidden;
-            }
+            width: 150px; /* Fixer la largeur */
+            height: 100px; /* Fixer la hauteur */
+            object-fit: contain; /* Maintient le contenu de l'image visible, même avec des dimensions fixes */
+            display: block; /* S'assure que l'image s'affiche correctement */
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            // filter: drop-shadow(2px 2px 7px cyan);
         }
+        
         &:hover {
             img {
                 &:last-child {
                     opacity: 1;
                     visibility: visible;
-                    top: 0;
+                    top: 0; /* Assurez-vous que ce style est approprié pour votre cas */
                 }
             }
         }
     }
 }
+
+
 
 /*about-css*/
 .repair-about-content {

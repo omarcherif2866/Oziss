@@ -8,6 +8,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { CalendarOptions } from '@fullcalendar/core';
+import { UserService } from '../../service/user.service';
+import { User } from '../../models/user';
 @Component({
   selector: 'app-projet',
   templateUrl: './projet.component.html',
@@ -32,13 +34,17 @@ export class ProjetComponent {
   ];
   deleteProjetDialog: boolean = false;
   selectedStatuses: { [key: string]: string } = {}; // Tableau pour stocker les statuts sélectionnés par commande
+  Users: User[] = [];
+  admin: User[] = [];
 
+  adminId: string | null = null;
   showCalendar: boolean = false;
   events: any[] = [];
   calendarOptions!: CalendarOptions;
   constructor(
     private projetService: ProjetService,private messageService: MessageService,
-    private formBuilder: FormBuilder, private sanitizer: DomSanitizer
+    private formBuilder: FormBuilder, private sanitizer: DomSanitizer,
+    private userService: UserService
 
 
   ) {}
@@ -47,7 +53,8 @@ export class ProjetComponent {
     this.getAllProjets()
     this.initializeForm();
     this.initializeCalendarOptions();
-
+    this.getAllPartners()
+    this.getAdmin()
   }
 
   initializeForm() {
@@ -55,12 +62,19 @@ export class ProjetComponent {
       nom: ['', Validators.required],
       description: [''],
       dateDebut: [null, Validators.required],
+      with: [null],  // Ajoutez ce champ au formulaire
+
     });
   }
   
   getUserRole(): string | null {
     return localStorage.getItem('userRole');
   }
+
+  getUserId(): string {
+    return localStorage.getItem('user_id') || ''; // Retourne l'ID de l'utilisateur connecté
+  }
+
 
   openNew() {
     this.projet = {
@@ -133,6 +147,68 @@ export class ProjetComponent {
     this.submitted = false;
   }
 
+  // saveProjet(): void {
+  //   this.submitted = true;
+  
+  //   if (this.projetForm.invalid) {
+  //     console.error('Veuillez remplir tous les champs obligatoires.');
+  //     return;
+  //   }
+  
+  //   // Création de l'objet FormData
+  //   const formData = new FormData();
+  //   formData.append('nom', this.projetForm.get('nom')?.value);
+  //   formData.append('description', this.projetForm.get('description')?.value);
+  // // Récupération et formatage de la date
+  // const dateDebut = this.projetForm.get('dateDebut')?.value;
+  // if (dateDebut) {
+  //   console.log('Date avant formatage:', dateDebut);
+  //   const formattedDate = dateDebut.toISOString().split('T')[0];
+  //   console.log('Date formatée:', formattedDate);
+  //   formData.append('dateDebut', formattedDate);
+  // } else {
+  //   console.warn('La date de début est vide ou non définie.');
+  // }
+  
+  //   for (let i = 0; i < this.projet.pdf!.length; i++) {
+  //     const file = this.projet.pdf![i];
+  //     formData.append('pdf', file, file.name); // Assurez-vous que `file` est un objet `File`
+  //   }
+  
+  //   console.log('Données envoyées:', formData);
+  
+  //   if (this.projet._id) {
+  //     // Mise à jour du projet
+  //     this.projetService.putProjet(this.projet._id, formData).subscribe(
+  //       res => {
+  //         console.log('Réponse du backend pour la mise à jour du projet :', res);
+  //         this.projetDialog = false;
+  //         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Projet mis à jour', life: 3000 });
+  //         this.getAllProjets();
+  //       },
+  //       error => {
+  //         console.error('Erreur lors de la mise à jour du projet :', error);
+  //         this.messageService.add({ severity: 'error', summary: 'Erreur lors de la mise à jour du projet', detail: error.message });
+  //       }
+  //     );
+  //   } else {
+  //     // Ajouter un nouveau projet
+  //     this.projetService.addProjet(formData).subscribe(
+  //       res => {
+  //         console.log('Réponse du backend pour l\'ajout du projet :', res);
+  //         this.projetDialog = false;
+  //         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Projet ajouté', life: 3000 });
+  //         this.getAllProjets();
+  //       },
+  //       error => {
+  //         console.error('Erreur lors de l\'ajout du projet :', error);
+  //         this.messageService.add({ severity: 'error', summary: 'Erreur lors de l\'ajout du projet', detail: error.message });
+  //       }
+  //     );
+  //   }
+  // }
+  
+
   saveProjet(): void {
     this.submitted = true;
   
@@ -141,30 +217,44 @@ export class ProjetComponent {
       return;
     }
   
-    // Création de l'objet FormData
     const formData = new FormData();
     formData.append('nom', this.projetForm.get('nom')?.value);
     formData.append('description', this.projetForm.get('description')?.value);
-  // Récupération et formatage de la date
-  const dateDebut = this.projetForm.get('dateDebut')?.value;
-  if (dateDebut) {
-    console.log('Date avant formatage:', dateDebut);
-    const formattedDate = dateDebut.toISOString().split('T')[0];
-    console.log('Date formatée:', formattedDate);
-    formData.append('dateDebut', formattedDate);
-  } else {
-    console.warn('La date de début est vide ou non définie.');
-  }
   
-    for (let i = 0; i < this.projet.pdf!.length; i++) {
-      const file = this.projet.pdf![i];
-      formData.append('pdf', file, file.name); // Assurez-vous que `file` est un objet `File`
+    const dateDebut = this.projetForm.get('dateDebut')?.value;
+    if (dateDebut) {
+      const formattedDate = dateDebut.toISOString().split('T')[0];
+      formData.append('dateDebut', formattedDate);
+    } else {
+      console.warn('La date de début est vide ou non définie.');
     }
   
-    console.log('Données envoyées:', formData);
+    if (this.projet.pdf) {
+      for (let i = 0; i < this.projet.pdf.length; i++) {
+        const file = this.projet.pdf[i];
+        formData.append('pdf', file, file.name);
+      }
+    }
+  
+    const userRole = this.getUserRole();
+    const userId = this.getUserId();
+    let ownedBy = '';
+    let withUser: string | null = null;
+  
+    if (userRole === 'admin') {
+      ownedBy = userId;
+      withUser = this.projetForm.get('with')?.value?._id || this.projetForm.get('with')?.value;
+    } else if (userRole === 'partner') {
+      ownedBy = userId;
+      withUser = this.adminId ; // Utilisation de l'ID de l'admin ou valeur par défaut
+    }
+  
+    formData.append('ownedBy', ownedBy);
+    if (withUser) {
+      formData.append('with', withUser); // Assurez-vous que withUser est une chaîne
+    }
   
     if (this.projet._id) {
-      // Mise à jour du projet
       this.projetService.putProjet(this.projet._id, formData).subscribe(
         res => {
           console.log('Réponse du backend pour la mise à jour du projet :', res);
@@ -178,8 +268,7 @@ export class ProjetComponent {
         }
       );
     } else {
-      // Ajouter un nouveau projet
-      this.projetService.addProjet(formData).subscribe(
+      this.projetService.addProjet(ownedBy, formData).subscribe(
         res => {
           console.log('Réponse du backend pour l\'ajout du projet :', res);
           this.projetDialog = false;
@@ -194,33 +283,55 @@ export class ProjetComponent {
     }
   }
   
+  
+  
 
+  // getAllProjets(): void {
+  //   this.projetService.getProjet().subscribe(
+  //     projets => {
+  //       console.log('Projets récupérés:', projets); // Debugging
+  //       this.projets = projets;
+  //       this.events = projets.map(projet => ({
+  //         title: `Nom : ${projet.nom} <br> Status : ${projet.status}`,
+  //         start: projet.dateDebut,
+  //         extendedProps: {
+  //           description: projet.description,
+  //           status: projets.forEach(projet => {
+  //             this.selectedStatuses[projet._id] = projet.status || ''; // Initialiser selectedStatuses avec le statut actuel
+  //           })
+
+  //         }
+  //       }));
+  //       this.initializeCalendarOptions();
+
+  //     },
+  //     error => {
+  //       console.error('Erreur lors de la récupération des projets:', error);
+  //     }
+  //   );
+  // }
+  
   getAllProjets(): void {
-    this.projetService.getProjet().subscribe(
+    this.projetService.getProjetsByCriteria().subscribe(
       projets => {
         console.log('Projets récupérés:', projets); // Debugging
         this.projets = projets;
         this.events = projets.map(projet => ({
-          title: `Nom : ${projet.nom} <br> Status : ${projet.status}`,
+          title: `Nom : ${projet.nom} <br> Status : ${projet.status} <br> Créer par : ${projet.ownedBy?.email}<br> avec : ${projet.with?.email}`,
           start: projet.dateDebut,
           extendedProps: {
             description: projet.description,
             status: projets.forEach(projet => {
               this.selectedStatuses[projet._id] = projet.status || ''; // Initialiser selectedStatuses avec le statut actuel
-            })
-
-          }
+            })          }
         }));
         this.initializeCalendarOptions();
-
       },
       error => {
         console.error('Erreur lors de la récupération des projets:', error);
       }
     );
   }
-  
-
 
   onGlobalFilter(table: any, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
@@ -288,21 +399,57 @@ export class ProjetComponent {
       locale: 'fr', // Configuration en français
       height: '500px', // Ajuster la hauteur du calendrier
       events: this.events,
-      eventContent: this.renderEventContent
+      eventContent: this.renderEventContent,
+
     };
   }
 
   renderEventContent(eventInfo: any) {
     return {
       html: `
-        <div>
+        <div style="font-size: 0.8em; color: white; padding: 5px; border-radius: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
           <b>${eventInfo.event.title}</b>
         </div>`
     };
   }
   
   
+
+  
     toggleCalendar() {
     this.showCalendar = !this.showCalendar; // Basculer l'affichage du calendrier
+  }
+
+  getAllPartners(): void {
+    this.userService.getUser().subscribe(ss => {
+      // Afficher les utilisateurs récupérés dans la console
+      console.log("Users récupérées:", ss);
+      
+      // Filtrer les utilisateurs pour ne garder que ceux avec userType = 'client'
+      this.Users = ss.filter(user => user.userType === 'partner');
+      
+      // Afficher les utilisateurs filtrés dans la console pour vérification
+      console.log("Partners filtrés:", this.Users);
+    }, error => {
+      // Gestion des erreurs
+      console.error("Erreur lors de la récupération des utilisateurs:", error);
+    });
+  }
+
+  getAdmin(): void {
+    this.userService.getUser().subscribe(ss => {
+      console.log("Users récupérées: ", ss);
+      this.admin = ss.filter(user => user.userType === 'admin');
+      console.log("admin filtré:", this.admin);
+
+      // Vérifiez que la liste d'utilisateurs n'est pas vide et que _id est défini
+      if (this.admin.length > 0 && this.admin[0]._id) {
+        this.adminId = this.admin[0]._id;
+      } else {
+        this.adminId = null; // Assurez-vous que adminId est null si l'ID n'est pas disponible
+      }
+    }, error => {
+      console.error("Erreur lors de la récupération des utilisateurs:", error);
+    });
   }
 }

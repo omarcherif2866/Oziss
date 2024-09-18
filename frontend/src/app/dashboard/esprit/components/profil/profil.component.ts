@@ -102,6 +102,11 @@ export class ProfilComponent {
         formData.append('availableResources', this.form.availableResources);
       }
 
+      // Ajoutez le fichier image s'il a été sélectionné
+      if (this.uploadedFiles.length > 0) {
+        formData.append('image', this.uploadedFiles[0]); // Vous pouvez adapter cela si plusieurs fichiers sont gérés
+      }
+
       // Appelez le service pour mettre à jour le profil utilisateur
       this.userService.updateUserProfile(this.userId, formData).subscribe(
         (updatedUser: User) => {
