@@ -45,6 +45,8 @@ import { CartComponent } from './components/pages/cart/cart.component';
 import { ClientsModule } from './dashboard/esprit/components/clients/clients.module';
 import { ReunionModule } from './dashboard/esprit/components/reunion/reunion.module';
 import { CommercialModule } from './dashboard/esprit/components/commercial/commercial.module';
+import { ActualiteModule } from './dashboard/esprit/components/actualite/actualite.module';
+import { TemoignageModule } from './dashboard/esprit/components/temoignage/temoignage.module';
 
 @NgModule({
   declarations: [
@@ -83,6 +85,8 @@ import { CommercialModule } from './dashboard/esprit/components/commercial/comme
     OrdersModule,
     ClientsModule,
     ProduitModule,
+    ActualiteModule,
+    TemoignageModule,
     ProfilModule,
     ServiceModule,
     ReunionModule,

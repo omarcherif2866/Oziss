@@ -31,22 +31,22 @@
                                             <form (submit)="creerCompte()" [formGroup]="form" id="createForm" enctype="multipart/form-data">
                                                 <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="inputName">Full Name</label>
-                                                        <input type="text" id="inputName" pInputText class="form-control" placeholder="Enter Full Name" formControlName="nom" required>
+                                                        <label for="inputName">Nom</label>
+                                                        <input type="text" id="inputName" pInputText class="form-control" placeholder="Votre Nom" formControlName="nom" required>
                                                     </div>
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
                                                         <label for="inputEmail">Email</label>
-                                                        <input type="email" id="inputEmail" pInputText class="form-control" placeholder="Enter Email Address" formControlName="email" required>
+                                                        <input type="email" id="inputEmail" pInputText class="form-control" placeholder="Votre adresse email" formControlName="email" required>
                                                     </div>
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="inputTel">Phone Number</label>
-                                                        <input type="tel" id="inputTel" pInputText class="form-control" placeholder="Enter Telephone Number" formControlName="phoneNumber" required>
+                                                        <label for="inputTel">Numéro de téléphone</label>
+                                                        <input type="tel" id="inputTel" pInputText class="form-control" placeholder="Votre Numéro de téléphone" formControlName="phoneNumber" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="signupPassword">Password</label><br>
-                                                        <p-password id="signupPassword" placeholder="Enter Password" formControlName="password" [toggleMask]="true" class="w-full p-3" required></p-password>
+                                                        <label for="signupPassword">Mot de passe</label><br>
+                                                        <p-password id="signupPassword" placeholder="Votre Mot de passe" formControlName="password" [toggleMask]="true" class="w-full p-3" required></p-password>
                                                         <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="text-danger">
                                                             <div *ngIf="form.get('password')?.errors?.required">Le mot de passe est requis.</div>
                                                             <div *ngIf="form.get('password')?.errors?.minlength">Le mot de passe doit comporter au moins 8 caractères.</div>
@@ -54,11 +54,11 @@
                                                         </div>
                                                     </div>
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="inputConfirmPassword">Confirm Password</label>
-                                                        <p-password id="inputConfirmPassword" placeholder="Confirm Password" formControlName="confirmPassword" [toggleMask]="true" class="w-full p-3" required></p-password>
+                                                        <label for="inputConfirmPassword">Confirmer mot de passe</label>
+                                                        <p-password id="inputConfirmPassword" placeholder="Retaper votre Mot de passe" formControlName="confirmPassword" [toggleMask]="true" class="w-full p-3" required></p-password>
                                                     </div>
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="inputImage">Image URL</label>
+                                                        <label for="inputImage">Image</label>
                                                         <div class="ms-auto position-relative">
                                                             <div class="position-absolute top-50 translate-middle-y search-icon px-3"><i class="bi bi-image-fill"></i></div>
                                                             <input type="file" class="form-control radius-30 ps-5" id="inputImage" (change)="onFileChange($event)" required>
@@ -67,30 +67,30 @@
                                                 </div>
                                                 <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="inputCompanyName">Company Name</label>
-                                                        <input type="text" id="inputCompanyName" pInputText class="form-control" placeholder="Enter Company Name" formControlName="companyName" required>
+                                                        <label for="inputCompanyName">Nom de l'entreprise </label>
+                                                        <input type="text" id="inputCompanyName" pInputText class="form-control" placeholder="Votre entreprise" formControlName="companyName" required>
                                                     </div>
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="inputIndustry">Industry</label>
-                                                        <input type="text" id="inputIndustry" pInputText class="form-control" placeholder="Enter Industry" formControlName="industry" required>
+                                                        <label for="inputIndustry">Secteur d'activité  </label>
+                                                        <input type="text" id="inputIndustry" pInputText class="form-control" placeholder="Votre Secteur d'activité" formControlName="industry" required>
                                                     </div>
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="inputPosition">Position</label>
-                                                        <input type="text" id="inputPosition" pInputText class="form-control" placeholder="Enter Position" formControlName="position" required>
+                                                        <label for="inputPosition">Poste occupé </label>
+                                                        <input type="text" id="inputPosition" pInputText class="form-control" placeholder="Votre Poste occupé" formControlName="position" required>
                                                     </div>
                                                 </div>
                                                 <div class="form-row" style="display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px;">
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="inputServicesNeeded">Types of Services Needed</label>
-                                                        <input type="text" id="inputServicesNeeded" pInputText class="form-control" placeholder="Enter Types of Services Needed" formControlName="servicesNeeded">
+                                                        <label for="inputServicesNeeded">Types de services recherchés</label>
+                                                        <input type="text" id="inputServicesNeeded" pInputText class="form-control" placeholder="Types de services recherchés" formControlName="servicesNeeded">
                                                     </div>
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="inputMainObjectives">Main Objectives</label>
-                                                        <input type="text" id="inputMainObjectives" pInputText class="form-control" placeholder="Enter Main Objectives" formControlName="mainObjectives">
+                                                        <label for="inputMainObjectives">Objectifs principaux</label>
+                                                        <input type="text" id="inputMainObjectives" pInputText class="form-control" placeholder="Vos Objectifs principaux" formControlName="mainObjectives">
                                                     </div>
                                                     <div class="form-group" style="flex: 1; min-width: 200px;">
-                                                        <label for="inputEstimatedBudget">Estimated Budget</label>
-                                                        <input type="number" id="inputEstimatedBudget" pInputText class="form-control" placeholder="Enter Estimated Budget" formControlName="estimatedBudget">
+                                                        <label for="inputEstimatedBudget">Budget estimé</label>
+                                                        <input type="number" id="inputEstimatedBudget" pInputText class="form-control" placeholder="Votre Budget estimé" formControlName="estimatedBudget">
                                                     </div>
                                                 </div>
                                                 <div class="flex items-center justify-between mb-5 gap-5">

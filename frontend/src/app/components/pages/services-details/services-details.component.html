@@ -53,7 +53,7 @@
                     <h3>{{ service?.nom }}</h3>
                     <p>{{ service?.description }}</p>
                 </div>
-                <div class="col-lg-6">
+                <div>
                     <div class="repair-about-content">
                         <ul>
                             <li *ngFor="let item of service?.subDesc">
@@ -70,109 +70,69 @@
     </div>
 </div>
 
-<div class="ml-partner-area pt-0 ptb-80">
+<div class="repair-partner-area bg-f9fafb">
     <div class="container">
-        <div class="partner-slides">
-            <owl-carousel-o [options]="partnerSlides">
-                <ng-template carouselSlide>
-                    <div class="single-ml-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-1.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover1.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-ml-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-2.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover2.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-ml-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-3.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover3.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-ml-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-10.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover10.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-ml-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-5.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover5.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-ml-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-6.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover6.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-                <ng-template carouselSlide>
-                    <div class="single-ml-partner">
-                        <a href="#" target="_blank">
-                            <img src="assets/img/partner-img/partner-7.png" alt="image">
-                            <img src="assets/img/partner-img/partner-hover7.png" alt="image">
-                        </a>
-                    </div>
-                </ng-template>
-            </owl-carousel-o>
-        </div>
+      <div class="section-title">
+        <h2>Nos Partenaires</h2>
+        <div class="bar"></div>
+        <p>
+          Nous collaborons avec des entreprises de premier plan dans divers secteurs pour garantir des solutions technologiques de qualité et adaptées aux exigences locales et internationales.
+        </p>
+      </div>
+      <div class="partner-slides">
+        <owl-carousel-o [options]="partnerSlides">
+          <ng-template carouselSlide *ngFor="let partner of allPartners">
+            <div class="single-repair-partner">
+              <a [href]="partner.url" target="_blank">
+                <img [src]="getImageUrl(partner.image)" [alt]="partner.nom" />
+              </a>
+            </div>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
     </div>
-</div>
-<div class="funfacts-area ptb-80" style="
-    background-image: url('assets/img/map.png');
-    background-size: 70%; /* Ajuste la taille de l'image pour un effet de zoom out */
-    background-position: center;
-    background-repeat: no-repeat;
-    padding: 80px 0;
-    color: #fff; /* Optionnel: couleur du texte pour contraste */
-">
+  </div>
+
+  <div class="funfacts-area ptb-80">
     <div class="container">
         <div class="section-title">
-            <h2>We always try to understand users expectation</h2>
+            <h2>Nos projets</h2>
             <div class="bar"></div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Au fil du temps, notre expertise nous a permis de travailler dans plusieurs projets aussi différents les uns que les autres..</p>
         </div>
-        <div class="row">
+      <div class="row">
             <div class="col-lg-3 col-md-3 col-6 col-sm-3">
                 <div class="funfact">
-                    <h3><span [countUp]="180">00</span>K</h3>
-                    <p>Downloaded</p>
+                    <h3>+<span [countUp]="36"></span></h3>
+                    <p>Projets Délivrés</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-6 col-sm-3">
                 <div class="funfact">
-                    <h3><span [countUp]="20">00</span>K</h3>
-                    <p>Feedback</p>
+                    <h3>+<span [countUp]="9">00</span></h3>
+                    <p>Industries</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-6 col-sm-3">
                 <div class="funfact">
-                    <h3><span [countUp]="500">00</span>+</h3>
-                    <p>Workers</p>
+                    <h3>+<span [countUp]="40">00</span></h3>
+                    <p>Services supportés</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-3 col-6 col-sm-3">
                 <div class="funfact">
-                    <h3><span [countUp]="70">00</span>+</h3>
-                    <p>Contributors</p>
+                    <h3>+<span [countUp]="25">00</span></h3>
+                    <p>Sites web crées</p>
                 </div>
             </div>
+        </div>
+        <!-- <div class="contact-cta-box">
+            <h3>Have any question about us?</h3>
+            <p>Don't hesitate to contact us</p>
+            <a routerLink="/contact" class="btn btn-primary">Contact Us</a>
+        </div> -->
+        <div class="map-bg">
+            <img src="assets/img/map.png" alt="map">
         </div>
     </div>
 </div>

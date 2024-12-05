@@ -16,6 +16,9 @@ import { User } from '../../models/user';
   styleUrl: './projet.component.scss'
 })
 export class ProjetComponent {
+  displayDialog: boolean = false; // Pour afficher le dialogue
+  displayModal: boolean = false;
+  selectedDescription: string = '';
   projets: Projet[] = [];
   selectedProjets: Projet[] = [];
   projet: Projet = {
@@ -56,6 +59,11 @@ export class ProjetComponent {
     this.getAllPartners()
     this.getAdmin()
   }
+
+  showFullDescription(description: string) {
+    this.selectedDescription = description;
+    this.displayModal = true;
+}
 
   initializeForm() {
     this.projetForm = this.formBuilder.group({
@@ -147,66 +155,6 @@ export class ProjetComponent {
     this.submitted = false;
   }
 
-  // saveProjet(): void {
-  //   this.submitted = true;
-  
-  //   if (this.projetForm.invalid) {
-  //     console.error('Veuillez remplir tous les champs obligatoires.');
-  //     return;
-  //   }
-  
-  //   // Création de l'objet FormData
-  //   const formData = new FormData();
-  //   formData.append('nom', this.projetForm.get('nom')?.value);
-  //   formData.append('description', this.projetForm.get('description')?.value);
-  // // Récupération et formatage de la date
-  // const dateDebut = this.projetForm.get('dateDebut')?.value;
-  // if (dateDebut) {
-  //   console.log('Date avant formatage:', dateDebut);
-  //   const formattedDate = dateDebut.toISOString().split('T')[0];
-  //   console.log('Date formatée:', formattedDate);
-  //   formData.append('dateDebut', formattedDate);
-  // } else {
-  //   console.warn('La date de début est vide ou non définie.');
-  // }
-  
-  //   for (let i = 0; i < this.projet.pdf!.length; i++) {
-  //     const file = this.projet.pdf![i];
-  //     formData.append('pdf', file, file.name); // Assurez-vous que `file` est un objet `File`
-  //   }
-  
-  //   console.log('Données envoyées:', formData);
-  
-  //   if (this.projet._id) {
-  //     // Mise à jour du projet
-  //     this.projetService.putProjet(this.projet._id, formData).subscribe(
-  //       res => {
-  //         console.log('Réponse du backend pour la mise à jour du projet :', res);
-  //         this.projetDialog = false;
-  //         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Projet mis à jour', life: 3000 });
-  //         this.getAllProjets();
-  //       },
-  //       error => {
-  //         console.error('Erreur lors de la mise à jour du projet :', error);
-  //         this.messageService.add({ severity: 'error', summary: 'Erreur lors de la mise à jour du projet', detail: error.message });
-  //       }
-  //     );
-  //   } else {
-  //     // Ajouter un nouveau projet
-  //     this.projetService.addProjet(formData).subscribe(
-  //       res => {
-  //         console.log('Réponse du backend pour l\'ajout du projet :', res);
-  //         this.projetDialog = false;
-  //         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Projet ajouté', life: 3000 });
-  //         this.getAllProjets();
-  //       },
-  //       error => {
-  //         console.error('Erreur lors de l\'ajout du projet :', error);
-  //         this.messageService.add({ severity: 'error', summary: 'Erreur lors de l\'ajout du projet', detail: error.message });
-  //       }
-  //     );
-  //   }
-  // }
   
 
   saveProjet(): void {
@@ -284,33 +232,6 @@ export class ProjetComponent {
   }
   
   
-  
-
-  // getAllProjets(): void {
-  //   this.projetService.getProjet().subscribe(
-  //     projets => {
-  //       console.log('Projets récupérés:', projets); // Debugging
-  //       this.projets = projets;
-  //       this.events = projets.map(projet => ({
-  //         title: `Nom : ${projet.nom} <br> Status : ${projet.status}`,
-  //         start: projet.dateDebut,
-  //         extendedProps: {
-  //           description: projet.description,
-  //           status: projets.forEach(projet => {
-  //             this.selectedStatuses[projet._id] = projet.status || ''; // Initialiser selectedStatuses avec le statut actuel
-  //           })
-
-  //         }
-  //       }));
-  //       this.initializeCalendarOptions();
-
-  //     },
-  //     error => {
-  //       console.error('Erreur lors de la récupération des projets:', error);
-  //     }
-  //   );
-  // }
-  
   getAllProjets(): void {
     this.projetService.getProjetsByCriteria().subscribe(
       projets => {
@@ -323,7 +244,8 @@ export class ProjetComponent {
             description: projet.description,
             status: projets.forEach(projet => {
               this.selectedStatuses[projet._id] = projet.status || ''; // Initialiser selectedStatuses avec le statut actuel
-            })          }
+            })          
+          }
         }));
         this.initializeCalendarOptions();
       },
@@ -387,7 +309,7 @@ export class ProjetComponent {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  initializeCalendarOptions() {
+  initializeCalendarOptions(): void {
     this.calendarOptions = {
       plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
       headerToolbar: {
@@ -398,11 +320,38 @@ export class ProjetComponent {
       initialView: 'dayGridMonth',
       locale: 'fr', // Configuration en français
       height: '500px', // Ajuster la hauteur du calendrier
-      events: this.events,
-      eventContent: this.renderEventContent,
-
+      events: this.projets.map(projet => ({
+        title: projet.nom,
+        start: projet.dateDebut,
+        extendedProps: {
+          projet: projet // Ajoutez ici l'objet projet complet
+        }
+      })),
+      eventContent: this.renderEventContent.bind(this), // Personnalisation de l'affichage des événements
+      eventClick: this.handleEventClick.bind(this) // Gérer le clic sur un événement
     };
   }
+
+  handleEventClick(event: any): void {
+    const projet: Projet = event.event.extendedProps.projet; // Assurez-vous que les détails du projet sont stockés ici
+    console.log('Projet sélectionné:', projet); // Pour déboguer
+    this.openDialog(projet); // Ouvrir le dialog avec le projet sélectionné
+}
+
+
+  onDialogHide() {
+    this.selectedProjets = []; // Réinitialiser les détails des projets
+  }
+
+  openDialog(projet: Projet): void {
+    console.log('Tentative d\'ouverture du dialog avec le projet:', projet); // Avant
+    this.selectedProjets = [projet]; // Mettre le projet sélectionné dans un tableau
+    this.displayDialog = true; // Afficher le dialog
+    console.log('Projet sélectionné:', this.selectedProjets); // Après
+}
+
+
+
 
   renderEventContent(eventInfo: any) {
     return {

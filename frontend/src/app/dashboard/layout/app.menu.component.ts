@@ -16,17 +16,11 @@ export class AppMenuComponent implements OnInit {
         const userRole = localStorage.getItem('userRole');
 
         this.model = [
-            // {
-            //     label: 'Home',
-            //     items: [
-            //         { label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard'] }
-            //     ]
-            // },
 
             {
-                label: 'UI Components',
+                label: 'Tableau de bord',
                 items: [
-                    { label: 'Chart', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/dashboard'] },                ]
+                    { label: 'Tableau de bord', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/dashboard'] },                ]
             },
 
 
@@ -38,31 +32,7 @@ export class AppMenuComponent implements OnInit {
             },
 
 
-            {
-                label: 'Pages',
-                icon: 'pi pi-fw pi-briefcase',
-                items: [
-    
-                    {
-                        label: 'Auth',
-                        icon: 'pi pi-fw pi-user',
-                        items: [
-                            {
-                                label: 'Login',
-                                icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['/auth/login']
-                            },
-                            {
-                                label: 'Signup',
-                                icon: 'pi pi-fw pi-sign-in',
-                                routerLink: ['/auth/signup']
-                            },
 
-                        ]
-                    },
-
-                ]
-            },
 
         ];
 
@@ -99,9 +69,23 @@ export class AppMenuComponent implements OnInit {
             });
 
             this.model.splice(2, 0, {
-                label: 'projet',
+                label: 'Projet',
                 items: [
-                    { label: 'projet', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/projet'] }
+                    { label: 'Projet', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/projet'] }
+                ]
+            });
+
+            this.model.splice(2, 0, {
+                label: 'Actualites',
+                items: [
+                    { label: 'Actualites', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/actualite'] }
+                ]
+            });
+
+            this.model.splice(2, 0, {
+                label: 'Images de la banniére',
+                items: [
+                    { label: 'Images de la banniére', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/imageBanniere'] }
                 ]
             });
 
@@ -111,6 +95,12 @@ export class AppMenuComponent implements OnInit {
                 label: 'Mes Commandes',
                 items: [
                     { label: 'Mes Commandes', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/commandes'] }
+                ]
+            });
+            this.model.splice(2, 0, {
+                label: 'Temoignages',
+                items: [
+                    { label: 'Temoignages', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/temoignages'] }
                 ]
             });
         } else if (userRole === 'partner') {
@@ -125,6 +115,12 @@ export class AppMenuComponent implements OnInit {
                 label: 'Projets et Collaborations',
                 items: [
                     { label: 'Projets', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/projet'] }
+                ]
+            });
+            this.model.splice(2, 0, {
+                label: 'Temoignages',
+                items: [
+                    { label: 'Temoignages', icon: 'pi pi-fw pi-calendar-plus', routerLink: ['/temoignages'] }
                 ]
             });
         } else if (userRole === 'commercial') {

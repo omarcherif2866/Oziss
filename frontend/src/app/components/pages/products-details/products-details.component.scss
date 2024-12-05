@@ -1,4 +1,47 @@
 /*products-details-css*/
+.single-repair-partner {
+    text-align: center;
+
+    a {
+        display: block;
+        position: relative;
+
+        img {
+            width: 150px; /* Fixer la largeur */
+            height: 100px; /* Fixer la hauteur */
+            object-fit: contain; /* Maintient le contenu de l'image visible, même avec des dimensions fixes */
+            display: block; /* S'assure que l'image s'affiche correctement */
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            // filter: drop-shadow(2px 2px 7px cyan);
+        }
+        
+        &:hover {
+            img {
+                &:last-child {
+                    opacity: 1;
+                    visibility: visible;
+                    top: 0; /* Assurez-vous que ce style est approprié pour votre cas */
+                }
+            }
+        }
+    }
+}
+
+.add-to-cart-btn {
+    display: block;
+    width: 20%;
+    color: var(--blackColor);
+    border: 1px solid var(--blackColor);
+    padding: 10px 15px;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: background-color 0.3s, color 0.3s; /* Ajoutez une transition pour un effet plus fluide */
+    cursor: pointer; /* Change le curseur en main */
+}
+.add-to-cart-btn:hover {
+    background-color: var(--blackColor);
+    color: var(--whiteColor);
+}
 .products-details-image {
     img {
         width: 100%;

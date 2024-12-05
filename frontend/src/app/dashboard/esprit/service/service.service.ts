@@ -59,4 +59,8 @@ export class ServiceService {
     return this.http.delete<Service>("http://localhost:9090/service/"+id)
 
   }
+
+  getServiceCount(): Observable<any> {
+    return this.http.get<any>(`http://localhost:9090/service/count`);
+  }
 }

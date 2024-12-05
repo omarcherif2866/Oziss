@@ -40,8 +40,11 @@ export class ClientsComponent {
   }
 
   getImageUrl(imageName: string): string {
-    return `http://localhost:9090/img/${imageName}`;
+    return `${imageName}`;
   }
+  // getImageUrl(imageName: string): string {
+  //   return `${imageName}`; 
+  // }
 
   onGlobalFilter(table: any, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');

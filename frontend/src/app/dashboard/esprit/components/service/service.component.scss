@@ -2,3 +2,13 @@
     border-radius: 50% !important; /* Assurez-vous que les styles sont forcés */
   }
   
+  @media only screen and (max-width: 767px) {
+    .service-description {
+        display: -webkit-box; // Utilisation de flexbox pour contrôler l'affichage
+        -webkit-box-orient: vertical; // Direction verticale
+        -webkit-line-clamp: 3; // Limite à 3 lignes
+        overflow: hidden; // Cache le texte supplémentaire
+        text-overflow: ellipsis; // Affiche des points de suspension pour le texte coupé
+    }
+
+  }

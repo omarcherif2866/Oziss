@@ -19,6 +19,33 @@ export class SignupComponent {
 
   hoveredElement: string | null = null;
 
+  staticPartners = [
+    {
+      nom: 'IBM',
+      image: 'assets/img/partner-img/ibm.png',
+      url: 'https://www.partner1.com'
+    },
+    {
+      nom: 'Microsoft',
+      image: 'assets/img/partner-img/microsoft.jpg',
+      url: 'https://www.partner2.com'
+    },
+    {
+      nom: 'Amazon Web Services (AWS)',
+      image: 'assets/img/partner-img/aws.jpg',
+      url: 'https://www.partner3.com'
+    },
+    {
+      nom: 'Oracle',
+      image: 'assets/img/partner-img/oracle.png',
+      url: 'https://www.partner3.com'
+    },
+    
+  ];
+
+  allPartners: any[] = [];
+
+
   constructor(private fb: FormBuilder, private userService: AuthService) { }
 
   ngOnInit(): void {
@@ -186,10 +213,14 @@ export class SignupComponent {
   }
 
   creerComptePartner() {
+    console.log("avant")
+
     if (this.formPartner.valid) {
+      console.log("Formulaire valide");
       const formData = new FormData();
+      console.log("apres")
   
-      // Ajout des champs généraux
+      
       formData.append('nom', this.formPartner.value.nom);
       formData.append('email', this.formPartner.value.email);
       formData.append('phoneNumber', this.formPartner.value.phoneNumber);
@@ -211,13 +242,14 @@ export class SignupComponent {
         formData.append('availableResources', this.formPartner.value.availableResources);
       }
   
-      // Ajout de l'image
+      
       if (this.formPartner.value.image instanceof File) {
         formData.append('image', this.formPartner.value.image);
       } else {
         console.error('Le champ image doit être un fichier');
       }
-  
+      console.log("apres")
+
       // Logs pour SweetAlert
       console.log('Selected role:', this.formPartner.value.userType);
       console.log('Selected image:', this.formPartner.value.image?.name);
@@ -244,7 +276,10 @@ export class SignupComponent {
           }); 
         }
       );
+    }else {
+      console.log("Formulaire invalide", this.formPartner.errors); // Affiche les erreurs de validation
     }
+    
   }
 
   onFileChangePartner(event: any) {
@@ -264,25 +299,54 @@ export class SignupComponent {
     return this.formPartner.get('password');
   }
 
-  getImageUrl(imageName?: string): string {
-    // Vérifiez si l'image existe dans le répertoire backend
-    const imageUrl = imageName ? `http://localhost:9090/img/${imageName}` : 'assets/img/default-image.png';
-    return imageUrl;
+//   getImageUrl(imageName?: string): string {
+//     // Vérifiez si l'image existe dans le répertoire backend
+//     const imageUrl = imageName ? `http://localhost:9090/img/${imageName}` : 'assets/img/default-image.png';
+//     return imageUrl;
+// }
+//   getAllPartners(): void {
+//     this.userService.getUser().subscribe(ss => {
+//       // Afficher les utilisateurs récupérés dans la console
+//       console.log("Users récupérées:", ss);
+      
+//       // Filtrer les utilisateurs pour ne garder que ceux avec userType = 'client'
+//       this.Users = ss.filter(user => user.userType === 'partner');
+      
+//       // Afficher les utilisateurs filtrés dans la console pour vérification
+//       console.log("Partners filtrés:", this.Users);
+//     }, error => {
+//       // Gestion des erreurs
+//       console.error("Erreur lors de la récupération des utilisateurs:", error);
+//     });
+//   }
+
+getImageUrl(imageName?: string): string {
+  if (imageName && !imageName.startsWith('assets/')) {
+    // Si l'image provient de la base de données, on utilise une URL spécifique
+    return `${imageName}`;
+  }
+  // Sinon, elle est dans les assets (statique)
+  return imageName ? imageName : 'assets/img/default-image.png';
 }
+
   getAllPartners(): void {
     this.userService.getUser().subscribe(ss => {
       // Afficher les utilisateurs récupérés dans la console
-      console.log("Users récupérées:", ss);
-      
-      // Filtrer les utilisateurs pour ne garder que ceux avec userType = 'client'
+      console.log("Users récupérés:", ss);
+
+      // Filtrer les utilisateurs pour ne garder que ceux avec userType = 'partner'
       this.Users = ss.filter(user => user.userType === 'partner');
-      
-      // Afficher les utilisateurs filtrés dans la console pour vérification
-      console.log("Partners filtrés:", this.Users);
+
+      // Combiner les partenaires récupérés dynamiquement avec les partenaires statiques
+      this.allPartners = [...this.Users, ...this.staticPartners];
+
+      // Afficher la liste complète des partenaires
+      console.log("Tous les partenaires:", this.allPartners);
+
     }, error => {
-      // Gestion des erreurs
       console.error("Erreur lors de la récupération des utilisateurs:", error);
     });
   }
+
 
 }

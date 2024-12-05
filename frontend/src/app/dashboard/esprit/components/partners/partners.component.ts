@@ -40,7 +40,7 @@ export class PartnersComponent {
   }
 
   getImageUrl(imageName: string): string {
-    return `http://localhost:9090/img/${imageName}`;
+    return `${imageName}`;
   }
 
   onGlobalFilter(table: any, event: Event) {

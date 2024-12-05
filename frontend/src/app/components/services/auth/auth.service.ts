@@ -35,9 +35,9 @@ export class AuthService {
     return this.http.get<User[]>("http://localhost:9090/api/user");
   }
 
-  getUserProfile(id:any) {
-    return this.http.get('http://localhost:9090/api/user/'+id)
-  }
+  getUserProfile(id: any): Observable<User> {
+    return this.http.get<User>(`http://localhost:9090/api/user/${id}`);
+}
 
   updateUserPassword(id: any, motdepasse: string, newPassword: string): Observable<any> {
     const data = {

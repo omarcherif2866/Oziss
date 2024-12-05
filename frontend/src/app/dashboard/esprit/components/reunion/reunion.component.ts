@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { Reunion } from '../../models/reunion';
 import { ReunionService } from '../../service/reunion.service';
 import { MessageService } from 'primeng/api';
-import { HttpErrorResponse } from '@angular/common/http';
+import { UserService } from '../../service/user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CalendarOptions } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-reunion',
@@ -15,6 +16,9 @@ import interactionPlugin from '@fullcalendar/interaction';
   styleUrl: './reunion.component.scss'
 })
 export class ReunionComponent {
+  displayDialog: boolean = false; // Pour afficher le dialogue
+  displayModal: boolean = false;
+  selectedDescription: string = '';
   reunions: Reunion[] = [];
   selectedReunions: Reunion[] = [];
   reunion: Reunion = {
@@ -38,13 +42,16 @@ export class ReunionComponent {
 
     // Ajoutez d'autres options de statut au besoin
   ];
+  deuxiemeMembre: any[] = [];  // Liste des membres pour le dropdown
+  selectedMember!: User; // Membre sélectionné
+  isAdmin: boolean = false; // Vérifier si l'utilisateur est admin
 
   showCalendar: boolean = false;
   events: any[] = [];
   calendarOptions!: CalendarOptions;
   constructor(
     private reunionService: ReunionService,private messageService: MessageService,
-    private formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,private userService: UserService,
 
   ) {}
 
@@ -53,7 +60,13 @@ export class ReunionComponent {
     this.getAllReunions()
     this.initializeForm();
     this.initializeCalendarOptions();
+    this.getAllUsers();
   }
+
+  showFullDescription(description: string) {
+    this.selectedDescription = description;
+    this.displayModal = true;
+}
 
   initializeForm() {
     this.reunionForm = this.formBuilder.group({
@@ -62,7 +75,8 @@ export class ReunionComponent {
       date: [null, Validators.required],
       heureDebut: [null, Validators.required],
       heureFin: [null, Validators.required],
-      logiciel: ['', Validators.required]  // Ajout d'un tableau pour les cases à cocher
+      logiciel: ['', Validators.required],  // Ajout d'un tableau pour les cases à cocher
+      deuxiemeMembre: [null] // Assurez-vous que selectedMember est bien inclus ici
 
     });
   }
@@ -164,6 +178,13 @@ export class ReunionComponent {
     const heureFin = this.reunionForm.get('heureFin')?.value;
     const logiciel = this.reunionForm.get('logiciel')?.value;
 
+    // Utilisez la valeur récupérée du formulaire
+    const selectedMember = this.reunionForm.get('deuxiemeMembre')?.value || ''; // Utiliser 'deuxiemeMembre' ici
+    const userRole = this.getUserRole(); // Utilisation de la fonction que vous avez déjà définie
+
+    // Si l'utilisateur est un partenaire, assignez 'admin@gmail.com' à deuxiemeMembre
+    const deuxiemeMembre = userRole === 'partner' ? 'admin@gmail.com' : selectedMember || '';
+
     // Vérifiez et formatez la date et les heures
     const formattedDate = date instanceof Date ? date.toISOString().split('T')[0] : '';
     const formattedHeureDebut = heureDebut instanceof Date ? heureDebut.toISOString().split('T')[1].substring(0, 5) : '';
@@ -177,7 +198,7 @@ export class ReunionComponent {
         heureFin: formattedHeureFin,
         createur: localStorage.getItem('user_id') || '',
         logiciel: logiciel,
-        deuxiemeMembre: 'admin@gmail.com'
+        deuxiemeMembre: deuxiemeMembre // L'attribut choisi
     };
 
     console.log('Données envoyées:', requestData);
@@ -219,25 +240,26 @@ export class ReunionComponent {
 
 
 
+getAllUsers(): void {
+  this.userService.getUser().subscribe(
+    (users) => {
+      // Filtrer uniquement les partenaires
+      this.deuxiemeMembre = users
+        .filter((user) => user.userType === 'partner') // Filtrer par le rôle "partenaire"
+        .map((user) => ({ nom: user.nom, email: user.email }));
+      console.log('Partenaires récupérés:', this.deuxiemeMembre);
+    },
+    (error) => {
+      console.error('Erreur lors de la récupération des utilisateurs:', error);
+    }
+  );
+}
 
 
 
 
 
-// getAllReunions(): void {
-//   this.reunionService.getReunion().subscribe(
-//     reunions => {
-//       this.reunions = reunions;
-//       reunions.forEach(reunion => {
-//         this.selectedStatuses[reunion._id] = reunion.status || ''; // Initialiser selectedStatuses avec le statut actuel
-//       });
-//       console.log("reunions récupérés:", this.reunions);
-//     },
-//     error => {
-//       console.error('Erreur lors de la récupération des reunions:', error);
-//     }
-//   );
-// }
+
 
 
 getAllReunions(): void {
@@ -270,25 +292,6 @@ getAllReunions(): void {
 onGlobalFilter(table: any, event: Event) {
   table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
 }
-
-
-// onStatusChange(reunion: Reunion, event: any) {
-//   const newStatus = event.value;
-//   this.reunionService.updateReunionStatus(reunion._id, newStatus).subscribe(
-//     (updatedReunion: Reunion) => {
-//       const index = this.reunions.findIndex(o => o._id === updatedReunion._id);
-//       if (index !== -1) {
-//         this.reunions[index] = updatedReunion;
-//         this.selectedStatuses[updatedReunion._id] = updatedReunion.status || ''; // Utilisation d'une valeur par défaut
-//         this.showMessage('success', 'Succès', 'Statut modifié');
-//       }
-//     },
-//     (error) => {
-//       console.error('Erreur lors de la mise à jour du statut de la reunion :', error.message, error.status);
-//       this.showMessage('error', 'Erreur', `Erreur lors de la mise à jour du statut : ${error.message}`);
-//     }
-//   );
-// }
 
 
 onStatusChange(reunion: Reunion, event: any) {
@@ -332,7 +335,23 @@ private showMessage(severity: string, summary: string, detail: string): void {
 }
 
 
-initializeCalendarOptions() {
+// initializeCalendarOptions() {
+//   this.calendarOptions = {
+//     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+//     headerToolbar: {
+//       left: 'prev',
+//       center: 'title',
+//       right: 'next',
+//     },
+//     initialView: 'dayGridMonth',
+//     locale: 'fr', // Configuration en français
+//     height: '500px', // Ajuster la hauteur du calendrier
+//     events: this.events,
+//     eventContent: this.renderEventContent
+//   };
+// }
+
+initializeCalendarOptions(): void {
   this.calendarOptions = {
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     headerToolbar: {
@@ -343,10 +362,36 @@ initializeCalendarOptions() {
     initialView: 'dayGridMonth',
     locale: 'fr', // Configuration en français
     height: '500px', // Ajuster la hauteur du calendrier
-    events: this.events,
-    eventContent: this.renderEventContent
+    events: this.reunions.map(reunion => ({
+      title: reunion.nom,
+      date: reunion.date,
+      extendedProps: {
+        reunion: reunion ,
+      }
+    })),
+    eventContent: this.renderEventContent.bind(this), // Personnalisation de l'affichage des événements
+    eventClick: this.handleEventClick.bind(this) // Gérer le clic sur un événement
   };
 }
+
+handleEventClick(event: any): void {
+  const reunion: Reunion = event.event.extendedProps.reunion; // Assurez-vous que les détails du projet sont stockés ici
+  console.log('Projet sélectionné:', reunion); // Pour déboguer
+  this.openDialog(reunion); // Ouvrir le dialog avec le projet sélectionné
+}
+
+
+onDialogHide() {
+  this.selectedReunions = []; // Réinitialiser les détails des projets
+}
+
+openDialog(reunion: Reunion): void {
+  console.log('Tentative d\'ouverture du dialog avec le reunion:', reunion); // Avant
+  this.selectedReunions = [reunion]; // Mettre le projet sélectionné dans un tableau
+  this.displayDialog = true; // Afficher le dialog
+  console.log('reunion sélectionné:', this.selectedReunions); // Après
+}
+
 
 renderEventContent(eventInfo: any) {
   return {

@@ -1,0 +1,74 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4" >
+                <ng-template pTemplate="left">
+                    <div class="my-2" >
+                        <button pButton pRipple label="Ajouter un témoignage" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <p-table #dt [value]="temoignages" [columns]="cols" responsiveLayout="scroll" [rows]="5" [globalFilterFields]="['nom']" [paginator]="true" [rowsPerPageOptions]="[5,10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [(selection)]="selectedTemoignages" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h5 class="m-0" >Nos temoignages</h5>
+                        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pSortableColumn="text" style="width: 40%;">Text <p-sortIcon field="nom"></p-sortIcon></th>
+                        <th >Action</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-temoignage>
+                    <tr>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">text</span>
+                            {{temoignage.text}}
+                        </td>                      
+                        <td>
+                            <div class="flex" >
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteTemoignage(temoignage)"></button>
+                            </div>
+                              
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog [(visible)]="temoignageDialog" [style]="{width: '450px'}" header="Détails du temoignage" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                <div class="field">
+                    <label for="text">Entrer Votre témoignage</label>
+                    <textarea id="text" pInputTextarea [(ngModel)]="temoignage.text" required rows="3" cols="20"></textarea>
+                </div>            
+                             
+                
+            </ng-template>
+            
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button  pButton pRipple [label]="actionLabel" icon="pi pi-check" class="p-button-text" (click)="saveTemoignage()"></button>
+            </ng-template>
+        </p-dialog>
+          
+          
+          <p-dialog [(visible)]="deleteTemoignageDialog" header="Confirmation" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+              <span *ngIf="temoignage">Voulez-vous supprimer ce temoignage ?</span>
+            </div>
+            <ng-template pTemplate="footer">
+              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteTemoignageDialog = false"></button>
+              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+    </div>
+</div>
+

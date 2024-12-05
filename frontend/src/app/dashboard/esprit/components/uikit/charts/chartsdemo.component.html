@@ -1,24 +1,51 @@
 <div style="display: flex; flex-direction: column; padding: 1rem;">
-  <div style="display: flex; flex-direction: row; gap: 1rem;" *ngIf="userRole === 'admin'">
-    <!-- Nombre total de produits -->
-    <div style="flex: 0 0 100%; max-width: 100%; margin-bottom: 1rem;">
-      <div class="card flex flex-column align-items-center">
-        <h5 class="text-left w-full">Le nombre total de produits:</h5>
-        <h1 class="text-center w-full" style="color: #E10209;">{{ productCount }}</h1>
-        <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
-      </div>
-    </div>
-  </div>
+  <div class="flex-row" style="display: flex; flex-direction: row; gap: 1rem;" *ngIf="userRole === 'admin'">
+        <!-- Nombre total de produits -->
+        <div style="flex: 1 1 0%; margin-bottom: 1rem;">
+            <div class="card flex flex-column align-items-center" style="background-color: #3801ec">
+              <h5 class="text-left w-full" style="color: white;">Le nombre total de produits:</h5>
+              <h1 class="text-center w-full" style="color: white;">{{ productCount }}</h1>
+              <p *ngIf="errorMessage" class="error" style="color: white;">{{ errorMessage }}</p>
+            </div>
+        </div>
 
-  <div style="display: flex; flex-direction: row; gap: 1rem;" *ngIf="userRole === 'admin'">
-    <!-- Produits les plus commandés et Nombre de clients / partenaires -->
-    <div style="flex: 0 0 50%; max-width: 50%;">
+        <!-- Nombre total de services -->
+        <div style="flex: 1 1 0%; margin-bottom: 1rem;">
+            <div class="card flex flex-column align-items-center" style="background-color: #109d00">
+                <h5 class="text-left w-full" style="color: white;">Le nombre total de services:</h5>
+                <h1 class="text-center w-full" style="color: white;">{{ serviceCount }}</h1>
+                <p *ngIf="errorMessage" class="error" style="color: white;">{{ errorMessage }}</p>
+            </div>
+        </div>
+
+        <!-- Nombre total de clients -->
+        <div style="flex: 1 1 0%; margin-bottom: 1rem;">
+          <div class="card flex flex-column align-items-center" style="background-color: #0088c7">
+              <h5 class="text-left w-full" style="color: white;">Le nombre total de clients:</h5>
+              <h1 class="text-center w-full" style="color: white;">{{ clientCount }}</h1>
+              <p *ngIf="errorMessage" class="error" style="color: white;">{{ errorMessage }}</p>
+          </div>
+        </div>
+  
+        <!-- Nombre total de partenaires -->
+        <div style="flex: 1 1 0%; margin-bottom: 1rem;">
+            <div class="card flex flex-column align-items-center" style="background-color: #d47f00">
+                <h5 class="text-left w-full" style="color: white;">Le nombre total de partenaires:</h5>
+                <h1 class="text-center w-full" style="color: white;">{{ partnerCount }}</h1>
+                <p *ngIf="errorMessage" class="error" style="color: white;">{{ errorMessage }}</p>
+            </div>
+        </div>
+</div>
+
+
+  <div class="flex-row" style="display: flex; flex-direction: row; gap: 1rem;" *ngIf="userRole === 'admin'">
+    <div style="flex: 0 0 50%; max-width: 50%;" class="chart-container">
       <div class="card">
         <h5>Produits les plus commandés</h5>
         <p-chart type="line" [data]="lineData" [options]="lineOptions"></p-chart>
       </div>
     </div>
-    <div style="flex: 0 0 50%; max-width: 50%;">
+    <div style="flex: 0 0 50%; max-width: 50%;" class="chart-container">
       <div class="card flex flex-column align-items-center">
         <h5 class="text-left w-full">Nombre de clients / partenaires</h5>
         <p-chart type="pie" [data]="pieData" [options]="pieOptions"></p-chart>
@@ -26,15 +53,15 @@
     </div>
   </div>
 
-  <div style="display: flex; flex-direction: row; gap: 1rem;" *ngIf="userRole === 'admin'">
-    <!-- Produits par services et Les budgets de nos clients -->
-    <div style="flex: 0 0 50%; max-width: 50%;">
+
+  <div class="flex-row" style="display: flex; flex-direction: row; gap: 1rem;" *ngIf="userRole === 'admin'">
+    <div style="flex: 0 0 50%; max-width: 50%;" class="chart-container">
       <div class="card">
         <h5>Produits par services</h5>
         <p-chart type="bar" [data]="barData" [options]="barOptions"></p-chart>
       </div>
     </div>
-    <div style="flex: 0 0 50%; max-width: 50%;">
+    <div style="flex: 0 0 50%; max-width: 50%;" class="chart-container">
       <div class="card">
         <h5 class="text-left w-full">Les budgets de nos clients</h5>
         <p-table [value]="clients" [paginator]="true" [rows]="5" responsiveLayout="scroll">
@@ -55,8 +82,11 @@
     </div>
   </div>
 
-  <div class="card flex flex-column align-items-center" *ngIf="userRole === 'client'">
+  <div class="card" *ngIf="userRole === 'client'">
     <h5 class="text-left w-full">Doughnut Chart</h5>
-    <p-chart *ngIf="doughnutData" type="doughnut" [data]="doughnutData" [options]="doughnutOptions"></p-chart>
+    <div class="doughnut">
+      <p-chart *ngIf="doughnutData" type="doughnut" [data]="doughnutData" [options]="doughnutOptions"></p-chart>
+    </div>
   </div>
+  
 </div>

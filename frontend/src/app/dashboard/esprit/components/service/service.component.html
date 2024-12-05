@@ -29,9 +29,7 @@
                 </ng-template>
                 <ng-template pTemplate="header">
                     <tr>
-                        <!-- <th style="width: 3rem">
-                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                        </th> -->
+
                         <th>Image</th>
                         <th pSortableColumn="name">Nom <p-sortIcon field="name"></p-sortIcon></th>
                         <th pSortableColumn="description">Description <p-sortIcon field="description"></p-sortIcon></th>
@@ -44,10 +42,6 @@
                 </ng-template>
                 <ng-template pTemplate="body" let-service>
                     <tr>
-                        <!-- <td>
-                            <p-tableCheckbox [value]="activite"></p-tableCheckbox>
-                        </td> -->
-
 
                         <td style="width:14%; min-width:10rem;">
                             <span class="p-column-title">Image</span>
@@ -57,21 +51,19 @@
                             <span class="p-column-title">Nom</span>
                             {{service.nom}}
                         </td>                
-                        <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">Description</span>
-                            {{service.description}}
-                        </td>
-                        <td style="width:14%; min-width:10rem;">
+                        <td class="service-description" (click)="showFullDescription(service.description)">{{service.description}}</td>
+
+                        <td >
                             <span class="p-column-title">Sous-descriptions</span>
                             <ul>
-                                <li *ngFor="let desc of service.subDesc">{{ desc }}</li>
+                                <li *ngFor="let desc of service.subDesc"  >{{ desc }}</li>
                             </ul>
                         </td>
                           
                         <td>
                             <div class="flex">
-                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editProduct(service)"></button>
-                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteProduct(service)"></button>
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editService(service)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteService(service)"></button>
                             </div>
                         </td>
                     </tr>
@@ -141,8 +133,15 @@
             </div>
             <ng-template pTemplate="footer">
               <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteServiceDialog = false"></button>
-              <!-- <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button> -->
+              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
             </ng-template>
+        </p-dialog>
+
+        <p-dialog header="Description Complète" [(visible)]="displayModal" [modal]="true" [responsive]="true">
+            <p>{{ selectedDescription }}</p>
+            <p-footer>
+                <button type="button" pButton icon="pi pi-times" (click)="displayModal = false" label="Fermer"></button>
+            </p-footer>
         </p-dialog>
 
 

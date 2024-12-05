@@ -45,6 +45,10 @@ export class ProfilComponent {
       this.form.email = this.user.email;
       this.form.phoneNumber = this.user.phoneNumber;
       this.form.image = this.user.image
+      this.form.companyName = this.user.companyName
+      this.form.position = this.user.position
+      this.form.industry = this.user.industry
+
       // Remplir les champs spécifiques aux clients
       if (this.getUserRole() === 'client') {
         this.form.servicesNeeded = this.user.servicesNeeded;
@@ -89,6 +93,10 @@ export class ProfilComponent {
       formData.append('username', this.form.username);
       formData.append('email', this.form.email);
       formData.append('tel', this.form.tel);
+      formData.append('companyName', this.form.companyName);
+      formData.append('industry', this.form.industry);
+      formData.append('position', this.form.position);
+
 
       // Ajoutez d'autres champs spécifiques selon le rôle de l'utilisateur
       if (this.getUserRole() === 'client') {
@@ -122,6 +130,8 @@ export class ProfilComponent {
   }
 
   getImageUrl(imageName: string): string {
-    return `http://localhost:9090/img/${imageName}`;
+    // S'assure que tu utilises l'URL de Cloudinary
+    return `${imageName}`; // Remplace <CLOUD_NAME> par le nom de ton Cloudinary
   }
+  
 }

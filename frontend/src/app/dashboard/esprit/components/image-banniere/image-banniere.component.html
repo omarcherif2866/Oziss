@@ -1,0 +1,95 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card px-6 py-6">
+            <p-toast></p-toast>
+            <p-toolbar styleClass="mb-4" >
+                <ng-template pTemplate="left">
+                    <div class="my-2" >
+                        <button pButton pRipple label="Ajouter une image de la banniére" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                    </div>
+                </ng-template>
+            </p-toolbar>
+
+            <div class="table-container">
+                <p-table #dt [value]="images" [columns]="cols" responsiveLayout="scroll" [rows]="5" [globalFilterFields]="['nom']" [paginator]="true" [rowsPerPageOptions]="[5,10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [(selection)]="selectedImages" selectionMode="multiple" [rowHover]="true" dataKey="id">
+                    <ng-template pTemplate="caption">
+                        <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                            <h5 class="m-0">Manage images</h5>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th pSortableColumn="image">Image</th>
+                            <th pSortableColumn="titre">Titre</th>
+                            <th pSortableColumn="sousTitre">Sous-titre</th>
+                            <th >Action</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-image>
+                        <tr>
+                            <td style="width:40%; min-width:15rem; text-align: center;">
+                                <span class="p-column-title">Image</span>
+                                <img [src]="getImageUrl(image.image)" [alt]="image.image" width="200" class="shadow-4" style="display: block; margin: 0 auto;" />
+                            </td>
+                            <td>{{image.titre}}</td>
+                            <td>{{image.sousTitre}}</td>
+                            
+                            
+                            <td>
+                                <div class="flex">
+                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteImage(image)"></button>
+                                    <button pButton pRipple icon="pi pi-plus" class="p-button-rounded p-button-success ml-2" (click)="addToBanner(image)" pTooltip="Ajouter à la bannière" tooltipPosition="top"> </button>
+                                </div>
+                            </td>
+                            
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+
+        <p-dialog [(visible)]="imageDialog" [style]="{width: '450px'}" header="Détails du image" [modal]="true" class="p-fluid">
+            <ng-template pTemplate="content">
+                
+                <div class="field" >
+                    <label for="titre">Titre</label>
+                    <input type="text" pInputText id="titre" [(ngModel)]="image.titre" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !image.titre}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !image.titre">titre est requis.</small>
+                </div> 
+                
+                <div class="field" >
+                    <label for="sousTitre">Sous-titre</label>
+                    <input type="text" pInputText id="sousTitre" [(ngModel)]="image.sousTitre" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !image.sousTitre}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !image.sousTitre">Sous-titre est requis.</small>
+                </div>
+
+                <div class="field" >
+                    <label for="image">Image</label>
+                    <p-fileUpload mode="basic" name="image" accept="image/*" maxFileSize="1000000" (onSelect)="onFileSelected($event)" label="Choisir une image" chooseLabel="Choisir une image" ></p-fileUpload>
+                </div>
+                
+            </ng-template>
+            
+            <ng-template pTemplate="footer">
+                <button pButton pRipple label="Annuler" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                <button  pButton pRipple [label]="actionLabel" icon="pi pi-check" class="p-button-text" (click)="saveImage()"></button>
+            </ng-template>
+        </p-dialog>
+          
+          
+          <p-dialog [(visible)]="deleteImageDialog" header="Confirmation" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+              <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+              <span *ngIf="image">Voulez-vous supprimer ce image ?</span>
+            </div>
+            <ng-template pTemplate="footer">
+              <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteImageDialog = false"></button>
+              <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+
+        
+    </div>
+</div>
+

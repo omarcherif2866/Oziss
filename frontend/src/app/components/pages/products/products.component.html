@@ -5,7 +5,9 @@
     <div class="d-table">
         <div class="d-table-cell">
             <div class="container">
-                <h2>Products</h2>
+                <h2>Découvrez Nos Solutions IT et Choisissez Celle Qui Vous 
+                    Correspond</h2>
+                <div class="bar"></div>
             </div>
         </div>
     </div>
@@ -18,6 +20,20 @@
     <div class="shape7"><img src="assets/img/shape4.png" alt="shape"></div>
     <div class="shape8 rotateme"><img src="assets/img/shape22.png" alt="shape"></div>
 </div>
+
+<div class="d-table">
+    <div class="d-table-cell">
+        <div class="container">
+            <p>Chez Oziss, nous mettons à votre disposition une gamme complète de solutions IT 
+            innovantes pour répondre aux besoins spécifiques de votre entreprise. Que vous 
+            souhaitiez optimiser vos opérations, renforcer la sécurité de vos données ou améliorer 
+            la gestion de vos relations clients, nous avons le produit qu’il vous faut. Sélectionnez la 
+            solution qui correspond le mieux à vos objectifs et propulsez votre entreprise vers la 
+            croissance.</p>  
+        </div>
+    </div>
+</div>
+
 
 <!-- Products -->
 <div class="shop-area ptb-80">
@@ -40,3 +56,72 @@
     </div>
 </div>
 
+
+<div class="d-table">
+    <div class="d-table-cell">
+        <div class="container">
+            <h2>Comment Choisir le Bon Produit ?</h2>
+            <div class="bar"></div>
+            <p>
+                Chaque produit Oziss est conçu pour répondre à des besoins spécifiques. Vous pouvez 
+                sélectionner le produit en fonction de vos objectifs actuels :
+            </p>
+            <ul>
+                <li>
+                    <p><strong>Pour optimiser la gestion de vos opérations :</strong> Optez pour <strong> Oziss ERP</strong></p>
+                </li>
+                <li>
+                    <p><strong>Pour gérer vos données en toute sécurité :</strong>  Choisissez  <strong> Oziss Cloud</strong></p>
+
+                </li>
+                <li>
+                    <p><strong>Pour automatiser et analyser vos données : Oziss AI </strong> est fait pour vous.</p>
+
+                </li>
+                <li>
+                    <p><strong>Pour améliorer vos relations client : </strong> Adoptez <strong> Oziss CRM </strong></p>
+
+                </li>
+                <li>
+                    <p><strong>Pour renforcer la sécurité de vos infrastructures IT : </strong>  Sécurisez vos 
+                        systèmes avec <strong> Oziss Secure</strong></p>
+
+                </li>
+                <li>
+                    <p><strong>Pour prendre des décisions basées sur vos données : Oziss Analytics
+                        </strong> est la solution idéale.</p>
+
+                </li>
+            </ul>
+            <p>
+                Contactez-nous pour plus d’informations ou sélectionnez directement le produit 
+                qui correspond à vos besoins et commencez à transformer votre entreprise dès 
+                aujourd’hui !
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- partenaire -->
+<div class="repair-partner-area bg-f9fafb">
+    <div class="container">
+      <div class="section-title">
+        <h2>Nos Partenaires</h2>
+        <div class="bar"></div>
+        <p>
+          Nous collaborons avec des entreprises de premier plan dans divers secteurs pour garantir des solutions technologiques de qualité et adaptées aux exigences locales et internationales.
+        </p>
+      </div>
+      <div class="partner-slides">
+        <owl-carousel-o [options]="partnerSlides">
+          <ng-template carouselSlide *ngFor="let partner of allPartners">
+            <div class="single-repair-partner">
+              <a [href]="partner.url" target="_blank">
+                <img [src]="getImageUrl(partner.image)" [alt]="partner.nom" />
+              </a>
+            </div>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
+    </div>
+  </div>

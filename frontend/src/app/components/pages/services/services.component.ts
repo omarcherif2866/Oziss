@@ -15,6 +15,33 @@ export class ServicesComponent implements OnInit {
   services: Service[] = [];
   Users: User[] = [];
 
+  staticPartners = [
+	{
+	  nom: 'IBM',
+	  image: 'assets/img/partner-img/ibm.png',
+	  url: 'https://www.partner1.com'
+	},
+	{
+	  nom: 'Microsoft',
+	  image: 'assets/img/partner-img/microsoft.jpg',
+	  url: 'https://www.partner2.com'
+	},
+	{
+	  nom: 'Amazon Web Services (AWS)',
+	  image: 'assets/img/partner-img/aws.jpg',
+	  url: 'https://www.partner3.com'
+	},
+	{
+	  nom: 'Oracle',
+	  image: 'assets/img/partner-img/oracle.png',
+	  url: 'https://www.partner3.com'
+	},
+	
+  ];
+
+  allPartners: any[] = [];
+
+
   constructor(private serviceService: ServiceService,    private userService: AuthService,
   ) { }
 
@@ -56,25 +83,52 @@ getAllServices(): void {
 	});
   }
 
+// getImageUrl(imageName?: string): string {
+//     // Vérifiez si l'image existe dans le répertoire backend
+//     const imageUrl = imageName ? `http://localhost:9090/img/${imageName}` : 'assets/img/default-image.png';
+//     return imageUrl;
+// }
+//   getAllPartners(): void {
+//     this.userService.getUser().subscribe(ss => {
+//       // Afficher les utilisateurs récupérés dans la console
+//       console.log("Users récupérées:", ss);
+      
+//       // Filtrer les utilisateurs pour ne garder que ceux avec userType = 'client'
+//       this.Users = ss.filter(user => user.userType === 'partner');
+      
+//       // Afficher les utilisateurs filtrés dans la console pour vérification
+//       console.log("Partners filtrés:", this.Users);
+//     }, error => {
+//       // Gestion des erreurs
+//       console.error("Erreur lors de la récupération des utilisateurs:", error);
+//     });
+//   }
+
 getImageUrl(imageName?: string): string {
-    // Vérifiez si l'image existe dans le répertoire backend
-    const imageUrl = imageName ? `http://localhost:9090/img/${imageName}` : 'assets/img/default-image.png';
-    return imageUrl;
-}
-  getAllPartners(): void {
-    this.userService.getUser().subscribe(ss => {
-      // Afficher les utilisateurs récupérés dans la console
-      console.log("Users récupérées:", ss);
-      
-      // Filtrer les utilisateurs pour ne garder que ceux avec userType = 'client'
-      this.Users = ss.filter(user => user.userType === 'partner');
-      
-      // Afficher les utilisateurs filtrés dans la console pour vérification
-      console.log("Partners filtrés:", this.Users);
-    }, error => {
-      // Gestion des erreurs
-      console.error("Erreur lors de la récupération des utilisateurs:", error);
-    });
+	if (imageName && !imageName.startsWith('assets/')) {
+	  // Si l'image provient de la base de données, on utilise une URL spécifique
+	  return `${imageName}`;
+	}
+	// Sinon, elle est dans les assets (statique)
+	return imageName ? imageName : 'assets/img/default-image.png';
   }
+	getAllPartners(): void {
+	  this.userService.getUser().subscribe(ss => {
+		// Afficher les utilisateurs récupérés dans la console
+		console.log("Users récupérés:", ss);
+  
+		// Filtrer les utilisateurs pour ne garder que ceux avec userType = 'partner'
+		this.Users = ss.filter(user => user.userType === 'partner');
+  
+		// Combiner les partenaires récupérés dynamiquement avec les partenaires statiques
+		this.allPartners = [...this.Users, ...this.staticPartners];
+  
+		// Afficher la liste complète des partenaires
+		console.log("Tous les partenaires:", this.allPartners);
+  
+	  }, error => {
+		console.error("Erreur lors de la récupération des utilisateurs:", error);
+	  });
+	}
 
 }

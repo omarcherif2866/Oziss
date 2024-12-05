@@ -4,12 +4,18 @@ import { LayoutService } from 'src/app/dashboard/layout/service/app.layout.servi
 import { OrderService } from '../../../service/order.service';
 import { UserService } from '../../../service/user.service';
 import { ProduitService } from '../../../service/produit.service';
+import { ServiceService } from '../../../service/service.service';
 
 @Component({
-    templateUrl: './chartsdemo.component.html'
+    templateUrl: './chartsdemo.component.html',
+    styleUrl: './chartsdemo.component.scss'
+
 })
 export class ChartsDemoComponent implements OnInit, OnDestroy {
+    isSmallScreen = window.innerWidth < 768;
 
+
+    
     clientId: string = '';
 
     doughnutData: any;
@@ -23,8 +29,6 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
     pieData: any;
 
     polarData: any;
-
-    radarData: any;
 
     lineOptions: any;
 
@@ -40,6 +44,12 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
 
     productCount: number | null = null;
 
+    serviceCount: number | null = null;
+
+    clientCount: number | null = null;
+
+    partnerCount: number | null = null;
+
     productsData!: any[];
 
     clients: any[] = []; // Exemple de propriété
@@ -50,6 +60,7 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
     subscription: Subscription;
     constructor(private layoutService: LayoutService, private orderService: OrderService,
         private userService: UserService, private produitService: ProduitService
+        , private serviceService: ServiceService
     ) {
         this.subscription = this.layoutService.configUpdate$
             .pipe(debounceTime(25))
@@ -73,10 +84,31 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
         this.loadOrdersByStatus();
         this.loadUserCounts();
         this.loadProductCount();
+        this.loadServiceCount();
         this.loadProductsByService();
         this.getTopSellingProducts();
         this.loadClientBudgets()
+        this.initializeCharts();
+        this.initializeClients();
+
     }
+
+
+    initializeCharts() {
+        // Initialisation des données et options pour les graphiques
+        this.lineData = { /* vos données pour le graphique en ligne */ };
+        this.lineOptions = { responsive: true, maintainAspectRatio: false };
+        this.pieData = { /* vos données pour le graphique en secteur */ };
+        this.pieOptions = { responsive: true, maintainAspectRatio: false };
+      }
+
+      initializeClients() {
+        // Initialisation des données et options pour les graphiques
+        this.lineData = { /* vos données pour le graphique en ligne */ };
+        this.lineOptions = { responsive: true, maintainAspectRatio: false };
+        this.pieData = { /* vos données pour le graphique en secteur */ };
+        this.pieOptions = { responsive: true, maintainAspectRatio: false };
+      }
 
     initCharts() {
         const documentStyle = getComputedStyle(document.documentElement);
@@ -84,56 +116,8 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
         const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
         const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
         
-        this.barData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'My First dataset',
-                    backgroundColor: documentStyle.getPropertyValue('--primary-500'),
-                    borderColor: documentStyle.getPropertyValue('--primary-500'),
-                    data: [65, 59, 80, 81, 56, 55, 40]
-                },
-                {
-                    label: 'My Second dataset',
-                    backgroundColor: documentStyle.getPropertyValue('--primary-200'),
-                    borderColor: documentStyle.getPropertyValue('--primary-200'),
-                    data: [28, 48, 40, 19, 86, 27, 90]
-                }
-            ]
-        };
 
-        this.barOptions = {
-            plugins: {
-                legend: {
-                    labels: {
-                        fontColor: textColor
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: textColorSecondary,
-                        font: {
-                            weight: 500
-                        }
-                    },
-                    grid: {
-                        display: false,
-                        drawBorder: false
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                },
-            }
-        };
+      
 
         this.pieData = {
             labels: ['A', 'B', 'C'],
@@ -164,57 +148,6 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
             }
         };
 
-        this.lineData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [
-                {
-                    label: 'First Dataset',
-                    data: [65, 59, 80, 81, 56, 55, 40],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--primary-500'),
-                    borderColor: documentStyle.getPropertyValue('--primary-500'),
-                    tension: .4
-                },
-                {
-                    label: 'Second Dataset',
-                    data: [28, 48, 40, 19, 86, 27, 90],
-                    fill: false,
-                    backgroundColor: documentStyle.getPropertyValue('--primary-200'),
-                    borderColor: documentStyle.getPropertyValue('--primary-200'),
-                    tension: .4
-                }
-            ]
-        };
-
-        this.lineOptions = {
-            plugins: {
-                legend: {
-                    labels: {
-                        fontColor: textColor
-                    }
-                }
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                },
-                y: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                },
-            }
-        };
 
         this.polarData = {
             datasets: [{
@@ -257,46 +190,6 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
             }
         };
 
-        this.radarData = {
-            labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
-            datasets: [
-                {
-                    label: 'My First dataset',
-                    borderColor: documentStyle.getPropertyValue('--indigo-400'),
-                    pointBackgroundColor: documentStyle.getPropertyValue('--indigo-400'),
-                    pointBorderColor: documentStyle.getPropertyValue('--indigo-400'),
-                    pointHoverBackgroundColor: textColor,
-                    pointHoverBorderColor: documentStyle.getPropertyValue('--indigo-400'),
-                    data: [65, 59, 90, 81, 56, 55, 40]
-                },
-                {
-                    label: 'My Second dataset',
-                    borderColor: documentStyle.getPropertyValue('--purple-400'),
-                    pointBackgroundColor: documentStyle.getPropertyValue('--purple-400'),
-                    pointBorderColor: documentStyle.getPropertyValue('--purple-400'),
-                    pointHoverBackgroundColor: textColor,
-                    pointHoverBorderColor: documentStyle.getPropertyValue('--purple-400'),
-                    data: [28, 48, 40, 19, 96, 27, 100]
-                }
-            ]
-        };
-
-        this.radarOptions = {
-            plugins: {
-                legend: {
-                    labels: {
-                        fontColor: textColor
-                    }
-                }
-            },
-            scales: {
-                r: {
-                    grid: {
-                        color: textColorSecondary
-                    }
-                }
-            }
-        };
     }
 
     ngOnDestroy() {
@@ -306,66 +199,76 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
     }
 
     loadOrdersByStatus() {
-        this.orderService.getOrdersByStatus(this.clientId)
-          .subscribe((data: any[]) => {
-            // Définir les couleurs en fonction des statuts
-            const statusColors: { [key: string]: string } = {
-              'En attente': '#FF6384',  // Couleur pour 'En attente'
-              'Confirmée': '#36A2EB',   // Couleur pour 'Confirmée'
-              'Expédiée': '#FFCE56',    // Couleur pour 'Expédiée'
-              'Livrée': '#E7E9ED',      // Couleur pour 'Livrée'
-              'Annulée': '#C9CBCF'      // Couleur pour 'Annulée'
-            };
-    
-            // Initialisation des labels et des données pour le graphique
-            const labels: string[] = [];
-            const datasetData: number[] = [];
-            const backgroundColor: string[] = [];
-    
-            // Transformation des données pour le graphique
-            data.forEach(order => {
-              labels.push(`${order.status}: ${order.produits.map((p: any) => p.produit).join(', ')}`); // Affichage du statut avec les noms des produits
+      this.orderService.getOrdersByStatus(this.clientId)
+        .subscribe((data: any[]) => {
+          // Définir les couleurs en fonction des statuts
+          const statusColors: { [key: string]: string } = {
+            'En attente': '#FF6384',  // Couleur pour 'En attente'
+            'Confirmée': '#36A2EB',   // Couleur pour 'Confirmée'
+            'Expédiée': '#FFCE56',    // Couleur pour 'Expédiée'
+            'Livrée': '#E7E9ED',      // Couleur pour 'Livrée'
+            'Annulée': '#C9CBCF'      // Couleur pour 'Annulée'
+          };
+  
+          // Initialisation des labels et des données pour le graphique
+          const labels: string[] = [];
+          const datasetData: number[] = [];
+          const backgroundColor: string[] = [];
+  
+          // Transformation des données pour le graphique
+          data.forEach(order => {
+            // Pour chaque produit dans la commande, ajouter une entrée dans les labels
+            order.produits.forEach((produit: any) => {
+              labels.push(`${order.status}: ${produit.produit}`); // Affichage du statut avec le nom du produit
               datasetData.push(order.total); // Total des produits pour chaque statut
-    
+  
               // Ajouter la couleur correspondante à chaque statut
               backgroundColor.push(statusColors[order.status] || '#FFFFFF'); // Utiliser une couleur par défaut si le statut n'est pas défini
             });
-    
-            this.doughnutData = {
-              labels: labels,
-              datasets: [{
-                data: datasetData,
-                backgroundColor: backgroundColor
-              }]
-            };
-    
-            this.doughnutOptions = {
-              responsive: true,
-              plugins: {
-                legend: {
-                  position: 'top',
-                },
-                tooltip: {
-                  callbacks: {
-                    label: (context: any) => {
-                      let label = context.label || '';
-                      if (label) {
-                        label += ': ' + context.raw + ' commandes';
-                      }
-                      return label;
-                    }
+          });
+  
+          this.doughnutData = {
+            labels: labels,
+            datasets: [{
+              data: datasetData,
+              backgroundColor: backgroundColor
+            }]
+          };
+  
+          this.doughnutOptions = {
+            responsive: true,
+            cutout: '40%', // Modifiez ce pourcentage pour ajuster la taille du trou
+            plugins: {
+              legend: {
+                position: 'top',
+                labels: {
+                  boxWidth: 60, // Largeur de la case de couleur à gauche de chaque label
+                  boxHeight: 10, // Hauteur de la case de couleur
+                  boxPadding: 5, // Espace entre la case de couleur et le texte du label
+                  font: {
+                    size: 10, // Taille de la police des légendes
+                  }
+                }
+              },
+              tooltip: {
+                callbacks: {
+                  label: (context: any) => {
+                    let label = context.label || '';
+                    return label;
                   }
                 }
               }
-            };
-    
-            console.log('Doughnut Data:', this.doughnutData); // Vérifiez que les données sont correctes
-            console.log('Doughnut Options:', this.doughnutOptions); // Vérifiez que les options sont correctes
-          }, error => {
-            console.error('Error loading orders by status:', error);
-          });
-      }
-    
+            }
+          };
+          
+  
+          console.log('Doughnut Data:', this.doughnutData); // Vérifiez que les données sont correctes
+          console.log('Doughnut Options:', this.doughnutOptions); // Vérifiez que les options sont correctes
+        }, error => {
+          console.error('Error loading orders by status:', error);
+        });
+  }
+  
 
     loadUserCounts() {
         this.userService.getUserCounts().subscribe(
@@ -385,6 +288,8 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
               responsive: true,
               maintainAspectRatio: false
             };
+            this.clientCount = data.clientCount;
+            this.partnerCount = data.partnerCount;
           },
           error => {
             console.error('Error fetching user counts:', error);
@@ -401,6 +306,18 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
           error => {
             console.error('Error fetching product count:', error);
             this.errorMessage = 'Error fetching product count. Please try again later.';
+          }
+        );
+      }
+
+    loadServiceCount() {
+        this.serviceService.getServiceCount().subscribe(
+          data => {
+            this.serviceCount = data.serviceCount;
+          },
+          error => {
+            console.error('Error fetching service count:', error);
+            this.errorMessage = 'Error fetching service count. Please try again later.';
           }
         );
       }
@@ -456,7 +373,7 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
             if (data && data.length > 0) {
             // Préparer les données pour le Line Chart
             this.lineData = {
-            labels: data.map(item => item.produitDetails.nom), // Noms des produits
+            labels: data.map(item => item.produitDetails.nom), 
             datasets: [
                 {
                 label: 'Nombre de Commandes',
@@ -470,22 +387,26 @@ export class ChartsDemoComponent implements OnInit, OnDestroy {
             };
 
             this.lineOptions = {
-            responsive: true,
-            legend: {
+              responsive: true,
+              legend: {
                 position: 'top',
-            },
-            scales: {
-                xAxes: [{
-                ticks: {
-                    autoSkip: false
-                }
-                }],
+              },
+              scales: {
+                x: {
+                  ticks: {
+                      display: false, // Désactiver l'affichage des labels sur l'axe x
+                      autoSkip: false
+                  },
+                  grid: {
+                      display: false // Désactiver l'affichage de la grille si souhaité
+                  }
+              },
                 yAxes: [{
-                ticks: {
+                  ticks: {
                     beginAtZero: true,
-                }
+                  }
                 }]
-            }
+              }
             };
         }
         });

@@ -2,7 +2,7 @@
 
 
 
-<div class="w-full surface-card py-8 px-5 sm:px-8 large-card" style="border-radius: 53px;">
+<div class="w-full surface-card py-8 px-3 sm:px-3 large-card" style="border-radius: 53px;">
     <form class="form-body" #f="ngForm" (ngSubmit)="onSubmit()">
         <div>
 
@@ -25,45 +25,82 @@
   
 
   
-        <label for="inputNom" class="block text-900 text-xl font-medium mb-2">Last Name</label>
-        <input type="text" id="inputNom" placeholder="Enter your Last Name" [(ngModel)]="form.nom" name="nom" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem" required>
-  
-  
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4"> <!-- Une colonne pour mobile, deux colonnes pour PC -->
 
-  
-        <label for="inputEmail" class="block text-900 text-xl font-medium mb-2">Email</label>
-        <input type="email" id="inputEmail" placeholder="Enter Email Address" [(ngModel)]="form.email" name="email" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem" required>
-  
-  
-        <label for="inputphoneNumber" class="block text-900 text-xl font-medium mb-2">Phone Number</label>
-        <input type="tel" id="inputTel" placeholder="Enter Telephone Number" [(ngModel)]="form.phoneNumber" name="phoneNumber" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem" required>
-  
-  
-
-        <!-- Champs spécifiques aux clients -->
-        <div *ngIf="getUserRole() === 'client'">
-          <label for="inputServicesNeeded" class="block text-900 text-xl font-medium mb-2">Services Needed</label>
-          <input type="text" id="inputServicesNeeded" placeholder="Enter Services Needed" [(ngModel)]="form.servicesNeeded" name="servicesNeeded" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem">
-  
-          <label for="inputMainObjectives" class="block text-900 text-xl font-medium mb-2">Main Objectives</label>
-          <input type="text" id="inputMainObjectives" placeholder="Enter Main Objectives" [(ngModel)]="form.mainObjectives" name="mainObjectives" pInputTextarea class="w-full md:w-30rem mb-5" style="padding: 1rem">
-  
-          <label for="inputEstimatedBudget" class="block text-900 text-xl font-medium mb-2">Estimated Budget</label>
-          <input type="number" id="inputEstimatedBudget" placeholder="Enter Estimated Budget" [(ngModel)]="form.estimatedBudget" name="estimatedBudget" pInputNumber class="w-full md:w-30rem mb-5" style="padding: 1rem">
-        </div>
-  
-        <!-- Champs spécifiques aux partenaires -->
-        <div *ngIf="getUserRole() === 'partner'">
-          <label for="inputPartnershipType" class="block text-900 text-xl font-medium mb-2">Partnership Type</label>
-          <input type="text" id="inputPartnershipType" placeholder="Enter Partnership Type" [(ngModel)]="form.partnershipType" name="partnershipType" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem">
-  
-          <label for="inputPartnershipObjectives" class="block text-900 text-xl font-medium mb-2">Partnership Objectives</label>
-          <textarea id="inputPartnershipObjectives" placeholder="Enter Partnership Objectives" [(ngModel)]="form.partnershipObjectives" name="partnershipObjectives" pInputTextarea class="w-full md:w-30rem mb-5" style="padding: 1rem"></textarea>
-  
-          <label for="inputAvailableResources" class="block text-900 text-xl font-medium mb-2">Available Resources</label>
-          <input type="text" id="inputAvailableResources" placeholder="Enter Available Resources" [(ngModel)]="form.availableResources" name="availableResources" pInputText class="w-full md:w-30rem mb-5" style="padding: 1rem">
-        </div>
-  
+          <!-- Colonnes gauche -->
+          <div class="left-column">
+              <div>
+                  <label for="inputNom" class="block text-900 text-xl font-medium mb-2">Nom</label>
+                  <input type="text" id="inputNom" placeholder="Enter your Last Name" [(ngModel)]="form.nom" name="nom" pInputText class="w-full" style="padding: 1rem" required>
+              </div>
+          
+              <div>
+                  <label for="inputEmail" class="block text-900 text-xl font-medium mb-2">Email</label>
+                  <input type="email" id="inputEmail" placeholder="Enter Email Address" [(ngModel)]="form.email" name="email" pInputText class="w-full" style="padding: 1rem" required>
+              </div>
+          
+              <div>
+                  <label for="inputphoneNumber" class="block text-900 text-xl font-medium mb-2">Numéro de téléphone</label>
+                  <input type="tel" id="inputTel" placeholder="Enter Telephone Number" [(ngModel)]="form.phoneNumber" name="phoneNumber" pInputText class="w-full" style="padding: 1rem" required>
+              </div>
+      
+              <div *ngIf="getUserRole() === 'client' || getUserRole() === 'partner'">
+                <label for="inputcompanyName" class="block text-900 text-xl font-medium mb-2">Nom de l'entreprise</label>
+                <input type="text" id="inputcompanyName" placeholder="Enter Company Name" [(ngModel)]="form.companyName" name="companyName" pInputText class="w-full" style="padding: 1rem">
+            </div>
+        
+            <div *ngIf="getUserRole() === 'client' || getUserRole() === 'partner'">
+                <label for="inputposition" class="block text-900 text-xl font-medium mb-2">Poste occupé</label>
+                <input type="text" id="inputposition" placeholder="Enter Position" [(ngModel)]="form.position" name="position" pInputTextarea class="w-full" style="padding: 1rem">
+            </div>
+        
+            <div *ngIf="getUserRole() === 'client' || getUserRole() === 'partner'">
+                <label for="inputindustry" class="block text-900 text-xl font-medium mb-2">Secteur d'activité</label>
+                <input type="text" id="inputindustry" placeholder="Enter Industry" [(ngModel)]="form.industry" name="industry" pInputTextarea class="w-full" style="padding: 1rem">
+            </div>
+          </div>
+        
+          <!-- Colonnes droite -->
+          <div class="right-column">
+              <!-- Champs spécifiques aux clients -->
+              <div *ngIf="getUserRole() === 'client'">
+                  <div>
+                      <label for="inputServicesNeeded" class="block text-900 text-xl font-medium mb-2">Types de services recherchés</label>
+                      <input type="text" id="inputServicesNeeded" placeholder="Enter Services Needed" [(ngModel)]="form.servicesNeeded" name="servicesNeeded" pInputText class="w-full" style="padding: 1rem">
+                  </div>
+              
+                  <div>
+                      <label for="inputMainObjectives" class="block text-900 text-xl font-medium mb-2">Objectifs principaux</label>
+                      <input type="text" id="inputMainObjectives" placeholder="Enter Main Objectives" [(ngModel)]="form.mainObjectives" name="mainObjectives" pInputTextarea class="w-full" style="padding: 1rem">
+                  </div>
+              
+                  <div>
+                      <label for="inputEstimatedBudget" class="block text-900 text-xl font-medium mb-2">Budget estimé </label>
+                      <input type="number" id="inputEstimatedBudget" placeholder="Enter Estimated Budget" [(ngModel)]="form.estimatedBudget" name="estimatedBudget" pInputNumber class="w-full" style="padding: 1rem">
+                  </div>
+              </div>
+              
+              <!-- Champs spécifiques aux partenaires -->
+              <div *ngIf="getUserRole() === 'partner'">
+                  <div>
+                      <label for="inputPartnershipType" class="block text-900 text-xl font-medium mb-2">Type de partenariat souhaité</label>
+                      <input type="text" id="inputPartnershipType" placeholder="Enter Partnership Type" [(ngModel)]="form.partnershipType" name="partnershipType" pInputText class="w-full" style="padding: 1rem">
+                  </div>
+              
+                  <div>
+                      <label for="inputPartnershipObjectives" class="block text-900 text-xl font-medium mb-2">Objectifs du partenariat</label>
+                      <textarea id="inputPartnershipObjectives" placeholder="Enter Partnership Objectives" [(ngModel)]="form.partnershipObjectives" name="partnershipObjectives" pInputTextarea class="w-full" style="padding: 1rem"></textarea>
+                  </div>
+              
+                  <div>
+                      <label for="inputAvailableResources" class="block text-900 text-xl font-medium mb-2">Capacités et ressources disponibles</label>
+                      <input type="text" id="inputAvailableResources" placeholder="Enter Available Resources" [(ngModel)]="form.availableResources" name="availableResources" pInputText class="w-full" style="padding: 1rem">
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      
         <br>
         <div class="d-grid">
           <button pButton pRipple label="Modifier Profile" class="w-full p-3 text-xl"></button>

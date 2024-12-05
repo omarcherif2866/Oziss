@@ -48,6 +48,9 @@ const routes: Routes = [
                 { path: 'reunion', loadChildren: () => import('./dashboard/esprit/components/reunion/reunion.module').then(m => m.ReunionModule) },
                 { path: 'projet', loadChildren: () => import('./dashboard/esprit/components/projet/projet.module').then(m => m.ProjetModule) },
                 { path: 'profil/:id', loadChildren: () => import('./dashboard/esprit/components/profil/profil.module').then(m => m.ProfilModule) },
+                { path: 'actualite', loadChildren: () => import('./dashboard/esprit/components/actualite/actualite.module').then(m => m.ActualiteModule) },
+                { path: 'temoignages', loadChildren: () => import('./dashboard/esprit/components/temoignage/temoignage.module').then(m => m.TemoignageModule) },
+                { path: 'imageBanniere', loadChildren: () => import('./dashboard/esprit/components/image-banniere/image-banniere.module').then(m => m.ImageBanniereModule) },
 
             ]
         },

@@ -14,6 +14,9 @@ import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Valida
 })
 
 export class ServiceComponent implements OnInit {
+  displayModal: boolean = false; // Contrôle la visibilité du modal
+  selectedDescription: string = ''; // Contient la description sélectionnée
+
   serviceForm!: FormGroup;
   serviceDialog: boolean = false;
   deleteServiceDialog: boolean = false;
@@ -50,6 +53,13 @@ export class ServiceComponent implements OnInit {
     this.getAllServices();
   }
 
+  showFullDescription(description: string, ): void {
+    this.selectedDescription = description; 
+    this.displayModal = true; // Affiche le modal
+}
+
+
+
   get subdesc() {
     return this.serviceForm.get('subdesc') as FormArray;
   }
@@ -61,7 +71,7 @@ export class ServiceComponent implements OnInit {
     this.serviceDialog = true;
   }
 
-  editProduct(service: Service) {
+  editService(service: Service) {
     this.service = { ...service };
     this.serviceForm.patchValue({
       nom: service.nom,
@@ -154,19 +164,44 @@ export class ServiceComponent implements OnInit {
   }
 
   getImageUrl(imageName: string): string {
-    return `http://localhost:9090/img/${imageName}`;
+    return `${imageName}`;
   }
 
   toFormControl(control: AbstractControl): FormControl {
     return control as FormControl;
   }
 
-  deleteProduct(service: Service) {
+  deleteService(service: Service) {
     if (service && service._id) {
       this.deleteServiceDialog = true;
       this.service = { ...service };
     } else {
       console.error('service object is missing ID:', service);
+    }
+  }
+
+  confirmDelete() {
+    if (this.service && this.service._id) {
+      console.log("ID du service à supprimer:", this.service._id); // Log de vérification
+      this.serviceService.deleteService(this.service._id).subscribe(
+        response => {
+          this.services = this.services.filter(val => val._id !== this.service._id);
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'service supprimé', life: 3000 });
+          this.service = {
+            _id: '',
+          };
+          this.deleteServiceDialog = false;
+        },
+        error => {
+          console.error('Erreur lors de la suppression du service:', error);
+          this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Échec de la suppression du service', life: 3000 });
+          this.deleteServiceDialog = false;
+        }
+      );
+    } else {
+      console.error('ID de service invalide:', this.service);
+      this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'ID de service invalide', life: 3000 });
+      this.deleteServiceDialog = false;
     }
   }
 

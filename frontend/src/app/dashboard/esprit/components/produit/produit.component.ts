@@ -16,6 +16,9 @@ import { OrderService } from '../../service/order.service';
   styleUrl: './produit.component.scss'
 })
 export class ProduitComponent {
+  displayModal: boolean = false; // Contrôle la visibilité du modal
+  selectedDescription: string = ''; // Contient la description sélectionnée
+
   produitDialog: boolean = false;
   actionLabel: string = 'Enregistrer';
   deleteProduitDialog: boolean = false;
@@ -62,6 +65,13 @@ export class ProduitComponent {
     this.getAllProducts();
   }
 
+  showFullDescription(description: string): void {
+    this.selectedDescription = description; // Assignez la description complète
+    this.displayModal = true; // Affiche le modal
+}
+
+
+
   getUserRole(): string | null {
     return localStorage.getItem('userRole');
   }
@@ -79,10 +89,19 @@ export class ProduitComponent {
 
   editProduct(produit: Produit) {
     this.produit = { ...produit };
-    this.selectedService = this.services.find(service => service._id === produit.service!._id) || null;
+    
+    // Vérifiez si produit.service et produit.service._id existent
+    if (produit.service && produit.service._id) {
+        this.selectedService = this.services.find(service => service._id === produit.service!._id) || null;
+    } else {
+        // Si l'ID du service est manquant, on peut affecter un service nul ou une valeur par défaut
+        this.selectedService = null;
+    }
+    
     this.produitDialog = true;
     this.actionLabel = 'Modifier';
-  }
+}
+
 
   deleteProduct(produit: Produit) {
     if (produit && produit._id) {
@@ -95,10 +114,11 @@ export class ProduitComponent {
 
   confirmDelete() {
     if (this.produit && this.produit._id) {
+      console.log("ID du produit à supprimer:", this.produit._id); // Log de vérification
       this.productService.deleteProduct(this.produit._id).subscribe(
         response => {
           this.produits = this.produits.filter(val => val._id !== this.produit._id);
-          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'produit Deleted', life: 3000 });
+          this.messageService.add({ severity: 'success', summary: 'Successful', detail: 'Produit supprimé', life: 3000 });
           this.produit = {
             _id: '',
             service: null
@@ -107,17 +127,18 @@ export class ProduitComponent {
           this.deleteProduitDialog = false;
         },
         error => {
-          console.error('Error deleting produit:', error);
-          this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Failed to Delete produit', life: 3000 });
+          console.error('Erreur lors de la suppression du produit:', error);
+          this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Échec de la suppression du produit', life: 3000 });
           this.deleteProduitDialog = false;
         }
       );
     } else {
-      console.error('Invalid produit ID:', this.produit);
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Invalid produit ID', life: 3000 });
+      console.error('ID de produit invalide:', this.produit);
+      this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'ID de produit invalide', life: 3000 });
       this.deleteProduitDialog = false;
     }
   }
+  
 
   hideDialog() {
     this.produitDialog = false;
@@ -125,51 +146,60 @@ export class ProduitComponent {
   }
 
   saveProduct(): void {
-    // Vérifier que tous les champs obligatoires sont remplis et un service est sélectionné
-    if (!this.produit.nom || !this.produit.description || this.uploadedFiles.length === 0 || !this.selectedService || !this.selectedService._id) {
-        console.error('Veuillez remplir tous les champs obligatoires ou sélectionner un service valide.');
-        return;
+    if (!this.produit.nom || !this.produit.description) {
+      console.error('Veuillez remplir tous les champs obligatoires.');
+      return;
     }
-
+  
     const formData = new FormData();
     formData.append('nom', this.produit.nom);
     formData.append('description', this.produit.description);
     formData.append('image', this.uploadedFiles[0]);
-    formData.append('service', this.selectedService._id); // Ajouter l'ID du service sélectionné
-
-    console.log('Données envoyées au backend :', formData);
-
-    if (this.produit._id) {
-        // Mettre à jour le produit existant
-        this.productService.putProduct(this.produit._id, formData).subscribe(
-            res => {
-                console.log('Réponse du backend pour la mise à jour du produit :', res);
-                this.produitDialog = false;
-                this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Produit mis à jour', life: 3000 });
-                this.getAllProducts();
-              },
-            (error: HttpErrorResponse) => {
-                console.error('Erreur lors de la mise à jour du produit:', error);
-                this.messageService.add({ severity: 'error', summary: 'Erreur lors de la mise à jour du produit', detail: error.message });
-            }
-        );
+  
+    // Ajouter l'ID du service uniquement si un service est sélectionné et que ce n'est pas "Aucun"
+    if (this.selectedService && this.selectedService._id !== '') {
+      formData.append('service', this.selectedService._id);
     } else {
-        // Ajouter un nouveau produit
-        this.productService.addProduct(formData).subscribe(
-            res => {
-                console.log('Réponse du backend pour l\'ajout du produit :', res);
-                this.produitDialog = false;
-                this.produit = { _id: '', service: null };
-                this.uploadedFiles = [];
-                this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Produit ajouté', life: 3000 });
-              },
-            (error: HttpErrorResponse) => {
-                console.error('Erreur lors de l\'ajout du produit:', error);
-                this.messageService.add({ severity: 'error', summary: 'Erreur lors de l\'ajout du produit', detail: error.message });
-            }
-        );
+      // Si "Aucun" est sélectionné, ne pas ajouter le champ service
+      console.log('Service non sélectionné, champ service non ajouté');
     }
-}
+  
+    console.log('Données envoyées au backend :', formData);
+  
+    if (this.produit._id) {
+      // Mettre à jour le produit existant
+      this.productService.putProduct(this.produit._id, formData).subscribe(
+        res => {
+          console.log('Réponse du backend pour la mise à jour du produit :', res);
+          this.produitDialog = false;
+          this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Produit mis à jour', life: 3000 });
+          this.getAllProducts();
+        },
+        (error: HttpErrorResponse) => {
+          console.error('Erreur lors de la mise à jour du produit:', error);
+          this.messageService.add({ severity: 'error', summary: 'Erreur lors de la mise à jour du produit', detail: error.message });
+        }
+      );
+    } else {
+      // Ajouter un nouveau produit
+      this.productService.addProduct(formData).subscribe(
+        res => {
+          console.log('Réponse du backend pour l\'ajout du produit :', res);
+          this.produitDialog = false;
+          this.produit = { _id: '', service: null };
+          this.uploadedFiles = [];
+          this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Produit ajouté', life: 3000 });
+          this.getAllProducts();
+        },
+        (error: HttpErrorResponse) => {
+          console.error('Erreur lors de l\'ajout du produit:', error);
+          this.messageService.add({ severity: 'error', summary: 'Erreur lors de l\'ajout du produit', detail: error.message });
+        }
+      );
+    }
+  }
+  
+  
 
 
 
@@ -177,12 +207,14 @@ export class ProduitComponent {
   
   
 
+// Ajoutez un service "aucun" pour être sélectionné si l'utilisateur ne souhaite pas associer de service
 getAllServices(): void {
   this.serviceService.getService().subscribe(ss => {
-    this.services = ss;
+    this.services = [{ _id: '', nom: 'Aucun' }, ...ss]; // Ajout du service "Aucun"
     console.log("services récupérées:", ss);
   });
 }
+
 
   getAllProducts(): void {
     this.productService.getProduct().subscribe(
@@ -213,7 +245,7 @@ getAllServices(): void {
   }
 
   getImageUrl(imageName: string): string {
-    return `http://localhost:9090/img/${imageName}`;
+    return `${imageName}`;
   }
 
   getServiceNom(serviceId: string): string {

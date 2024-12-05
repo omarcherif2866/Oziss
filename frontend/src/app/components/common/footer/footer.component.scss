@@ -121,11 +121,11 @@
                         }
                     }
                     &.instagram {
-                        border-color: #231F20;
-                        color: #231F20;
+                        border-color:  var(--mainColor);
+                        color:  var(--mainColor);
 
                         &:hover {
-                            background: #231F20;
+                            background: var(--mainColor);
                             color: var(--whiteColor);
                         }
                     }

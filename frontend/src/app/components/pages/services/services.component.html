@@ -5,7 +5,7 @@
     <div class="d-table">
         <div class="d-table-cell">
             <div class="container">
-                <h2>Services</h2>
+                <h2>Solutions IT Innovantes pour les Entreprises Africaines</h2>
             </div>
         </div>
     </div>
@@ -23,9 +23,13 @@
 <div class="services-area-two ptb-80 bg-f9f6f6">
     <div class="container">
         <div class="section-title">
-            <h2>Our Services</h2>
-            <div class="bar"></div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>
+                Chez Oziss, nous comprenons que chaque entreprise est unique. C’est pourquoi nous 
+                proposons une gamme complète de services IT conçus sur mesure pour répondre aux 
+                défis et opportunités spécifiques du marché africain. Nos solutions vous permettent 
+                d’optimiser vos opérations, d’améliorer votre compétitivité et de saisir de nouvelles 
+                opportunités de croissance.
+            </p>
         </div>
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-6" *ngFor="let service of services">
@@ -41,7 +45,7 @@
         
     </div>
 <!-- Partner -->
-<div *ngIf="Users.length > 0" class="repair-partner-area bg-f9fafb">
+<!-- <div *ngIf="Users.length > 0" class="repair-partner-area bg-f9fafb">
     <div class="container">
         <div class="section-title">
             <h2>Nos Partenaires</h2>
@@ -60,8 +64,29 @@
       </div>
     </div>
   </div>
-</div>
-
+</div> -->
+  <div class="repair-partner-area bg-f9fafb">
+    <div class="container">
+      <div class="section-title">
+        <h2>Nos Partenaires</h2>
+        <div class="bar"></div>
+        <p>
+          Nous collaborons avec des entreprises de premier plan dans divers secteurs pour garantir des solutions technologiques de qualité et adaptées aux exigences locales et internationales.
+        </p>
+      </div>
+      <div class="partner-slides">
+        <owl-carousel-o [options]="partnerSlides">
+          <ng-template carouselSlide *ngFor="let partner of allPartners">
+            <div class="single-repair-partner">
+              <a [href]="partner.url" target="_blank">
+                <img [src]="getImageUrl(partner.image)" [alt]="partner.nom" />
+              </a>
+            </div>
+          </ng-template>
+        </owl-carousel-o>
+      </div>
+    </div>
+  </div>
 
 <div class="funfacts-area ptb-80" style="
     background-image: url('assets/img/map.png');
@@ -73,35 +98,98 @@
 ">
     <div class="container">
         <div class="section-title">
-            <h2>We always try to understand users expectation</h2>
+            <h2>Nos projets</h2>
             <div class="bar"></div>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p>Au fil du temps, notre expertise nous a permis de travailler dans plusieurs projets aussi différents les uns que les autres..</p>
         </div>
+      <div class="row">
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3>+<span [countUp]="36"></span></h3>
+                    <p>Projets Délivrés</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3>+<span [countUp]="9">00</span></h3>
+                    <p>Industries</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3>+<span [countUp]="40">00</span></h3>
+                    <p>Services supportés</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
+                <div class="funfact">
+                    <h3>+<span [countUp]="25">00</span></h3>
+                    <p>Sites web crées</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="repair-about-area ptb-80">
+    <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
-                <div class="funfact">
-                    <h3><span [countUp]="180">00</span>K</h3>
-                    <p>Downloaded</p>
+            <div class="about-content">
+                    <h2 >Pourquoi Choisir Oziss ?
+                    </h2>
+                    <ul>
+                        <li><span> <strong>Solutions sur mesure</strong>   adaptées aux besoins spécifiques des entreprises 
+                            africaines.</span></li>
+                        <li><span><strong>Expertise locale et internationale</strong>  pour répondre aux défis spécifiques 
+                            du marché africain.</span></li>
+                        <li><span> <strong>Support 24/7</strong> pour garantir la disponibilité de vos systèmes IT.</span></li>
+                        <li><span> <strong>Technologies de pointe </strong>  pour vous oFrir des solutions innovantes et performantes</span></li>                        
+                    </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="repair-why-choose-us ptb-80 pb-0">
+    <div class="container">
+        <div class="section-title">
+            <h2>Pourquoi Choisir Oziss ?</h2>
+            <div class="bar"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-6 col-sm-6 d-flex align-items-stretch">
+                <div class="single-repair-box">
+                    <h3>Solutions sur mesure</h3>
+                    <p>  adaptées aux besoins spécifiques des entreprises 
+                        africaines.</p>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
-                <div class="funfact">
-                    <h3><span [countUp]="20">00</span>K</h3>
-                    <p>Feedback</p>
+        
+            <div class="col-lg-3 col-md-6 col-sm-6 d-flex align-items-stretch">
+                <div class="single-repair-box">
+                    <h3>Expertise locale et internationale</h3>
+                    <p>  pour répondre aux défis spécifiques 
+                        du marché africain.</p>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
-                <div class="funfact">
-                    <h3><span [countUp]="500">00</span>+</h3>
-                    <p>Workers</p>
+        
+            <div class="col-lg-3 col-md-6 col-sm-6 d-flex align-items-stretch">
+                <div class="single-repair-box">
+                    <h3>Support 24/7</h3>
+                    <p> pour garantir la disponibilité de vos systèmes IT.</p>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-3 col-6 col-sm-3">
-                <div class="funfact">
-                    <h3><span [countUp]="70">00</span>+</h3>
-                    <p>Contributors</p>
+        
+            <div class="col-lg-3 col-md-6 col-sm-6 d-flex align-items-stretch">
+                <div class="single-repair-box">
+                    <h3>Technologies de pointe</h3>
+                    <p> pour vous oFrir des solutions innovantes et performantes</p>
                 </div>
             </div>
         </div>
+        
     </div>
 </div>

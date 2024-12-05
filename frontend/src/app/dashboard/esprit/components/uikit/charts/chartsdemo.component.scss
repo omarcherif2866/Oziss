@@ -1,0 +1,33 @@
+.doughnut {
+  width: 450px; /* Ajustez la largeur selon vos besoins */
+  height: 450px; /* Ajustez la hauteur selon vos besoins */
+  margin: 0 auto; /* Centre le graphique */
+}
+
+
+@media (max-width: 768px) {
+    .chart-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto;
+      }
+
+      .doughnut{
+        width: 100% !important;
+        max-width: 100% !important;
+        height: auto;
+      }
+
+    .card {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+  
+    /* Pour organiser les cartes en colonne sur les petits écrans */
+    .flex-row {
+      flex-direction: column !important;
+    }
+  
+
+  }
+  

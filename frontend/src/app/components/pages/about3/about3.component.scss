@@ -1,3 +1,37 @@
+.funfact {
+    text-align: center;
+
+    h3 {
+        color: var(--mainColor);
+        font-size: 32px;
+        margin-bottom: 7px;
+    }
+    p {
+        line-height: initial;
+    }
+}
+.funfacts-area {
+    position: relative;
+    z-index: 1;
+
+    .section-title {
+        h2 {
+            max-width: 520px;
+            margin: 0 auto;
+            line-height: 37px;
+        }
+    }
+    .map-bg {
+        position: absolute;
+        z-index: -1;
+        top: 120px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+
 .btn-primary {
     background: var(--gradientColor);
     border: none; /* Supprimez la bordure si nécessaire */
@@ -33,6 +67,236 @@
                     top: 0; /* Assurez-vous que ce style est approprié pour votre cas */
                 }
             }
+        }
+    }
+}
+
+.repair-about-content {
+    .sub-title {
+        text-transform: uppercase;
+        color: var(--mainColor);
+        display: block;
+        font: {
+            size: 15px;
+            weight: 400;
+        };
+    }
+    h2 {
+        font: {
+            size: 24px;
+            weight: 600;
+        };
+        margin: {
+            top: 10px;
+            bottom: 10px;
+        };
+    }
+    ul {
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+        list-style-type: none;
+        margin: {
+            top: -10px;
+            left: -10px;
+            right: -10px;
+        }
+        li {
+            -ms-flex: 0 0 50%;
+            flex: 0 0 50%;
+            max-width: 50%;
+            width: 100%;
+            margin-top: 25px;
+            color: var(--paragraphColor);
+            position: relative;
+            padding: {
+                right: 10px;
+                left: 10px;
+            };
+            span {
+                display: block;
+                position: relative;
+                z-index: 1;
+                padding: 10px;
+                border-radius: 3px;
+                transition: var(--transition);
+                box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
+
+                i-feather {
+                    margin-right: 5px;
+                    display: inline-block;
+                    color: var(--mainColor);
+                    transition: var(--transition);
+                    width: 18px;
+                }
+                &::before {
+                    content: '';
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    width: 100%;
+                    background: var(--gradientColor);
+                    opacity: 0;
+                    visibility: hidden;
+                    position: absolute;
+                    border-radius: 3px;
+                    z-index: -1;
+                    transition: var(--transition);
+                }
+                &:hover, &:focus {
+                    color: var(--whiteColor);
+                    transform: translateY(-5px);
+
+                    &::before {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                    i-feather {
+                        color: var(--whiteColor);
+                    }
+                }
+            }
+        }
+    }
+}
+
+.repair-about-image {
+    position: relative;
+    width: 100%;
+    height: auto; /* Ajuste automatiquement la hauteur pour s'adapter au contenu */
+
+    img {
+        position: relative; /* Permet à l'image de rester à sa position normale */
+        width: 100%; /* L'image prend toute la largeur disponible */
+        height: auto; /* Maintient le ratio de l'image */
+    }
+}
+
+.agency-about-img {
+    display: flex;
+    justify-content: center; /* Centre l'image horizontalement */
+    align-items: center; /* Centre l'image verticalement */
+}
+
+.responsive-image {
+    width: 100%;
+    height: auto;
+    max-width: 500px; /* Limite la largeur maximale de l'image sur les écrans plus grands */
+}
+
+.about-content {
+    
+    .sub-title {
+        text-transform: uppercase;
+        color: var(--mainColor);
+        display: block;
+        font: {
+            size: 15px;
+            weight: 400;
+        };
+    }
+    h2 {
+        font: {
+            size: 24px;
+            weight: 600;
+        };
+        margin: {
+            top: 10px;
+            bottom: 10px;
+        };
+    }
+    ul {
+        padding: 0;
+        display: flex;
+        list-style-type: none;
+        margin: 0;
+        gap: 15px; /* Espace entre les éléments */
+    }
+    li {
+        flex: 1; /* Prend toute la place disponible */
+        max-width: 45%; /* Ajuste la largeur à 45% pour 2 éléments par ligne */
+        color: var(--paragraphColor);
+        position: relative;
+        padding: 10px;
+        box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
+        transition: var(--transition);
+        border-radius: 3px;
+        
+        span {
+            display: flex;
+            flex-direction: column; /* Permet de placer les éléments l'un en dessous de l'autre */
+            align-items: center; /* Centre les éléments horizontalement */
+            text-align: center; /* Centre le texte */
+            z-index: 1;
+            padding: 10px;
+            border-radius: 3px;
+            transition: var(--transition);
+        }
+
+        &::before {
+            content: '';
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            background: var(--gradientColor);
+            opacity: 0;
+            visibility: hidden;
+            position: absolute;
+            border-radius: 3px;
+            z-index: -1;
+            transition: var(--transition);
+        }
+        &:hover, &:focus {
+            color: var(--whiteColor);
+            transform: translateY(-5px);
+
+            &::before {
+                opacity: 1;
+                visibility: visible;
+            }
+
+        }
+    }
+}
+
+
+@media (max-width: 768px) {
+    .responsive-image {
+        width: 90%; /* Ajuste la largeur de l'image pour les petits écrans */
+        max-width: 100%; /* S'assure que l'image n'excède pas la largeur du conteneur */
+    }
+
+    .about-content {
+        margin-bottom: 40px;
+
+        .sub-title {
+            font-size: 14px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+        ul {
+            display: block; /* S'assure que les éléments à l'intérieur soient en colonne */
+            
+            li {
+                flex: 0 0 100%; /* Prend 100% de la largeur */
+                max-width: 100%; /* Limite la largeur à 100% */
+                margin-top: 15px; /* Espace entre chaque élément */
+                background: var(--gradientColor); /* Appliquez le dégradé en arrière-plan */
+                padding: 10px; /* Ajustez le padding pour rendre le texte plus lisible */
+                border-radius: 5px; /* Arrondit les coins pour un rendu plus esthétique */
+                color: var(--whiteColor); /* Change la couleur du texte pour un meilleur contraste */
+                display: flex; /* Centrer le contenu */
+                align-items: center; /* Aligne verticalement les éléments */
+            }
+    
+            li span {
+                display: flex;
+                align-items: center; /* Pour centrer l'icône et le texte */
+            }
+    
+
         }
     }
 }

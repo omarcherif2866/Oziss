@@ -25,6 +25,10 @@
         right: auto;
         top: -50px;
     };
+    .title-white {
+        color: white;
+    }
+    
     .sub-title {
         display: block;
         font-size: 16px;
@@ -176,6 +180,8 @@
 
 }
 
+
+
 .btn-primary {
     background: var(--gradientColor);
     border: none; /* Supprimez la bordure si nécessaire */
@@ -188,48 +194,6 @@
 }
 
 
-// .single-ml-services-box {
-//     position: relative;
-//     z-index: 1;
-//     background-color: var(--whiteColor);
-//     text-align: center;
-//     margin-bottom: 30px;
-//     padding: 30px 25px;
-//     overflow: hidden;
-//     transition: var(--transition);
-
-//     .image {
-//         margin-bottom: 25px;
-//         width: 100%; /* Définir une largeur fixe */
-//         height: 250px; /* Définir une hauteur fixe */
-//     }
-//     h3 {
-//         font-size: 18px;
-//         margin-bottom: 12px;
-//     }
-//     p {
-//         margin-bottom: 0;
-//     }
-//     &::before {
-//         content: '';
-//         position: absolute;
-//         left: -15px;
-//         bottom: -15px;
-//         width: 30px;
-//         height: 30px;
-//         transition: var(--transition);
-//         transform: rotate(45deg);
-//         background: var(--mainColor);
-//         visibility: hidden;
-//         opacity: 0;
-//     }
-//     &:hover {
-//         &::before {
-//             opacity: 1;
-//             visibility: visible;
-//         }
-//     }
-// }
 
 .description {
     display: -webkit-box;
@@ -501,22 +465,7 @@
             bottom: 17px;
         };
     }
-    .icon {
-        display: inline-block;
-        color: var(--mainColor);
-        width: 85px;
-        height: 85px;
-        line-height: 85px;
-        border: 1px solid #e3f7e9;
-        border-radius: 50%;
-        transition: var(--transition);
 
-        i {
-            &::before {
-                font-size: 35px;
-            }
-        }
-    }
     p {
         margin-bottom: 25px;
         transition: var(--transition);
@@ -654,134 +603,9 @@
     }
 }
 
-/*team-css*/
-.team-area {
-    padding-bottom: 50px;
-}
-.single-team {
-    z-index: 1;
-    text-align: center;
-    margin-bottom: 30px;
-    transition: var(--transition);
-    background: var(--whiteColor);
-    padding: {
-        top: 35px;
-        bottom: 35px;
-    };
-    .team-image {
-        position: relative;
-        z-index: 1;
-        padding: {
-            left: 35px;
-            right: 35px;
-        };
-        img {
-            border: 3px solid #8893db;
-            width: auto !important;
-            border-radius: 50%;
-            display: inline-block !important;
-            transition: var(--transition);
-        }
-        &::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            background: var(--bgColor2);
-            height: 10px;
-            width: 100%;
-            z-index: -1;
-            transition: var(--transition);
-        }
-    }
-    .team-content {
-        padding: {
-            left: 35px;
-            right: 35px;
-        };
-        ul {
-            padding: 0;
-            margin: 0;
-            list-style-type: none;
 
-            li {
-                display: inline-block;
-                margin: 0 4px;
 
-                a {
-                    color: var(--purpleColor);
 
-                    &:hover {
-                        transform: translateY(-5px);
-                        color: var(--mainColor);
-                    }
-                    i-feather {
-                        width: 19px;
-                    }
-                }
-            }
-        }
-        p {
-            margin: {
-                top: 20px;
-                bottom: 0;
-            }
-        }
-    }
-    .team-info {
-        background: var(--gradientColor);
-        transition: var(--transition);
-        padding: 10px 15px;
-        border-radius: 75px;
-        margin: {
-            bottom: 25px;
-            left: 10px;
-            right: 10px;
-            top: 25px;
-        };
-        h3 {
-            font-size: 18px;
-            margin-bottom: 5px;
-            color: var(--whiteColor);
-        }
-        span {
-            color: var(--whiteColor);
-            font-size: 13px;
-        }
-    }
-    &:hover {
-        box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
-
-        .team-image {
-            &::before {
-                height: 0;
-            }
-            img {
-                border-color: var(--mainColor);
-            }
-        }
-        .team-info {
-            border-radius: 0;
-            margin: {
-                left: 0;
-                right: 0;
-            };
-        }
-    }
-}
-.repair-team-area {
-    .container {
-        max-width: 1175px;
-    }
-    .single-team {
-        .team-content {
-            padding: {
-                left: 25px;
-                right: 25px;
-            };
-        }
-    }
-}
 
 /*feedback-css*/
 .feedback-area {
@@ -805,7 +629,7 @@
         position: relative;
         text-align: start;
         margin-bottom: 40px;
-        display: inline-block;
+        // display: inline-block;
         padding: {
             left: 108px;
             top: 18px;
@@ -980,13 +804,26 @@
     position: relative;
     margin-bottom: 30px;
     transition: var(--transition);
+    width: 100%; // Ajoutez cette ligne si vous voulez que chaque post prenne 100% de la largeur de son conteneur parent.
+    height: 400px; // Fixez la hauteur des éléments pour qu'ils soient de la même taille.
+    display: flex;
+    flex-direction: column;
 
     .blog-image {
         position: relative;
+        height: 60%; // La hauteur de l'image est fixée pour être proportionnelle au contenu.
 
         a {
             display: block;
+            height: 100%; // Pour que l'image prenne toute la place disponible.
         }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; // Ajuste l'image pour qu'elle couvre toute la zone sans déformer l'image.
+        }
+
         .date {
             left: 20px;
             bottom: -20px;
@@ -1006,20 +843,22 @@
             }
         }
     }
+
     .blog-post-content {
         background: var(--bgColor);
         transition: var(--transition);
-        padding: {
-            top: 40px;
-            left: 20px;
-            bottom: 20px;
-            right: 20px;
-        };
+        padding: 20px; // Ajuste les marges pour un contenu plus uniforme.
+        flex: 1; // Prend l'espace restant pour que tous les contenus soient uniformes.
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; // Pour espacer les éléments verticalement.
+
         h3 {
             font-size: 20px;
             line-height: 30px;
             margin-bottom: 0;
         }
+
         span {
             display: block;
             color: var(--blackColor);
@@ -1033,13 +872,16 @@
                 }
             }
         }
+
         .read-more-btn {
             color: var(--blackColor);
+            align-self: flex-start;
 
             i-feather {
                 transition: var(--transition);
                 width: 15px;
             }
+
             &:hover {
                 color: var(--mainColor);
 
@@ -1049,14 +891,16 @@
             }
         }
     }
+
     &:hover {
         box-shadow: 0 2px 48px 0 rgba(0, 0, 0, 0.08);
-        
+
         .blog-post-content {
             background: var(--whiteColor);
         }
     }
 }
+
 
 @media only screen and (max-width: 767px) {
     
@@ -1073,6 +917,10 @@
             line-height: 1.4;
             margin-bottom: 17px;
             font-size: 25px;
+        }
+        .btn {
+            margin-top: 20px; /* Ajuste la valeur selon l'espace souhaité */
+            display: inline-block; /* Assure que le bouton est un bloc inline pour le centrage */
         }
     }
     .repair-banner-image {
@@ -1107,6 +955,21 @@
                 flex: 0 0 100%;
                 max-width: 100%;
                 margin-top: 15px;
+                background: var(--gradientColor); /* Appliquez le dégradé en arrière-plan */
+                padding: 10px; /* Ajustez le padding pour rendre le texte plus lisible */
+                border-radius: 5px; /* Arrondit les coins pour un rendu plus esthétique */
+                color: var(--whiteColor); /* Change la couleur du texte pour un meilleur contraste */
+                display: flex; /* Centrer le contenu verticalement */
+                align-items: center; /* Aligne verticalement les éléments à l'intérieur */
+            }
+    
+            li span {
+                display: flex;
+                align-items: center; /* Pour centrer l'icône et le texte */
+            }
+    
+            li i-feather {
+                margin-right: 8px; /* Espace entre l'icône et le texte */
             }
         }
     }
@@ -1130,23 +993,39 @@
     .repair-services-area {
         padding-bottom: 20px;
     }
+    
     .single-repair-services {
-        padding: 30px 20px;
-
+        position: relative; /* Positionnement relatif pour le conteneur */
+        background-image: inherit; /* Assurez-vous que l'image d'arrière-plan est définie ici */
+        filter: brightness(0.7); /* Ajustez cette valeur pour rendre l'image plus claire ou plus sombre */
+        padding: 20px 15px; /* Ajustez le padding si nécessaire */
+        text-align: center; /* Centre le texte */
+    
+        &::before {
+            content: ''; /* Nécessaire pour activer le pseudo-élément */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5); /* Calque blanc semi-transparent */
+            z-index: -1; /* S'assure que le calque est derrière le contenu */
+        }
+    
         h3 {
-            font-size: 17px;
+            font-size: 20px; /* Augmentez la taille de la police */
+            font-weight: bold; /* Met le texte en gras */
+            margin-top: 10px; /* Espacement au-dessus du titre */
+            margin-bottom: 5px; /* Espacement en dessous du titre */
         }
-        .icon {
-            width: 65px;
-            height: 65px;
-            line-height: 65px;
-
-            i {
-                &::before {
-                    font-size: 25px;
-                }
-            }
+        
+        p {
+            font-size: 18px; /* Augmentez la taille de la police */
+            font-weight: bold; /* Met le texte en gras */
+            margin-bottom: 10px; /* Espacement en dessous de la description */
+            color: black;
         }
+        
     }
 
     .repair-cta-area {
@@ -1172,7 +1051,7 @@
     }
 
     .single-repair-feedback {
-        border-radius: 5px;
+        border-radius: 8px;
         padding: {
             top: 20px;
             left: 20px;
@@ -1206,8 +1085,9 @@
     }
 
     .single-repair-box {
-        padding: 20px;
-
+        width: 320px; 
+        padding: 20px; /* Ajustez le padding pour réduire l'espace interne */
+        margin: 10px auto; 
         .icon {
             width: 75px;
             height: 75px;
@@ -1228,6 +1108,8 @@
                     font-size: 170px;
                 }
             }
+            width: 200px;
+            height: 200px;
         }
     }
 
@@ -1256,50 +1138,7 @@
         }
     }
 
-    .team-area {
-        padding-bottom: 20px;
 
-        .container-fluid {
-            padding: {
-                left: var(--bs-gutter-x, 0.75rem) !important;
-                right: var(--bs-gutter-x, 0.75rem) !important;
-            };
-        }
-    }
-    .single-team {
-        padding: {
-            top: 30px;
-            bottom: 30px;
-        }
-        .team-image {
-            padding: {
-                left: 20px;
-                right: 20px;
-            }
-        }
-        .team-content {
-            padding: {
-                left: 20px;
-                right: 20px;
-            }
-
-            .team-info {
-                margin: {
-                    right: 10px;
-                    left: 10px;
-                }
-
-                h3 {
-                    font-size: 17px;
-                }
-            }
-        }
-    }
-    .repair-team-area {
-        .container {
-            max-width: 100%;
-        }
-    }
 
     .blog-area {
         padding-bottom: 20px;
@@ -1309,6 +1148,10 @@
         }
     }
     .single-blog-post {
+        box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.2); 
+        transition: transform 0.3s, box-shadow 0.3s; 
+        margin-bottom: 20px; 
+        overflow: hidden; 
         .blog-post-content {
             h3 {
                 font-size: 17px;
@@ -1327,16 +1170,8 @@
 
 @media only screen and (min-width: 576px) and (max-width: 767px) {
 
-    .team-area {
-        .container-fluid {
-            max-width: 540px;
-        }
-    }
-    .repair-team-area {
-        .container {
-            max-width: 540px;
-        }
-    }
+
+
 
     .repair-about-content {
         ul {
@@ -1415,53 +1250,272 @@
         }
     }
 
-    .repair-team-area {
-        .container {
-            max-width: 720px;
-        }
-    }
     
-    .team-area {
-        .container-fluid {
-            max-width: 720px;
-        }
-    }
+
 
 }
 
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
-
+ 
     .repair-main-banner {
         padding: {
-            top: 185px;
-            bottom: 110px;
+            top: 150px;
+            bottom: 85px;
+        };
+    }
+    .repair-banner-content {
+        text-align: center;
+
+        h1 {
+            line-height: 1.4;
+            margin-bottom: 17px;
+            font-size: 25px;
+        }
+        .btn {
+            margin-top: 20px; /* Ajuste la valeur selon l'espace souhaité */
+            display: inline-block; /* Assure que le bouton est un bloc inline pour le centrage */
         }
     }
     .repair-banner-image {
+        margin-top: 60px;
+
         img {
-            &:nth-child(4) {
-                display: none;
+            &:nth-child(2) {
+                top: 0;
+                right: 0;
             }
             &:nth-child(3) {
                 top: -35px;
             }
-            &:nth-child(2) {
-                top: -30px;
-            }
-        }
-    }
-    
-    .repair-team-area {
-        .single-team {
-            .team-content {
-                padding: {
-                    left: 0;
-                    right: 0;
-                }
+            &:nth-child(4) {
+                display: none;
             }
         }
     }
 
+    .repair-about-content {
+        margin-bottom: 40px;
+
+        .sub-title {
+            font-size: 14px;
+        }
+        h2 {
+            font-size: 20px;
+        }
+        ul {
+            li {
+                -ms-flex: 0 0 100%;
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-top: 15px;
+                background: var(--gradientColor); /* Appliquez le dégradé en arrière-plan */
+                padding: 10px; /* Ajustez le padding pour rendre le texte plus lisible */
+                border-radius: 5px; /* Arrondit les coins pour un rendu plus esthétique */
+                color: var(--whiteColor); /* Change la couleur du texte pour un meilleur contraste */
+                display: flex; /* Centrer le contenu verticalement */
+                align-items: center; /* Aligne verticalement les éléments à l'intérieur */
+            }
+    
+            li span {
+                display: flex;
+                align-items: center; /* Pour centrer l'icône et le texte */
+            }
+    
+            li i-feather {
+                margin-right: 8px; /* Espace entre l'icône et le texte */
+            }
+        }
+    }
+    .repair-about-image {
+        text-align: center;
+        padding: {
+            top: 35px;
+            bottom: 35px;
+        }
+        img {
+            &:nth-child(2) {
+                width: 550px;
+                position: relative;
+            }
+
+        }
+    }
+
+    .repair-services-area {
+        padding-bottom: 20px;
+    }
+    
+    .single-repair-services {
+        position: relative; /* Positionnement relatif pour le conteneur */
+        background-image: inherit; /* Assurez-vous que l'image d'arrière-plan est définie ici */
+        filter: brightness(0.7); /* Ajustez cette valeur pour rendre l'image plus claire ou plus sombre */
+        padding: 20px 15px; /* Ajustez le padding si nécessaire */
+        text-align: center; /* Centre le texte */
+    
+        &::before {
+            content: ''; /* Nécessaire pour activer le pseudo-élément */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5); /* Calque blanc semi-transparent */
+            z-index: -1; /* S'assure que le calque est derrière le contenu */
+        }
+    
+        h3 {
+            font-size: 20px; /* Augmentez la taille de la police */
+            font-weight: bold; /* Met le texte en gras */
+            margin-top: 10px; /* Espacement au-dessus du titre */
+            margin-bottom: 5px; /* Espacement en dessous du titre */
+        }
+        
+        p {
+            font-size: 18px; /* Augmentez la taille de la police */
+            font-weight: bold; /* Met le texte en gras */
+            margin-bottom: 10px; /* Espacement en dessous de la description */
+            color: black;
+        }
+        
+    }
+
+    .repair-cta-area {
+        padding: {
+            top: 50px;
+            bottom: 50px;
+        }
+    }
+    .cta-repair-content {
+        text-align: center;
+        margin-bottom: 30px;
+
+        h3 {
+            font-size: 21px;
+            margin-bottom: 17px;
+        }
+        p {
+            font-size: 13px;
+        }
+    }
+    .cta-repair-img {
+        text-align: center;
+    }
+
+    .single-repair-feedback {
+        border-radius: 5px;
+        padding: {
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+        }
+        &::after {
+            font-size: 30px;
+            left: 10px;
+        }
+        .client-img {
+            margin-bottom: 29px;
+            padding: {
+                left: 85px;
+                top: 13px;
+            }
+            img {
+                width: 70px;
+                height: 70px;
+            }
+            span {
+                margin-top: 5px;
+            }
+            h3 {
+                font-size: 17px;
+            }
+        }
+        p {
+            font-size: 14px;
+        }
+    }
+
+    .single-repair-box {
+        width: 320px; 
+        padding: 20px; /* Ajustez le padding pour réduire l'espace interne */
+        margin: 10px auto; 
+        .icon {
+            width: 75px;
+            height: 75px;
+            line-height: 75px;
+
+            i {
+                &::before {
+                    font-size: 25px;
+                }
+            }
+            h3 {
+                font-size: 17px;
+            }
+        }
+        .back-icon {
+            i {
+                &::before {
+                    font-size: 170px;
+                }
+            }
+            width: 200px;
+            height: 200px;
+        }
+    }
+
+    .funfact {
+        margin-bottom: 30px;
+
+        h3 {
+            font-size: 25px;
+            margin-bottom: 3px;
+        }
+    }
+    .contact-cta-box {
+        text-align: center;
+        margin: 20px 0 0;
+        max-width: 100%;
+        padding: 30px 20px;
+
+        h3 {
+            font-size: 17px;
+        }
+        .btn {
+            position: relative;
+            right: 0;
+            top: 0;
+            margin-top: 15px;
+        }
+    }
+
+
+
+    .blog-area {
+        padding-bottom: 20px;
+
+        .widget-area {
+            margin-top: 10px;
+        }
+    }
+    .single-blog-post {
+        box-shadow: 0px 4px 2px rgba(0, 0, 0, 0.2); 
+        transition: transform 0.3s, box-shadow 0.3s; 
+        margin-bottom: 20px; 
+        overflow: hidden; 
+        .blog-post-content {
+            h3 {
+                font-size: 17px;
+            }
+        }
+        .blog-image {
+            a {
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (min-width: 1550px) {

@@ -13,10 +13,10 @@
 
             <div *ngIf="showCalendar" class="calendar-container">
                 <button (click)="toggleCalendar()" class="close-button">
-                  <i class="pi pi-times"></i> <!-- Icône de croix -->
+                    <i class="pi pi-times"></i> <!-- Icône de croix -->
                 </button>
                 <full-calendar [options]="calendarOptions" class="custom-calendar"></full-calendar>
-              </div>
+            </div>
 
             <p-table #dt [value]="reunions" [columns]="cols" responsiveLayout="scroll" [rows]="5" [globalFilterFields]="['nom']" [paginator]="true" [rowsPerPageOptions]="[5,10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Affichage de {first} à {last} sur {totalRecords} entrées" [(selection)]="selectedReunions" selectionMode="multiple" [rowHover]="true" dataKey="id">
                 <ng-template pTemplate="caption">
@@ -37,8 +37,8 @@
                         <th pSortableColumn="heureDebut">Heure de Debut <p-sortIcon field="heureDebut"></p-sortIcon></th>
                         <th pSortableColumn="heureFin">Heure de Fin <p-sortIcon field="heureFin"></p-sortIcon></th>
                         <th pSortableColumn="logiciel">logiciel <p-sortIcon field="logiciel"></p-sortIcon></th>
-                        <th pSortableColumn="deuxiemeMembre" *ngIf="getUserRole() === 'partner'">deuxiemeMembre <p-sortIcon field="deuxiemeMembre"></p-sortIcon></th>
-                        <th pSortableColumn="createur" *ngIf="getUserRole() === 'admin'">createur <p-sortIcon field="createur"></p-sortIcon></th>
+                        <th pSortableColumn="deuxiemeMembre" >deuxiemeMembre <p-sortIcon field="deuxiemeMembre"></p-sortIcon></th>
+                        <th pSortableColumn="createur">createur <p-sortIcon field="createur"></p-sortIcon></th>
                         <th pSortableColumn="status">status <p-sortIcon field="status"></p-sortIcon></th>
                         <th *ngIf="getUserRole() === 'admin'">Modifier le status de la reunion <p-sortIcon ></p-sortIcon></th>
 
@@ -52,10 +52,8 @@
                             {{reunion.nom}}
                         </td>
 
-                        <td style="width:14%; min-width:8rem;">
-                            <span class="p-column-title">Description</span>
-                            {{reunion.description}}
-                        </td>
+                        <td class="projet-description" (click)="showFullDescription(reunion.description)">{{reunion.description}}</td>
+
 
                         <td style="width:14%; min-width:8rem;">
                             <span class="p-column-title">date</span>
@@ -73,11 +71,12 @@
                             <span class="p-column-title">logiciel</span>
                             {{reunion.logiciel}}
                         </td>
-                        <td style="width:14%; min-width:8rem;" *ngIf="getUserRole() === 'partner'">
+                        <td style="width:14%; min-width:8rem;" >
                             <span class="p-column-title">deuxiemeMembre</span>
-                            {{reunion.deuxiemeMembre}}
+                            <strong>Email:</strong>  {{ reunion.deuxiemeMembre.email}}
+                            <strong>Nom:</strong> {{ reunion.deuxiemeMembre.nom}}
                         </td>
-                        <td style="width:14%; min-width:8rem;" *ngIf="getUserRole() === 'admin'">
+                        <td style="width:14%; min-width:8rem;" >
                             <span class="p-column-title">createur</span>
                             <strong>Email:</strong>  {{ reunion.createur.email}}
                             <strong>Nom:</strong> {{ reunion.createur.nom}}
@@ -128,16 +127,6 @@
                         <p-calendar formControlName="date" [showIcon]="true" inputId="icon" required></p-calendar>
                         <small *ngIf="submitted && reunionForm.get('date')?.invalid" class="ng-dirty ng-invalid">Date est requise.</small>
                     </div>
-                    <!-- <div class="field">
-                        <label for="heureDebut">Heure de Début</label>
-                        <input type="text" pInputText id="heureDebut" formControlName="heureDebut" required />
-                        <small *ngIf="submitted && reunionForm.get('heureDebut')?.invalid" class="ng-dirty ng-invalid">Heure de début est requise.</small>
-                    </div>
-                    <div class="field">
-                        <label for="heureFin">Heure de Fin</label>
-                        <input type="text" pInputText id="heureFin" formControlName="heureFin" required />
-                        <small *ngIf="submitted && reunionForm.get('heureFin')?.invalid" class="ng-dirty ng-invalid">Heure de fin est requise.</small>
-                    </div> -->
                     <div [formGroup]="reunionForm">
                         <div class="field">
                             <label for="heureDebut">Heure de Début</label>
@@ -172,6 +161,15 @@
                         </div>
                     </div>
                     
+                    <p-dropdown 
+                    [options]="deuxiemeMembre" 
+                    formControlName="deuxiemeMembre" 
+                    optionLabel="nom" 
+                    placeholder="Sélectionner un membre" 
+                    appendTo="body">
+                </p-dropdown>
+                
+
                     <div class="field">
                         <label>Logiciel</label>
                         <div class="software-options">
@@ -211,6 +209,27 @@
               <button pButton pRipple icon="pi pi-times" class="p-button-text" label="Non" (click)="deleteReunionDialog = false"></button>
               <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Oui" (click)="confirmDelete()"></button>
             </ng-template>
+        </p-dialog>
+
+        <p-dialog header="Description Complète" [(visible)]="displayModal" [modal]="true" [responsive]="true">
+            <p>{{ selectedDescription }}</p>
+            <p-footer>
+                <button type="button" pButton icon="pi pi-times" (click)="displayModal = false" label="Fermer"></button>
+            </p-footer>
+        </p-dialog>
+
+        <p-dialog [(visible)]="displayDialog" [modal]="true" [closable]="true" header="Détails de la réunion" (onHide)="onDialogHide()">
+            <div *ngIf="selectedReunions.length > 0">
+                <p><strong>Nom:</strong> {{ selectedReunions[0].nom }}</p>
+                <p><strong>Description:</strong> {{ selectedReunions[0].description }}</p>
+                <p><strong>Date:</strong> {{ selectedReunions[0].date }}</p>
+                <p><strong>heure de debut:</strong> {{ selectedReunions[0].heureDebut }}</p>
+                <p><strong>Heure de fin:</strong> {{ selectedReunions[0].heureFin }}</p>
+                <p><strong>Logiciel:</strong> {{ selectedReunions[0].logiciel }}</p>
+                <p><strong>Status:</strong> {{ selectedReunions[0].status }}</p>
+
+
+            </div>
         </p-dialog>
     </div>
 </div>

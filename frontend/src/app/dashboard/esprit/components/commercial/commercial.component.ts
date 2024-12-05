@@ -109,7 +109,7 @@ export class CommercialComponent {
   }
 
   getImageUrl(imageName: string): string {
-    return `http://localhost:9090/img/${imageName}`;
+    return `${imageName}`;
   }
 
   saveCommercial() {
