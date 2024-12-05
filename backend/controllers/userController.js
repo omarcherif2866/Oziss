@@ -1,8 +1,8 @@
 import nodemailer from 'nodemailer';
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import Profil from "../models/Profil.js";
 import User from '../models/User.js';
+import Temoignage from '../models/temoignage.js';
 
 
 
@@ -438,6 +438,70 @@ const confirmProductByLink = async (req, res) => {
 }
 };
 
+const addTemoignage = async (req, res) => {
+  Temoignage.create({
+            text: req.body.text,
+            createur: req.body.createur,
+
+
+          })
+            .then((newTemoignages) => {
+              
+              res.status(200).json({
+                text: newTemoignages.text,
+                createur: newTemoignages.createur,
+
+
+              });
+            })
+            .catch((err) => {
+              res.status(404).json({ error: err });
+            });
+}
+
+const getAllTemoignage = async (req, res) => {
+  Temoignage
+    .find({})
+
+    .then(docs => {
+      res.status(200).json(docs);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+}
+
+const getLastThreeTemoignage = async (req, res) => {
+  Temoignage
+    .find({})
+    .sort({ createdAt: -1 }) // Trie les actualités par 'createdAt' en ordre décroissant (les plus récentes en premier)
+    .limit(3) // Limite le nombre de résultats à 3
+    .then(docs => {
+      res.status(200).json(docs);
+    })
+    .catch(err => {
+      res.status(500).json({ error: err });
+    });
+}
+
+const deleteTemoignage = async (req, res) => {
+  const id =req.params.id
+  const tem = await Temoignage.findByIdAndDelete(id);
+  res.status(200).json({"message":" Actualites deleted"});
+}
+
+const getTemoignagesByCreateur = async (req, res) => {
+    const { createurId } = req.params; // Supposons que vous passez l'ID du créateur en tant que paramètre d'URL
+
+    try {
+        const temoignages = await Temoignage.find({ createur: createurId }).populate('createur', 'nom email'); // Populate pour récupérer les détails de l'utilisateur, si nécessaire
+        res.status(200).json(temoignages);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+};
+
+
 export {
   findAllUser,
   getUserProfile,
@@ -451,5 +515,10 @@ export {
   getBlockedUserCount,
   getUnblockedUserCount,
   getAllUsers,
-  confirmProductByLink
+  confirmProductByLink,
+  addTemoignage,
+  getLastThreeTemoignage,
+  getAllTemoignage,
+  deleteTemoignage,
+  getTemoignagesByCreateur
 };

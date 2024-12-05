@@ -19,7 +19,8 @@ const userSchema = new Schema({
   // Champs spécifiques aux partenaires
   partnershipType: { type: String },
   partnershipObjectives: { type: String },
-  availableResources: { type: String }
+  availableResources: { type: String },
+  
 });
 
 export default model('User', userSchema);

@@ -68,7 +68,22 @@ export function getAllOrders(req, res) {
     .find({})
 
     .then(docs => {
-      res.status(200).json(docs);
+      // Map pour ajouter l'URL complète pour chaque image
+      const ordersWithImageUrls = docs.map(doc => {
+        if (doc.image) {
+          // Vérifie si l'image est stockée sur Cloudinary ou localement
+          if (doc.image.startsWith('http')) {
+            // Si l'image est déjà une URL (Cloudinary)
+            doc.image = doc.image; // Utilise directement l'URL
+          } else {
+            // Sinon, on construit l'URL pour l'image stockée localement
+            doc.image = `http://localhost:9090/img/${doc.image}`; // Remplacez le port et le chemin selon votre configuration
+          }
+        }
+        return doc;
+      });
+
+      res.status(200).json(ordersWithImageUrls);
     })
     .catch(err => {
       res.status(500).json({ error: err });

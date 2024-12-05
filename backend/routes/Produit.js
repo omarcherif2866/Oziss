@@ -1,5 +1,4 @@
 import express from 'express';
-import { body } from "express-validator";
 import multer from "../middlewares/multer-config.js";
 import { DeleteProduits, addOnceProduits, countProducts, getAllProduct, getProductsByService, getProduitsById, getTopSellingProducts, putOnce } from '../controllers/Produit.js';
 
@@ -25,8 +24,8 @@ router.route('/')
 
 
 router.route('/:id')
-.get(getProduitsById)
 .delete(DeleteProduits)
+.get(getProduitsById)
 .put(
     multer("image"),
     putOnce)

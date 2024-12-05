@@ -12,21 +12,17 @@ dotenvConfig();
 import { notFoundError, errorHandler } from './middlewares/error-handler.js';
 import bodyParser from 'body-parser';
 
-import DomainesRoutes from './routes/Domaine.js'; 
-import FormationRoutes from './routes/Formation.js'; 
 import AuthRoutes from './routes/auth.js';
 import UserRoutes from './routes/User.js';
-import FormateursRoutes from './routes/Formateur.js';
-import SessionCoursRoutes from './routes/sessionCoursId.js';
-import ApprenantsRoutes from './routes/Apprenant.js';
-import ProfilsRoutes from './routes/Profil.js';
-import AdministrateursRoutes from './routes/Administrateur.js';
 import ServiceRoutes from './routes/service.js';
 import ProduitRoutes from './routes/Produit.js';
 import OrderRoutes from './routes/Order.js';
 import EmailRoutes from './routes/emailRoute.js';
 import ReunionRoutes from './routes/Reunion.js';
 import ProjetRoutes from './routes/projet.js';
+import ActualiteRoutes from './routes/actualite.js';
+import ImageRoutes from './routes/ImageBanniere.js'
+
 
 
 
@@ -86,14 +82,7 @@ app.use(session({
   }
 }));
 
-app.use('/formations', FormationRoutes);
-app.use('/formateur', FormateursRoutes);
-app.use('/domaine', DomainesRoutes);
-app.use('/sessionCours', SessionCoursRoutes);
 app.use('/api', AuthRoutes);
-app.use('/apprenant', ApprenantsRoutes);
-app.use('/profil', ProfilsRoutes);
-app.use('/admin', AdministrateursRoutes);
 app.use('/user', UserRoutes);
 app.use('/service', ServiceRoutes);
 app.use('/produit', ProduitRoutes);
@@ -101,6 +90,9 @@ app.use('/commande', OrderRoutes);
 app.use('/mailing', EmailRoutes);
 app.use('/reunion', ReunionRoutes);
 app.use('/Projet', ProjetRoutes);
+app.use('/Actualite', ActualiteRoutes);
+app.use('/imageBanniere', ImageRoutes);
+
 
 
 app.use(notFoundError);

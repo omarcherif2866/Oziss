@@ -26,7 +26,7 @@ const ReunionSchema = new Schema(
         },
         createur: { type: Schema.Types.ObjectId, ref: 'User',},
         deuxiemeMembre: {             
-            type: String,
+            type: Schema.Types.Mixed,
         },
         status: { type: String, enum: ['En attente', 'Confirmée', 'Refusée'], default: 'En attente' },
 

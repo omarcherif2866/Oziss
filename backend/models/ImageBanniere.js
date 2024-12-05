@@ -2,21 +2,20 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 
-const ProduitSchema = new Schema(
+const ImageBanniereSchema = new Schema(
     {
-        nom: {
-            type: String,
-            required: true
-        },
-        description: {
-            type: String,
-            required: true
-        },
         image: {
             type: String,
             required: true,
         },
-        service: { type: Schema.Types.ObjectId, ref: 'Service' }
+        titre: {
+            type: String,
+            required: true
+        },
+        sousTitre: {
+            type: String,
+            required: true
+        },
 
     },
     {
@@ -24,4 +23,4 @@ const ProduitSchema = new Schema(
     }
 );
 
-export default model('Produit', ProduitSchema);
+export default model('ImageBanniere', ImageBanniereSchema);

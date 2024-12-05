@@ -14,6 +14,11 @@ import {
   // getUnblockedUserCount,
   // getAllUsers,
   // confirmProductByLink,
+  addTemoignage,
+  getAllTemoignage,
+  deleteTemoignage,
+  getLastThreeTemoignage,
+  getTemoignagesByCreateur
 } from '../controllers/userController.js';
 
 const router = express.Router();
@@ -33,6 +38,17 @@ router.use(function(req, res, next) {
 router.post('/forgotPassword', forgotPassword);
 
 router.post('/reset-password', resetPassword);
+
+router.post('/addTemoignage', addTemoignage);
+
+router.get('/getAllTemoignage', getAllTemoignage);
+
+router.get('/getLastThreeTemoignage',  getLastThreeTemoignage);
+
+router.delete('/deleteTemoignage/:id',  deleteTemoignage);
+
+router.get('/temoignages/createur/:createurId', getTemoignagesByCreateur);
+
 
 // router.post('/auth/google', createUserFromGoogle);
 

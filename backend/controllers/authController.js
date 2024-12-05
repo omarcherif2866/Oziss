@@ -1,11 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import nodemailer from 'nodemailer';
-import Profil  from "../models/Profil.js";
-import Apprenants  from "../models/Apprenant.js";
-import Formateurs  from "../models/Formateur.js";
-import Admins  from "../models/Administrateur.js";
-import User from '../models/User.js'; // Assurez-vous que le chemin est correct
+import { v2 as cloudinary } from 'cloudinary'; // Assurez-vous que c'est bien importé
+
+import User from '../models/User.js'; 
 
 
 const jwtsecret = "mysecret";
@@ -53,7 +50,7 @@ const signup = async (req, res) => {
       nom,
       email,
       password: hashedPassword,
-      image: imageFile.filename,
+      image: imageFile.path, // Stocke l'URL de Cloudinary
       confirmPassword: hashedPassword, // Vous pouvez décider de ne pas stocker la confirmation du mot de passe
       phoneNumber,
       companyName,
@@ -154,15 +151,23 @@ export function getUserById(req, res) {
     .then((doc) => {
       if (!doc) {
         // Gérer le cas où l'utilisateur n'est pas trouvé
-        res.status(404).json({ message: 'Utilisateur non trouvé' });
-      } else {
-        res.status(200).json(doc);
+        return res.status(404).json({ message: 'Utilisateur non trouvé' });
       }
+
+      if (doc.image) {
+        // Si doc.image contient le nom du fichier, construis l'URL complète
+        doc.image = cloudinary.url(doc.image); // Utiliser uniquement le nom de fichier
+        console.log("doc.image:", doc.image)
+      }
+
+      res.status(200).json(doc);
     })
     .catch((err) => {
+      console.error("Erreur lors de la récupération de l'utilisateur :", err);
       res.status(500).json({ error: err });
     });
 }
+
 
 export async function updateUserProfile(req, res) {
   try {
@@ -171,13 +176,21 @@ export async function updateUserProfile(req, res) {
             servicesNeeded, mainObjectives, estimatedBudget, partnershipType, partnershipObjectives, availableResources } = req.body;
 
     // Préparer l'objet à mettre à jour
-    let updateData = { nom, email, password, confirmPassword, phoneNumber, companyName, industry, position,
+    let updateData = { nom, email, phoneNumber, companyName, industry, position,
                         servicesNeeded, mainObjectives, estimatedBudget, partnershipType, partnershipObjectives, availableResources };
 
     // Gérer le fichier image si présent
     if (req.file) {
       console.log('File received:', req.file);
-      updateData.image = req.file.filename; // Assurez-vous que le chemin est correct pour le stockage
+      updateData.image = req.file.path; // Utiliser le chemin Cloudinary
+    }
+
+    // Vérifier si le mot de passe doit être mis à jour
+    if (password && password === confirmPassword) {
+      // Hacher le nouveau mot de passe avant de le stocker
+      updateData.password = await bcrypt.hash(password, 8);
+    } else if (password !== confirmPassword) {
+      return res.status(400).json({ message: 'Les mots de passe ne correspondent pas' });
     }
 
     // Mettre à jour l'utilisateur dans la base de données
@@ -194,6 +207,7 @@ export async function updateUserProfile(req, res) {
     res.status(500).json({ message: 'Erreur lors de la mise à jour du profil utilisateur' });
   }
 }
+
 
 const putPassword = async (req, res) => {
   try {
@@ -232,15 +246,22 @@ const putPassword = async (req, res) => {
 };
 
 export function getAll(req, res) {
-  User
-    .find({})
-
-    .then(docs => {
-      res.status(200).json(docs);
-    })
-    .catch(err => {
-      res.status(500).json({ error: err });
+  User.find({})
+  .then(docs => {
+    // Mapper les documents pour ajouter l'URL de l'image
+    const usersWithImages = docs.map(doc => {
+      if (doc.image) {
+        // Construire l'URL complète pour l'image
+        doc.image = cloudinary.url(doc.image); // Utiliser uniquement le nom de fichier
+      }
+      return doc; // Retourner le document modifié
     });
+
+    res.status(200).json(usersWithImages);
+  })
+  .catch(err => {
+    res.status(500).json({ error: err });
+  });
 }
 
 
@@ -333,7 +354,7 @@ export async function addCommercial(req, res) {
       password: hashedPassword,
       confirmPassword: hashedPassword, // Vous pouvez décider de ne pas stocker la confirmation du mot de passe
       phoneNumber,
-      image: imageFile.filename,
+      image: imageFile.path,
     });
 
     // Enregistrez l'utilisateur dans la base de données
@@ -346,6 +367,7 @@ export async function addCommercial(req, res) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 }
+
 
 
 export { signup, signin, signout, getUser, putPassword};

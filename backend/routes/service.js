@@ -1,7 +1,7 @@
 import express from 'express';
 import { body } from "express-validator";
 import multer from "../middlewares/multer-config.js";
-import { DeleteServices, addOnceServices, getAll, getServicesById, putOnce } from '../controllers/Service.js';
+import { DeleteServices, addOnceServices, countServices, getAll, getServicesById, putOnce } from '../controllers/Service.js';
 
 
 const router = express.Router();
@@ -9,6 +9,9 @@ const router = express.Router();
 
 router.route('/')
 .get(getAll);
+
+router.route('/count')
+.get(countServices);
 
 router.route('/')
 .post(

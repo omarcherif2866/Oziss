@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 const { Schema, model } = mongoose;
 
 
-const ProduitSchema = new Schema(
+const ActualiteSchema = new Schema(
     {
         nom: {
             type: String,
@@ -16,12 +16,10 @@ const ProduitSchema = new Schema(
             type: String,
             required: true,
         },
-        service: { type: Schema.Types.ObjectId, ref: 'Service' }
-
     },
     {
         timestamps: true
     }
 );
 
-export default model('Produit', ProduitSchema);
+export default model('Actualite', ActualiteSchema);

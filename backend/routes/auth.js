@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from "../middlewares/multer-config.js";
-import { signup, signin, putUser, getUserById, getAll, updateUserProfile,putPassword, DeleteUser, countUsersByType, getClientBudgets, addCommercial} from '../controllers/authController.js';
+import { signup, signin, putUser,  getUserById, getAll, updateUserProfile,putPassword, DeleteUser, countUsersByType, getClientBudgets, addCommercial} from '../controllers/authController.js';
 
 
 const router = express.Router();
