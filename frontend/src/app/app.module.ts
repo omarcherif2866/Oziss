@@ -47,6 +47,8 @@ import { ReunionModule } from './dashboard/esprit/components/reunion/reunion.mod
 import { CommercialModule } from './dashboard/esprit/components/commercial/commercial.module';
 import { ActualiteModule } from './dashboard/esprit/components/actualite/actualite.module';
 import { TemoignageModule } from './dashboard/esprit/components/temoignage/temoignage.module';
+import { ForgotPasswordComponent } from './components/pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/pages/reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,8 @@ import { TemoignageModule } from './dashboard/esprit/components/temoignage/temoi
     ServicesDetailsComponent,
     SignupComponent,
     SigninComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,

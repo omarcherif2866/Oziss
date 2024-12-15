@@ -14,6 +14,8 @@ import { ServicesComponent } from './components/pages/services/services.componen
 import { SignupComponent } from './components/pages/signup/signup.component';
 import { SigninComponent } from './components/pages/signin/signin.component';
 import { AppLayoutComponent } from './dashboard/layout/app.layout.component';
+import { ForgotPasswordComponent } from './components/pages/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/pages/reset-password/reset-password.component';
 
 const routes: Routes = [
     { path: '', component: PcRepairDemoComponent },
@@ -29,7 +31,8 @@ const routes: Routes = [
     { path: 'checkout', component: CheckoutComponent },
     { path: 'coming-soon', component: ComingSoonComponent },
     { path: 'contact', component: ContactComponent },
-    // Here add new pages component
+    { path :"forgetpassword", component :ForgotPasswordComponent},
+    { path :"resetPassword/:id", component :ResetPasswordComponent},
 
 
 

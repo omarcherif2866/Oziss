@@ -127,13 +127,13 @@ export class AuthService {
   }
 
 
-  forget(adresse: string): Observable<any> {
-    const credentials = { adresse };
+  forget(email: string): Observable<any> {
+    const credentials = { email };
     return this.http.post<any>('http://localhost:9090/user/forgotPassword', credentials);
   }
 
-  resetPassword(userId: string, motdepasse: string): Observable<any> {
-    return this.http.put<any>(`http://localhost:9090/api/user/password/${userId}`, { motdepasse });
+  resetPassword(userId: string, password: string): Observable<any> {
+    return this.http.put<any>(`http://localhost:9090/api/user/password/${userId}`, { password });
   }
 
   

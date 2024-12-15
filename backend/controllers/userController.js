@@ -130,15 +130,18 @@ const forgotPassword = async (req, res) => {
     const resetPasswordLink = `http://localhost:4200/resetPassword/${user._id}`;
 
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: 'Hostinger',
+      host: 'smtp.hostinger.com',
+      port: 465,
+      secure: true,
       auth: {
-        user: 'comar2866@gmail.com',
-        pass: 'byxg hhff ktjy rndg',
+        user: 'info@oziss.fr',
+        pass: 'C-Oziss-05',
       },
     });
 
     const mailOptions = {
-      from: 'comar2866@gmail.com',
+      from: 'info@oziss.fr',
       to: email,
       subject: 'Réinitialisation de mot de passe',
       html: `
